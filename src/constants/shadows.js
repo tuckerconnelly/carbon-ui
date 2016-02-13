@@ -3,6 +3,10 @@ const umbraOpacity = 0.2
 const ambientOpacity = 0.12
 
 export default {
+  dp0: {
+    boxShadow: 'none',
+  },
+
   dp2: {
     boxShadow: `
       0 2px 2px 0 rgba(0, 0, 0, ${penumbraOpacity}),

@@ -1,9 +1,8 @@
 {
-  "name": "generator-rr",
-  "version": "0.0.2",
-  "description": "A React-Redux generator for Yeoman",
+  "name": "react-material",
+  "version": "0.0.0",
+  "description": "Material Design framework for React",
   "main": "lib/index.js",
-  "jsnext:main": "src/index.js",
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "babel ./src --out-dir ./lib",
@@ -11,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tuckerconnelly/react-materialgit"
+    "url": "https://github.com/tuckerconnelly/react-material.git"
   },
   "homepage": "https://github.com/tuckerconnelly/react-material.git",
   "keywords": [

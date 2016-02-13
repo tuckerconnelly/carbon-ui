@@ -1,4 +1,4 @@
-react-material
+material-react
 ==========
 
 ## License

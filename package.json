@@ -1,0 +1,41 @@
+{
+  "name": "generator-rr",
+  "version": "0.0.2",
+  "description": "A React-Redux generator for Yeoman",
+  "main": "lib/index.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "babel ./src --out-dir ./lib",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuckerconnelly/react-materialgit"
+  },
+  "homepage": "https://github.com/tuckerconnelly/react-material.git",
+  "keywords": [
+    "react",
+    "material",
+    "design"
+  ],
+  "author": "Tucker Connelly <web@tuckerconnelly.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.4.0",
+    "babel-core": "^6.4.0",
+    "babel-eslint": "^4.1.8",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.1.18",
+    "babel-preset-react-hmre": "^1.0.1",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^5.0.0",
+    "eslint-plugin-babel": "^3.1.0",
+    "eslint-plugin-react": "^3.14.0",
+    "react": "^0.14.7",
+    "rimraf": "^2.5.0"
+  }
+}

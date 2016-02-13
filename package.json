@@ -36,5 +36,8 @@
     "eslint-plugin-react": "^3.14.0",
     "react": "^0.14.7",
     "rimraf": "^2.5.0"
+  },
+  "dependencies": {
+    "react-pure-render": "^1.0.2"
   }
 }

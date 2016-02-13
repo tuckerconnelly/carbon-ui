@@ -20,4 +20,6 @@ export default {
       focusedShade: 'rgba(0, 0, 0, .12)',
     },
   },
+
+  ripple: 'rgba(0, 0, 0, .87)',
 }

@@ -1,211 +1,210 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import ReactTransitionGroup from 'react-addons-transition-group'
+import { TransitionMotion, spring } from 'react-motion'
 
-import autoPrefix from '../styles/auto-prefix'
-import Transitions from '../styles/transitions'
+const defaults = {
+  centered: false,
+  styles: {},
+  spread: 2,
+}
 
-class CircleRipple extends Component {
-  componentWillAppear(callback) {
-    this._initializeAnimation(callback)
-  }
+export default (options = {}) => {
+  const {
+    centered: defaultCentered,
+    styles: defaultStyles,
+    spread: defaultSpread,
+  } = { ...defaults, ...options }
 
-  componentWillEnter(callback) {
-    this._initializeAnimation(callback)
-  }
+  return WrappedComponent => {
+    class RippledComponent extends Component {
+      state = {
+        ripples: [],
+      }
 
-  componentDidAppear() {
-    this._animate()
-  }
+      _ignoreNextMouseDown: false
 
-  componentDidEnter() {
-    this._animate()
-  }
+      _getDescriptor({ pageX, pageY }) {
+        const {
+          left,
+          top,
+          height,
+          width,
+        } = ReactDOM.findDOMNode(WrappedComponent).getBoundingClientRect()
 
-  componentWillLeave(callback) {
-    const style = ReactDOM.findDOMNode(this).style
-    style.opacity = 0
-    setTimeout(() => callback(), 2000)
-  }
+        const { rippleCentered, rippleSpread } = this.props
 
-  _animate() {
-    const style = ReactDOM.findDOMNode(this).style
-    const transitionValue = `${Transitions.easeOut('2s', 'opacity')}, ${
-      Transitions.easeOut('1s', 'transform')}`
-    autoPrefix.set(style, 'transition', transitionValue, this.props.muiTheme)
-    autoPrefix.set(style, 'transform', 'scale(1)', this.props.muiTheme)
-  }
+        return {
+          left: rippleCentered ? 0 : pageX - left - width / 2 - window.scrollX,
+          top: rippleCentered ? 0 : pageY - top - height / 2 - window.scrollY,
+          width: width * rippleSpread,
+        }
+      }
 
-  _initializeAnimation(callback) {
-    const style = ReactDOM.findDOMNode(this).style
-    style.opacity = this.props.opacity
-    autoPrefix.set(style, 'transform', 'scale(0)', this.props.muiTheme)
-    setTimeout(() => {
-      if (this.isMounted()) callback()
-    }, 0)
-  }
+      start(e) {
+        const { disabled, ripple } = this.props
+        const { ripples } = this.state
+        const isTouchEvent = e.touches && e.touches.length
 
-  render() {
-    const {
-      color,
-    } = this.props
+        if (disabled || !ripple) return
+        if (!isTouchEvent && e.button !== 0) return
+        if (this._ignoreNextMouseDown) {
+          this._ignoreNextMouseDown = false
+          return
+        }
 
-    const styles = {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      height: '100%',
-      width: '100%',
-      borderRadius: '50%',
-      backgroundColor: color,
+        this._ignoreNextMouseDown = isTouchEvent
+
+        // Start
+        this.setState({ ripples: ripples.concat({
+          key: ripples.length,
+          style: {
+            scale: spring(0),
+            opacity: spring(1),
+          },
+          data: this._getDescriptor(e),
+        }) })
+      }
+
+      end() {
+        const { ripples } = this.state
+
+        this.setState({
+          ripples: ripples.slice(1, ripples.length),
+        })
+      }
+
+      willEnter() {
+        return {
+          scale: 0,
+          opacity: 1,
+        }
+      }
+
+      willLeave() {
+        return {
+          scale: spring(1),
+          opacity: spring(0),
+        }
+      }
+
+      passThrough(e) {
+        const handlers = [
+          'onMouseDown',
+          'onMouseUp',
+          'onMouseLeave',
+          'onTouchStart',
+          'onTouchEnd',
+        ]
+        handlers.forEach(it =>
+          this.props[it](e)
+        )
+
+        switch (e.type) {
+          case 'mousedown':
+          case 'touchstart':
+            return this.start(e)
+          case 'mouseup':
+          case 'mouseleave':
+          case 'touchend':
+            return this.end()
+        }
+      }
+
+      render() {
+        const styles = {
+          container: {
+            position: 'absolute',
+            left: '0',
+            top: '0',
+
+            width: '100%',
+            height: '100%',
+
+            pointerEvents: 'none',
+          },
+
+          ripple: {
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+
+            borderRadius: '50%',
+
+            backgroundColor: this.context.theme.ripple,
+
+            pointerEvents: 'none',
+            transformOrigin: '50% 50%',
+          },
+        }
+
+        const { children } = this.props
+        const { ripples } = this.state
+
+        return (
+          <WrappedComponent
+            onMouseDown={this.passThrough}
+            onTouchStart={this.passThrough}
+            onMouseUp={this.passThrough}
+            onMouseLeave={this.passThrough}
+            onTouchEnd={this.passThrough}>
+            {children}
+            <TransitionMotion
+              willEnter={this.willEnter}
+              willLeave={this.willLeave}
+              styles={ripples}>
+              {interpolatedStyles =>
+                <div style={styles.container}>
+                  {interpolatedStyles.map(it => {
+                    const { width, left, top } = it.data
+                    return (
+                      <span key={it.key} style={{
+                        ...styles.ripple,
+                        opacity: it.style.opacity,
+                        transform: `translate3d(
+                          ${-width / 2 + left}px,
+                          ${-width / 2 + top}px,
+                          0
+                        ) scale(${it.style.scale})`,
+                      }} />
+                    )
+                  })}
+                </div>
+              }
+            </TransitionMotion>
+          </WrappedComponent>
+        )
+      }
     }
 
-    return (
-      <div style={[styles, this.props.style]} />
-    )
-  }
-}
+    RippledComponent.propTypes = {
+      children: PropTypes.node,
+      disabled: PropTypes.bool,
 
-CircleRipple.propTypes = {
-  color: React.PropTypes.string,
-  opacity: React.PropTypes.number,
-  style: React.PropTypes.object,
-}
+      onMouseDown: PropTypes.func,
+      onMouseUp: PropTypes.func,
+      onMouseLeave: PropTypes.func,
+      onTouchStart: PropTypes.func,
+      onTouchEnd: PropTypes.func,
 
-CircleRipple.defaultProps = {
-  opacity: 0.16,
-}
-
-
-
-
-const domOffset = el => {
-  const rect = el.getBoundingClientRect()
-  return {
-    top: rect.top + document.body.scrollTop,
-    left: rect.left + document.body.scrollLeft,
-  }
-}
-
-const calcDiag = (a, b) => Math.sqrt((a * a) + (b * b))
-
-class TouchRipple extends Component {
-  constructor(props, context) {
-    super(props, context)
-
-    // Touch start produces a mouse down event for compat reasons. To avoid
-    // showing ripples twice we skip showing a ripple for the first mouse down
-    // after a touch start. Note we don't store ignoreNextMouseDown in this.state
-    // to avoid re-rendering when we change it
-    this._ignoreNextMouseDown = false
-
-    this.state = {
-      ripples: [],
-    }
-  }
-
-  _getRippleStyle(e) {
-    const el = ReactDOM.findDOMNode(this)
-    const elHeight = el.offsetHeight
-    const elWidth = el.offsetWidth
-    const offset = domOffset(el)
-    const isTouchEvent = e.touches && e.touches.length
-    const pageX = isTouchEvent ? e.touches[0].pageX : e.pageX
-    const pageY = isTouchEvent ? e.touches[0].pageY : e.pageY
-    const pointerX = pageX - offset.left
-    const pointerY = pageY - offset.top
-    const topLeftDiag = calcDiag(pointerX, pointerY)
-    const topRightDiag = calcDiag(elWidth - pointerX, pointerY)
-    const botRightDiag = calcDiag(elWidth - pointerX, elHeight - pointerY)
-    const botLeftDiag = calcDiag(pointerX, elHeight - pointerY)
-    const rippleRadius = Math.max(
-      topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
-    )
-    const rippleSize = rippleRadius * 2
-
-    return {
-      left: pointerX - rippleRadius,
-      top: pointerY - rippleRadius,
-      width: rippleSize,
-      height: rippleSize,
-
-      color: this.props.color || this.context.theme.ripple,
-    }
-  }
-
-  start(e) {
-    const isTouchEvent = e.touches && e.touches.length
-    const { ripples } = this.state
-
-    if (this._ignoreNextMouseDown && !isTouchEvent) {
-      this._ignoreNextMouseDown = false
-      return
+      ripple: PropTypes.bool,
+      rippleCentered: PropTypes.bool,
+      rippleStyles: PropTypes.object,
+      rippleSpread: PropTypes.number,
     }
 
-    // Only handle left-clicks
-    if (!isTouchEvent && e.button !== 0) return
+    RippledComponent.defaultProps = {
+      disabled: false,
 
-    this.setState({ ripples: ripples.concat(
-      <CircleRipple
-        key={ripples.length}
-        style={this.props.centerRipple && this._getRippleStyle(e)}
-        opacity={this.props.opacity}
-        touchGenerated={isTouchEvent} />
-    ) })
-
-    this._ignoreNextMouseDown = isTouchEvent
-  }
-
-  end() {
-    const { ripples } = this.state
-
-    this.setState({
-      ripples: ripples.slice(1, ripples.length),
-    })
-  }
-
-  render() {
-    const { ripples } = this.state
-
-    const styles = {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-
-      width: '100%',
-      height: '100%',
-
-      overflow: 'hidden',
+      ripple: true,
+      rippleCentered: defaultCentered,
+      rippleStyles: defaultStyles,
+      rippleSpread: defaultSpread,
     }
 
-    return (
-      <ReactTransitionGroup
-        component="div"
-        style={[ripples.length && styles, this.props.style]}
+    RippledComponent.contextTypes = {
+      theme: PropTypes.object,
+    }
 
-        onMouseDown={this.start}
-        onTouchStart={this.start}
-        onMouseUp={this.end}
-        onMouseLeave={this.end}
-        onTouchEnd={this.end}>
-        {ripples}
-        {this.props.children}
-      </ReactTransitionGroup>
-    )
+    return RippledComponent
   }
 }
-
-TouchRipple.propTypes = {
-  style: PropTypes.object,
-  children: PropTypes.node,
-
-  centerRipple: React.PropTypes.bool,
-  color: React.PropTypes.string,
-  opacity: React.PropTypes.number,
-}
-
-TouchRipple.contextTypes = {
-  theme: PropTypes.object,
-}
-
-export default TouchRipple

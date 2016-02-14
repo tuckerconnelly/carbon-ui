@@ -38,6 +38,7 @@
     "rimraf": "^2.5.0"
   },
   "dependencies": {
+    "react-motion": "^0.4.2",
     "react-pure-render": "^1.0.2"
   }
 }

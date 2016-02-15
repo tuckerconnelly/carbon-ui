@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "babel ./src --out-dir ./lib",
+    "build": "babel ./src/components --out-dir ./lib && babel ./src/styles --out-dir ./lib/styles && babel ./src/themes --out-dir ./lib/themes && babel ./src/theme-provider.js --out-file ./lib/theme-provider.js",
     "prepublish": "npm run build"
   },
   "repository": {

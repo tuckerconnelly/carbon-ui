@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react'
 import Radium from 'radium'
 import Color from 'color'
 
-import Shadows from '../constants/shadows'
-import Breakpoints from '../constants/breakpoints'
-import Animations from '../constants/animations'
+import { Animations, Breakpoints, Shadows } from '../styles'
 
 const Button = (props, { theme }) => {
   const styles = {
@@ -78,6 +76,24 @@ const Button = (props, { theme }) => {
     fab: {
 
     },
+
+    icon: {
+      width: '40px',
+      height: '40px',
+      padding: '12px 0',
+
+      fontSize: '16px',
+      lineHeight: '16px',
+      textAlign: 'center',
+
+      [Breakpoints.ml]: {
+        height: '40px',
+        padding: '12px 0',
+
+        fontSize: '16px',
+        lineHeight: '16px',
+      },
+    },
   }
 
   return (
@@ -87,10 +103,12 @@ const Button = (props, { theme }) => {
       props.flat && styles.flat,
       props.raised && styles.raised,
       props.fab && styles.fab,
+      props.icon && styles.icon,
 
       props.disabled && props.flat && styles.flat.disabled,
       props.disabled && props.raised && styles.raised.disabled,
       props.disabled && props.fab && styles.fab.disabled,
+      props.disabled && props.icon && styles.icon.disabled,
 
       props.styles,
     ]}>
@@ -108,6 +126,7 @@ Button.propTypes = {
   flat: PropTypes.bool,
   raised: PropTypes.bool,
   fab: PropTypes.bool,
+  icon: PropTypes.bool,
 }
 
 Button.contextTypes = {

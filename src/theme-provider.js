@@ -1,4 +1,5 @@
 import { Component, PropTypes, Children } from 'react'
+import lightTheme from './themes/light'
 
 class ThemeProvider extends Component {
   constructor(props, context) {
@@ -18,6 +19,10 @@ class ThemeProvider extends Component {
 ThemeProvider.propTypes = {
   theme: PropTypes.object,
   children: PropTypes.node.isRequired,
+}
+
+ThemeProvider.defaultProps = {
+  theme: lightTheme,
 }
 
 ThemeProvider.childContextTypes = {

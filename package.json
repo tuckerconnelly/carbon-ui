@@ -1,5 +1,5 @@
 {
-  "name": "react-material",
+  "name": "native-material",
   "version": "0.0.0",
   "description": "Material Design framework for React",
   "main": "src/index.js",
@@ -10,9 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tuckerconnelly/react-material.git"
+    "url": "https://github.com/tuckerconnelly/native-material.git"
   },
-  "homepage": "https://github.com/tuckerconnelly/react-material.git",
+  "homepage": "https://github.com/tuckerconnelly/native-material.git",
   "keywords": [
     "react",
     "material",

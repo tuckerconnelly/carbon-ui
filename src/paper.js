@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Radium from 'radium'
 
-import Shadows from '../styles/shadows'
+import Shadows from './styles/shadows'
 
 const Paper = props => {
   const styles = {
@@ -11,7 +11,7 @@ const Paper = props => {
   }
 
   return (
-    <div styles={[styles.base, props.styles]}>
+    <div style={[styles.base, props.style]}>
       {props.children}
     </div>
   )
@@ -19,7 +19,7 @@ const Paper = props => {
 
 Paper.propTypes = {
   children: PropTypes.node,
-  styles: PropTypes.object,
+  style: PropTypes.object,
 
   elevation: PropTypes.number,
 }

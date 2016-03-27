@@ -1,2 +1,2 @@
-export ThemeProvider from './theme-provider'
-export connectTheme from './connect-theme'
+export { default as ThemeProvider } from './ThemeProvider'
+export { default as connectTheme } from './connectTheme'

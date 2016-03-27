@@ -1,9 +1,9 @@
 import Color from 'color'
-import Radium from 'radium'
+import Uranium from 'uranium'
 import React, { PropTypes } from 'react'
 
 import connectTheme from './connect-theme'
-import { Animations, Breakpoints, Shadows } from './styles'
+import { Breakpoints, Shadows } from './styles'
 
 const Button = (props) => {
   const { children, disabled, flat, raised, fab, icon, theme } = props
@@ -12,12 +12,9 @@ const Button = (props) => {
     base: {
       minWidth: 64,
       height: 36,
-      paddingLeft: 16,
-      paddingRight: 16,
-      paddingTop: 10,
-      paddingBottom: 10,
-      marginLeft: 8,
-      marginRight: 8,
+      paddingHorizontal: 16,
+      paddingVertical: 10,
+      marginHorizontal: 8,
 
       fontSize: 14,
       lineHeight: 16,
@@ -35,8 +32,6 @@ const Button = (props) => {
     },
 
     flat: {
-      minWidth: 88,
-
       color: theme.primary,
 
       ':active': {
@@ -83,8 +78,7 @@ const Button = (props) => {
     icon: {
       width: 40,
       height: 40,
-      paddingTop: 12,
-      paddingBottom: 12,
+      paddingVertical: 12,
 
       fontSize: 16,
       lineHeight: 16,
@@ -92,8 +86,7 @@ const Button = (props) => {
 
       [Breakpoints.ml]: {
         height: 40,
-        paddingTop: 16,
-        paddingBottom: 16,
+        paddingVertical: 16,
 
         fontSize: 16,
         lineHeight: 16,
@@ -135,4 +128,4 @@ Button.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-export default connectTheme(Radium(Button))
+export default connectTheme(Uranium(Button))

@@ -1,4 +1,4 @@
-import Colors from '../styles/colors'
+import Colors from '../styles/Colors'
 
 export default {
   primary: Colors.lightBlue400,

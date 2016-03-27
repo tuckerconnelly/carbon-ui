@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Radium from 'radium'
+import Uranium from 'uranium'
 
 import Shadows from './styles/shadows'
 
@@ -28,4 +28,4 @@ Paper.defaultProps = {
   elevation: 2,
 }
 
-export default Radium(Paper)
+export default Uranium(Paper)

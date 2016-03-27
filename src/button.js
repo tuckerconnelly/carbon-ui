@@ -2,7 +2,7 @@ import Color from 'color'
 import Uranium from 'uranium'
 import React, { PropTypes } from 'react'
 
-import connectTheme from './connect-theme'
+import connectTheme from './connectTheme'
 import { Breakpoints, Shadows } from './styles'
 
 const Button = (props) => {

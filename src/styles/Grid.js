@@ -1,4 +1,4 @@
-export default {
+export const Breakpoints = {
   xs: '@media (min-width: 480px)',
   sm: '@media (min-width: 600px)',
   ms: '@media (min-width: 840px)',
@@ -7,3 +7,5 @@ export default {
   lg: '@media (min-width: 1440px)',
   xl: '@media (min-width: 1600px)',
 }
+
+export const gu = 4

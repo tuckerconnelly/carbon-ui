@@ -4,9 +4,6 @@
   "description": "Material Design framework for React",
   "main": "src/index.js",
   "scripts": {
-    "prebuild": "rimraf lib",
-    "build": "babel -d lib src",
-    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,8 +23,8 @@
     "babel-eslint": "^4.1.8",
     "babel-preset-react-native": "^1.5.3",
     "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^5.0.0",
-    "eslint-plugin-react": "^4.2.3"
+    "eslint-config-airbnb": "^5.0.1",
+    "eslint-plugin-react": "^3.16.1"
   },
   "peerDependencies": {
     "react-native": "^0.22.2"

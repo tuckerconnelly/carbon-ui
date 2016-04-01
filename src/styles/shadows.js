@@ -1,14 +1,12 @@
-import { Platform } from 'react-native'
+import ps from 'react-native-ps'
 
 const iosOpacity = 0.25
 
 const penumbraOpacity = 0.14
 const umbraOpacity = 0.2
 
-let Shadows
-
-if (Platform.OS === 'ios') {
-  Shadows = {
+export default ps({
+  ios: {
     dp0: {
       shadowColor: 'transparent',
     },
@@ -48,9 +46,9 @@ if (Platform.OS === 'ios') {
       shadowOpacity: iosOpacity,
       shadowRadius: 8,
     },
-  }
-} else if (Platform.OS === 'android') {
-  Shadows = {
+  },
+
+  android: {
     dp0: {
       elevation: 0,
     },
@@ -72,10 +70,10 @@ if (Platform.OS === 'ios') {
     dp16: {
       elevation: 16,
     },
-  }
-} else if (Platform.OS === 'web') {
+  },
+
   // Taken from Material Design Lite
-  Shadows = {
+  web: {
     dp0: {
       boxShadow: 'none',
     },
@@ -115,7 +113,5 @@ if (Platform.OS === 'ios') {
         0 6px 30px 5px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
-  }
-}
-
-export default Shadows
+  },
+})

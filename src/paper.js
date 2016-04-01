@@ -4,17 +4,21 @@ import Uranium from 'uranium'
 import Shadows from './styles/Shadows'
 import { gu } from './styles/Grid'
 
-const Paper = ({ css, children, elevation, ...other }) =>
+const Paper = ({ style, css, children, elevation, ...other }) =>
   <View
-    css={[styles.base, {
-      ...Shadows[`dp${elevation}`],
-    }, css]}
+    css={[
+      styles.base,
+      { ...Shadows[`dp${elevation}`] },
+      style,
+      css,
+    ]}
     {...other}>
     {children}
   </View>
 
 Paper.propTypes = {
   children: PropTypes.node,
+  style: PropTypes.object,
   css: PropTypes.object,
 
   elevation: PropTypes.number,

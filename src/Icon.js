@@ -1,4 +1,5 @@
-import React, { Platform, Text } from 'react-native'
+import React, { Text } from 'react-native'
+import ps from 'react-native-ps'
 
 export default ({ style, name, size, ...other }) =>
   <Text
@@ -16,15 +17,15 @@ export default ({ style, name, size, ...other }) =>
     {name}
   </Text>
 
-const styles = {
+const styles = ps({
   base: {
     fontFamily: 'MaterialIcons-Regular',
   },
-}
 
-if (Platform.OS === 'web') {
-  styles.base = {
-    ...styles.base,
-    wordWrap: 'normal',
-  }
-}
+
+  web: {
+    base: {
+      wordWrap: 'normal',
+    },
+  },
+})

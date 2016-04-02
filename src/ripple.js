@@ -1,161 +1,151 @@
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { TransitionMotion, spring } from 'react-motion'
+import React, { Animated, Component, Easing, PropTypes, View } from 'react-native'
 
-class Ripple extends Component {
-  state = {
-    ripples: [],
-  }
+export default component => {
+  let WrappedComponent = component
 
-  _ignoreNextMouseDown: false
-
-  _getClickDescription({ pageX, pageY }) {
-    const {
-      left,
-      top,
-      height,
-      width,
-    } = ReactDOM.findDOMNode(this).getBoundingClientRect()
-
-    const { centered, spread } = this.props
-
-    return {
-      left: centered ? 0 : pageX - left - width / 2 - window.scrollX,
-      top: centered ? 0 : pageY - top - height / 2 - window.scrollY,
-      width: width * spread,
+  // Handle stateless components
+  if (!WrappedComponent.render && !WrappedComponent.prototype.render) {
+    WrappedComponent = class extends Component {
+      render() {
+        return component(this.props, this.context)
+      }
     }
   }
 
-  start(e) {
-    const { disabled } = this.props
-    const { ripples } = this.state
-    const isTouchEvent = e.touches && e.touches.length
+  class Ripple extends Component {
+    constructor(props, context) {
+      super(props, context)
 
-    if (disabled) return
-    if (!isTouchEvent && e.button !== 0) return
-    if (this._ignoreNextMouseDown) {
-      this._ignoreNextMouseDown = false
-      return
+      this.getDimensions = this.getDimensions.bind(this)
+      this.start = this.start.bind(this)
+      this.end = this.end.bind(this)
     }
 
-    this._ignoreNextMouseDown = isTouchEvent
+    state = {
+      ripples: [],
+    };
 
-    // Start
-    this.setState({ ripples: ripples.concat({
-      key: ripples.length,
-      style: {
-        scale: spring(0),
-        opacity: spring(1),
-      },
-      data: this._getClickDescription(e),
-    }) })
-  }
-
-  end() {
-    const { ripples } = this.state
-
-    this.setState({
-      ripples: ripples.slice(1, ripples.length),
-    })
-  }
-
-  willEnter() {
-    return {
-      scale: 0,
-      opacity: 1,
-    }
-  }
-
-  willLeave() {
-    return {
-      scale: spring(1),
-      opacity: spring(0),
-    }
-  }
-
-  render() {
-    const styles = {
-      container: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-
-        width: '100%',
-        height: '100%',
-
-        pointerEvents: 'none',
-      },
-
-      ripple: {
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
-
-        borderRadius: '50%',
-
-        backgroundColor: this.context.theme.ripple,
-
-        pointerEvents: 'none',
-        transformOrigin: '50% 50%',
-      },
-    }
-
-    const { ripples } = this.state
-
-    return (
-      <TransitionMotion
-        willEnter={this.willEnter}
-        willLeave={this.willLeave}
-        styles={ripples}>
-        {interpolatedStyles =>
-          <div
-            style={styles.container}
-
-            onMouseDown={this.start}
-            onTouchStart={this.start}
-
-            onMouseUp={this.end}
-            onMouseLeave={this.end}
-            onTouchEnd={this.end}>
-            {interpolatedStyles.map(it => {
-              const { width, left, top } = it.data
-              return (
-                <span key={it.key} style={{
-                  ...styles.ripple,
-                  opacity: it.style.opacity,
-                  transform: `translate3d(
-                    ${-width / 2 + left}px,
-                    ${-width / 2 + top}px,
-                    0
-                  ) scale(${it.style.scale})`,
-                }} />
-              )
-            })}
-          </div>
+    getDimensions() {
+      this.refs.component.measure((x, y, width, height, pageX, pageY) => {
+        this.position = {
+          width,
+          height,
+          x: pageX,
+          y: pageY,
         }
-      </TransitionMotion>
-    )
+      })
+    }
+
+    setResponder() { return true }
+
+    start(e) {
+      const { width, height } = this.position
+
+      this.setState({
+        ripples: [
+          ...this.state.ripples,
+          {
+            startTime: e.nativeEvent.timestamp,
+
+            size: Math.sqrt(width * width + height * height) * 2,
+            left: e.nativeEvent.pageX - this.position.x,
+            top: e.nativeEvent.pageY - this.position.y,
+            scale: new Animated.Value(0),
+            opacity: new Animated.Value(0.2),
+          },
+        ],
+      })
+      Animated.timing(
+        this.state.ripples[this.state.ripples.length - 1].scale,
+        {
+          toValue: 1,
+          duration: 800,
+          easing: Easing.out(Easing.ease),
+        }
+      ).start()
+    }
+
+    end(e) {
+      const { opacity, startTime } = this.state.ripples[this.state.ripples.length - 1]
+      Animated.timing(
+        opacity,
+        {
+          toValue: 0,
+          duration: Math.max(800 - (e.nativeEvent.timestamp - startTime), 400),
+          easing: Easing.out(Easing.ease),
+        }
+      ).start()
+    }
+
+    render() {
+      const { children, ...other } = this.props
+      return (
+        <WrappedComponent
+          ref="component"
+          onLayout={this.getDimensions}
+          onStartShouldSetResponder={this.setResponder}
+          onResponderGrant={this.start}
+          onResponderRelease={this.end}
+          {...other}>
+          { children }
+          <View style={styles.container}>
+          {
+            this.state.ripples.map((ripple, i) =>
+              <Animated.View
+                key={i}
+                style={[
+                  styles.ripple,
+                  {
+                    left: ripple.left,
+                    top: ripple.top,
+
+                    width: ripple.size,
+                    height: ripple.size,
+                    borderRadius: ripple.size / 2,
+
+                    opacity: ripple.opacity,
+
+                    transform: [
+                      { translateX: -ripple.size / 2 },
+                      { translateY: -ripple.size / 2 },
+                      { scale: ripple.scale },
+                    ],
+                  },
+                ]}/>
+            )
+          }
+          </View>
+        </WrappedComponent>
+      )
+    }
   }
+
+  Ripple.propTypes = {
+    children: PropTypes.node,
+    style: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+    ]),
+  }
+
+  return Ripple
 }
 
-Ripple.propTypes = {
-  disabled: PropTypes.bool,
+const styles = {
+  container: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    overflow: 'hidden',
+  },
 
-  centered: PropTypes.bool,
-  style: PropTypes.object,
-  spread: PropTypes.number,
+  ripple: {
+    position: 'absolute',
+    top: 100,
+    left: 100,
+
+    backgroundColor: 'black',
+  },
 }
-
-Ripple.defaultProps = {
-  disabled: false,
-
-  centered: false,
-  style: {},
-  spread: 2,
-}
-
-Ripple.contextTypes = {
-  theme: PropTypes.object,
-}
-
-export default Ripple

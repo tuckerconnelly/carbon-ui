@@ -39,11 +39,10 @@ export const Caption = ({ children, style }) =>
 
 const propTypes = {
   children: PropTypes.node,
-  style: PropTypes.oneOfType(
+  style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
-    PropTypes.boolean
-  ),
+  ]),
 }
 
 Display4.propTypes = propTypes

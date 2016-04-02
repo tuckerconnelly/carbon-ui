@@ -9,16 +9,17 @@ const Paper = ({ style, css, children, elevation, ...other }) =>
     css={[
       styles.base,
       { ...Shadows[`dp${elevation}`] },
-      style,
-      css,
-    ]}
+    ].concat(style, css)}
     {...other}>
     {children}
   </View>
 
 Paper.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
   css: PropTypes.object,
 
   elevation: PropTypes.number,

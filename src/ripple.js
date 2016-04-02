@@ -1,13 +1,27 @@
 import React, { Animated, Component, Easing, PropTypes, View } from 'react-native'
 
-export default component => {
-  let WrappedComponent = component
+const defaultOptions = {
+  color: 'black',
+  spread: 2,
+  opacity: 0.2,
+  duration: 800,
+}
+
+export default function ripple(optionsOrComponent, passedOptions = {}) {
+  // Handle ripple({ ...options })(component)
+  if (typeof optionsOrComponent !== 'function') {
+    return component => ripple(component, { ...optionsOrComponent })
+  }
+
+  let WrappedComponent = optionsOrComponent
+
+  const options = { ...defaultOptions, ...passedOptions }
 
   // Handle stateless components
   if (!WrappedComponent.render && !WrappedComponent.prototype.render) {
     WrappedComponent = class extends Component {
       render() {
-        return component(this.props, this.context)
+        return optionsOrComponent(this.props, this.context)
       }
     }
   }
@@ -30,8 +44,8 @@ export default component => {
         this.position = {
           width,
           height,
-          x: pageX,
-          y: pageY,
+          pageX,
+          pageY,
         }
       })
     }
@@ -39,6 +53,7 @@ export default component => {
     setResponder() { return true }
 
     start(e) {
+      const { spread, opacity, duration } = options
       const { width, height } = this.position
 
       this.setState({
@@ -47,11 +62,11 @@ export default component => {
           {
             startTime: e.nativeEvent.timestamp,
 
-            size: Math.sqrt(width * width + height * height) * 2,
-            left: e.nativeEvent.pageX - this.position.x,
-            top: e.nativeEvent.pageY - this.position.y,
+            size: Math.sqrt(width * width + height * height) * spread,
+            x: e.nativeEvent.pageX - this.position.pageX,
+            y: e.nativeEvent.pageY - this.position.pageY,
             scale: new Animated.Value(0),
-            opacity: new Animated.Value(0.2),
+            opacity: new Animated.Value(opacity),
           },
         ],
       })
@@ -59,7 +74,7 @@ export default component => {
         this.state.ripples[this.state.ripples.length - 1].scale,
         {
           toValue: 1,
-          duration: 800,
+          duration,
           easing: Easing.out(Easing.ease),
         }
       ).start()
@@ -71,7 +86,10 @@ export default component => {
         opacity,
         {
           toValue: 0,
-          duration: Math.max(800 - (e.nativeEvent.timestamp - startTime), 400),
+          duration: Math.max(
+            options.duration - (e.nativeEvent.timestamp - startTime),
+            options.duration / 2
+          ),
           easing: Easing.out(Easing.ease),
         }
       ).start()
@@ -93,25 +111,25 @@ export default component => {
             this.state.ripples.map((ripple, i) =>
               <Animated.View
                 key={i}
-                style={[
-                  styles.ripple,
-                  {
-                    left: ripple.left,
-                    top: ripple.top,
+                style={{
+                  position: 'absolute',
+                  left: ripple.x,
+                  top: ripple.y,
 
-                    width: ripple.size,
-                    height: ripple.size,
-                    borderRadius: ripple.size / 2,
+                  width: ripple.size,
+                  height: ripple.size,
+                  borderRadius: ripple.size / 2,
 
-                    opacity: ripple.opacity,
+                  backgroundColor: options.color,
 
-                    transform: [
-                      { translateX: -ripple.size / 2 },
-                      { translateY: -ripple.size / 2 },
-                      { scale: ripple.scale },
-                    ],
-                  },
-                ]}/>
+                  opacity: ripple.opacity,
+
+                  transform: [
+                    { translateX: -ripple.size / 2 },
+                    { translateY: -ripple.size / 2 },
+                    { scale: ripple.scale },
+                  ],
+                }} />
             )
           }
           </View>
@@ -138,14 +156,7 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 0,
+    
     overflow: 'hidden',
-  },
-
-  ripple: {
-    position: 'absolute',
-    top: 100,
-    left: 100,
-
-    backgroundColor: 'black',
   },
 }

@@ -40,7 +40,7 @@ export default function ripple(optionsOrComponent, passedOptions = {}) {
     };
 
     getDimensions() {
-      this.refs.component.measure((x, y, width, height, pageX, pageY) => {
+      this.refs.container.measure((x, y, width, height, pageX, pageY) => {
         this.position = {
           width,
           height,
@@ -60,7 +60,7 @@ export default function ripple(optionsOrComponent, passedOptions = {}) {
         ripples: [
           ...this.state.ripples,
           {
-            startTime: e.nativeEvent.timestamp,
+            startTime: Date.now(),
 
             size: Math.sqrt(width * width + height * height) * spread,
             x: e.nativeEvent.pageX - this.position.pageX,
@@ -69,44 +69,51 @@ export default function ripple(optionsOrComponent, passedOptions = {}) {
             opacity: new Animated.Value(opacity),
           },
         ],
+      }, () => {
+        Animated.timing(
+          this.state.ripples[this.state.ripples.length - 1].scale,
+          {
+            toValue: 1,
+            duration,
+            easing: Easing.out(Easing.ease),
+          }
+        ).start()
       })
-      Animated.timing(
-        this.state.ripples[this.state.ripples.length - 1].scale,
-        {
-          toValue: 1,
-          duration,
-          easing: Easing.out(Easing.ease),
-        }
-      ).start()
     }
 
-    end(e) {
+    end() {
       const { opacity, startTime } = this.state.ripples[this.state.ripples.length - 1]
+
+      const duration = Math.max(
+        options.duration - (Date.now() - startTime),
+        options.duration / 2
+      )
+
       Animated.timing(
         opacity,
         {
           toValue: 0,
-          duration: Math.max(
-            options.duration - (e.nativeEvent.timestamp - startTime),
-            options.duration / 2
-          ),
+          duration,
           easing: Easing.out(Easing.ease),
         }
       ).start()
+
+      // Clean up after fade out
+      const index = this.state.ripples.length - 1
+      setTimeout(() => this.state.ripples.slice(index, 1), duration)
     }
 
     render() {
       const { children, ...other } = this.props
       return (
         <WrappedComponent
-          ref="component"
           onLayout={this.getDimensions}
           onStartShouldSetResponder={this.setResponder}
           onResponderGrant={this.start}
           onResponderRelease={this.end}
           {...other}>
           { children }
-          <View style={styles.container}>
+          <View ref="container" style={styles.container}>
           {
             this.state.ripples.map((ripple, i) =>
               <Animated.View
@@ -156,7 +163,7 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 0,
-    
+
     overflow: 'hidden',
   },
 }

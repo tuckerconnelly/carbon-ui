@@ -4,7 +4,8 @@ const defaultOptions = {
   color: 'black',
   spread: 2,
   opacity: 0.2,
-  duration: 800,
+  // px/ms
+  velocity: 1,
 }
 
 export default function ripple(optionsOrComponent, passedOptions = {}) {
@@ -53,7 +54,7 @@ export default function ripple(optionsOrComponent, passedOptions = {}) {
     setResponder() { return true }
 
     start(e) {
-      const { spread, opacity, duration } = options
+      const { spread, opacity } = options
       const { width, height } = this.position
 
       this.setState({
@@ -70,11 +71,12 @@ export default function ripple(optionsOrComponent, passedOptions = {}) {
           },
         ],
       }, () => {
+        const { scale, size } = this.state.ripples[this.state.ripples.length - 1]
         Animated.timing(
-          this.state.ripples[this.state.ripples.length - 1].scale,
+          scale,
           {
             toValue: 1,
-            duration,
+            duration: size / options.velocity,
             easing: Easing.out(Easing.ease),
           }
         ).start()
@@ -82,18 +84,20 @@ export default function ripple(optionsOrComponent, passedOptions = {}) {
     }
 
     end() {
-      const { opacity, startTime } = this.state.ripples[this.state.ripples.length - 1]
+      const { opacity, startTime, size } = this.state.ripples[this.state.ripples.length - 1]
 
-      const duration = Math.max(
-        options.duration - (Date.now() - startTime),
-        options.duration / 2
+      const duration = size / options.velocity
+
+      const adjustedDuration = Math.max(
+        duration - (Date.now() - startTime),
+        duration / 2
       )
 
       Animated.timing(
         opacity,
         {
           toValue: 0,
-          duration,
+          duration: adjustedDuration,
           easing: Easing.out(Easing.ease),
         }
       ).start()

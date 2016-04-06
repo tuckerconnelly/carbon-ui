@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "description": "Material Design framework for React",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "babel -d lib src",
+    "build:watch": "babel -d lib src -w",
+    "prepublish": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tuckerconnelly/carbon-ui.git"

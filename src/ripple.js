@@ -1,11 +1,11 @@
-import React, { Animated, Component, Easing, PropTypes, View } from 'react-native'
+import React from './react'
+const { Animated, Component, Easing, PropTypes, View } = React
 
 const defaultOptions = {
   color: 'black',
   spread: 2,
   opacity: 0.2,
-  // px/ms
-  velocity: 1,
+  velocity: 1, // px/ms
 }
 
 export default function ripple(optionsOrComponent, passedOptions = {}) {

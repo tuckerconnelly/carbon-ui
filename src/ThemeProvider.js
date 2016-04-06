@@ -1,4 +1,5 @@
-import { Component, PropTypes, Children } from 'react'
+import React from './react'
+const { Component, PropTypes, Children } = React
 import lightTheme from './themes/light'
 
 class ThemeProvider extends Component {

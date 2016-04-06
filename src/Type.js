@@ -1,4 +1,5 @@
-import React, { PropTypes, Text } from 'react-native'
+import React from './react'
+const { PropTypes, Text } = React
 import Uranium from 'uranium'
 
 import styles from './styles/Type'

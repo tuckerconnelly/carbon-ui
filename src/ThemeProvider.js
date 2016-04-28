@@ -1,4 +1,4 @@
-import React from './react'
+import React from './React'
 const { Component, PropTypes, Children } = React
 import lightTheme from './themes/light'
 

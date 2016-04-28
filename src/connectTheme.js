@@ -1,4 +1,4 @@
-import React from './react'
+import React from './React'
 const { Component, PropTypes } = React
 import invariant from 'invariant'
 

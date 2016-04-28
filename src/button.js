@@ -1,4 +1,4 @@
-import React from './react'
+import React from './React'
 const { PropTypes } = React
 import Color from 'color'
 import Uranium from 'uranium'

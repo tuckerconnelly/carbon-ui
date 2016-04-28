@@ -1,4 +1,4 @@
-import React from './react'
+import React from './React'
 const { Text } = React
 import ps from 'react-native-ps'
 

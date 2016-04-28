@@ -1,4 +1,4 @@
-import React from './react'
+import React from './React'
 const { Animated, Component, Easing, PropTypes, View } = React
 
 class Ripple extends Component {

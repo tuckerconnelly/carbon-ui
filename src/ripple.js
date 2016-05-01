@@ -32,6 +32,7 @@ class Ripple extends Component {
     const { width, height } = this.position
 
     this.setState({
+      // Create a new ripple
       ripples: [
         ...this.state.ripples,
         {
@@ -45,6 +46,7 @@ class Ripple extends Component {
         },
       ],
     }, () => {
+      // And then start the expansion animation
       const { scale, size } = this.state.ripples[this.state.ripples.length - 1]
       Animated.timing(
         scale,
@@ -62,6 +64,11 @@ class Ripple extends Component {
 
     const duration = size / this.props.velocity
 
+    // Adjust duration to account for time between mousedown and
+    // mouseup
+    // User mouses down, 200ms passes, user mouses up
+    // Duration of fadeout should be 200ms less now
+    // Minimum duration of duration/2
     const adjustedDuration = Math.max(
       duration - (Date.now() - startTime),
       duration / 2

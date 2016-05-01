@@ -1,118 +1,57 @@
 import React from './React'
-const { PropTypes } = React
-import Color from 'color'
+const { PropTypes, View } = React
+import ps from 'react-native-ps'
 import Uranium from 'uranium'
+import Color from 'color'
 
 import connectTheme from './connectTheme'
-import { Breakpoints, Shadows } from './styles'
+import Shadows from './styles/Shadows'
+import { Breakpoints } from './styles/Grid'
+import { Body1 } from 'carbon-ui/lib/Type'
+import Ripple from './Ripple'
 
-const Button = (props) => {
-  const { children, disabled, flat, raised, fab, icon, theme } = props
+const Button = ({
+  children,
+  style,
 
-  const styles = {
-    base: {
-      minWidth: 64,
-      height: 36,
-      paddingHorizontal: 16,
-      paddingVertical: 10,
-      marginHorizontal: 8,
+  disabled,
+  flat,
+  raised,
+  fab,
+  icon,
 
-      fontSize: 14,
-      lineHeight: 16,
+  theme,
+}) => {
+  // Themed styles
+  const tStyles = styles(theme)
 
-      [Breakpoints.ml]: {
-        height: 32,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingTop: 8,
-        paddingBottom: 8,
-
-        fontSize: 13,
-        lineHeight: 16,
-      },
-    },
-
-    flat: {
-      color: theme.primary,
-
-      ':active': {
-        backgroundColor: theme.button.flat.pressed,
-      },
-
-      disabled: {
-        backgroundColor: theme.button.flat.disabled,
-      },
-    },
-
-    raised: {
-      minWidth: 88,
-
-      ...Shadows.dp2,
-
-      ':active': {
-        ...Shadows.dp4,
-      },
-
-      ':focus': {
-        backgroundColor: Color(theme.primary).darken(0.12).hexString(),
-      },
-
-      disabled: {
-        color: theme.button.raised.disabledText,
-
-        backgroundColor: theme.button.raised.disabled,
-      },
-
-      [Breakpoints.ml]: {
-        ...Shadows.none,
-
-        ':hover': {
-          ...Shadows.dp2,
-        },
-      },
-    },
-
-    fab: {
-
-    },
-
-    icon: {
-      width: 40,
-      height: 40,
-      paddingVertical: 12,
-
-      fontSize: 16,
-      lineHeight: 16,
-      textAlign: 'center',
-
-      [Breakpoints.ml]: {
-        height: 40,
-        paddingVertical: 16,
-
-        fontSize: 16,
-        lineHeight: 16,
-      },
-    },
-  }
+  // Uppercase and style if the child is a string
+  // Otherwise it's probably an icon or image, so let it through
+  const formattedChildren = typeof children === 'string' ?
+    <Body1>{children.toUpperCase()}</Body1> :
+    children
 
   return (
-    <div style={[
-      styles.base,
+    <View style={tStyles.touchable}>
+      <View css={[
+        tStyles.base,
 
-      flat && styles.flat,
-      raised && styles.raised,
-      fab && styles.fab,
-      icon && styles.icon,
+        flat && tStyles.flat,
+        raised && tStyles.raised,
+        fab && tStyles.fab,
+        icon && tStyles.icon,
 
-      disabled && flat && styles.flat.disabled,
-      disabled && raised && styles.raised.disabled,
-      disabled && fab && styles.fab.disabled,
-      disabled && icon && styles.icon.disabled,
+        disabled && flat && tStyles.flat.disabled,
+        disabled && raised && tStyles.raised.disabled,
+        disabled && fab && tStyles.fab.disabled,
+        disabled && icon && tStyles.icon.disabled,
 
-      props.style,
-    ]}>
-      {children}
-    </div>
+        style,
+      ]}>
+        {formattedChildren}
+        <Ripple />
+      </View>
+    </View>
   )
 }
 
@@ -128,5 +67,91 @@ Button.propTypes = {
 
   theme: PropTypes.object.isRequired,
 }
+
+const styles = theme => ps({
+  touchable: {
+    padding: 12,
+  },
+
+  base: {
+    height: 36,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    marginHorizontal: 8,
+
+    [Breakpoints.ml]: {
+      height: 32,
+    },
+  },
+
+  flat: {
+    color: theme.primary,
+
+    active: {
+      backgroundColor: theme.button.flat.pressed,
+    },
+
+    disabled: {
+      backgroundColor: theme.button.flat.disabled,
+    },
+  },
+
+  raised: {
+    minWidth: 88,
+
+    ...Shadows.dp2,
+
+    active: {
+      ...Shadows.dp4,
+    },
+
+    focus: {
+      backgroundColor: Color(theme.primary).darken(0.12).hexString(),
+    },
+
+    disabled: {
+      color: theme.button.raised.disabledText,
+
+      backgroundColor: theme.button.raised.disabled,
+    },
+
+    [Breakpoints.ml]: {
+      ...Shadows.none,
+
+      hover: {
+        ...Shadows.dp2,
+      },
+    },
+  },
+
+  fab: {
+
+  },
+
+  icon: {
+    width: 40,
+    height: 40,
+    paddingVertical: 12,
+
+    fontSize: 16,
+    lineHeight: 16,
+    textAlign: 'center',
+
+    [Breakpoints.ml]: {
+      height: 40,
+      paddingVertical: 16,
+
+      fontSize: 16,
+      lineHeight: 16,
+    },
+  },
+
+
+  web: {
+    base: {
+      cursor: 'pointer',
+    },
+  },
+})
 
 export default connectTheme(Uranium(Button))

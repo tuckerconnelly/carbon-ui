@@ -1,4 +1,5 @@
 import Colors from '../styles/Colors'
+import Color from 'color'
 
 export default {
   primary: Colors.lightBlue400,
@@ -23,4 +24,5 @@ export default {
 
   divider: 'rgba(0, 0, 0, .12)',
   ripple: 'rgba(0, 0, 0, .87)',
+  error: Color(Colors.red400).alpha(0.87).rgbString(),
 }

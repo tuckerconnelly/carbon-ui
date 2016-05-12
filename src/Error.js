@@ -1,5 +1,4 @@
-import React from './React'
-const { PropTypes } = React
+import React, { PropTypes } from 'react'
 
 import { Caption } from './Type'
 import connectTheme from './connectTheme'

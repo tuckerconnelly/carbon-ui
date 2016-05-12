@@ -1,5 +1,5 @@
-import React from './React'
-const { Text } = React
+import React from 'react'
+import { Text } from 'react-native-universal'
 import ps from 'react-native-ps'
 
 export default ({ style, name, size, ...other }) =>

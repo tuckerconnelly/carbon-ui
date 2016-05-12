@@ -1,5 +1,4 @@
-import React from './React'
-const { Component, PropTypes } = React
+import React, { Component, PropTypes } from 'react'
 import invariant from 'invariant'
 
 export default (component) => {

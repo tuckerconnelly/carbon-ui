@@ -1,5 +1,5 @@
-import React from './React'
-const { Animated, Component, Easing, PropTypes, View } = React
+import React, { Component, PropTypes } from 'react'
+import { Animated, Easing, View } from 'react-native-universal'
 
 class Ripple extends Component {
   constructor(props, context) {

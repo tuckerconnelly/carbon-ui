@@ -1,5 +1,5 @@
-import React from './React'
-const { View, PropTypes } = React
+import React, { PropTypes } from 'react'
+import { View } from 'react-native-universal'
 import Uranium from 'uranium'
 
 import Shadows from './styles/Shadows'

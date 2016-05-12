@@ -1,5 +1,4 @@
-import React from '../React'
-const { Easing } = React
+import { Easing } from 'react-native-universal'
 
 export default {
   default: {

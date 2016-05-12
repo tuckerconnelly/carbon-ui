@@ -1,5 +1,5 @@
-import React from './React'
-const { PropTypes, View } = React
+import React, { PropTypes } from 'react'
+import { View } from 'react-native-universal'
 
 import connectTheme from './connectTheme'
 

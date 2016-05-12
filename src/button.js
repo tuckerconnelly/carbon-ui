@@ -1,5 +1,5 @@
-import React from './React'
-const { PropTypes, View } = React
+import React, { PropTypes } from 'react'
+import { TouchableWithoutFeedback, View } from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import Color from 'color'
@@ -21,6 +21,7 @@ const Button = ({
   icon,
 
   theme,
+  ...other,
 }) => {
   // Themed styles
   const tStyles = styles(theme)
@@ -32,8 +33,8 @@ const Button = ({
     children
 
   return (
-    <View style={tStyles.touchable}>
-      <View css={[
+    <TouchableWithoutFeedback
+      css={[
         tStyles.base,
 
         flat && tStyles.flat,
@@ -47,11 +48,15 @@ const Button = ({
         disabled && icon && tStyles.icon.disabled,
 
         style,
-      ]}>
+      ]}
+      style={tStyles.touchable}
+      hitSlop={{ top: 12, right: 12, bottom: 12, left: 12 }}
+      {...other}>
+      <View>
         {formattedChildren}
         <Ripple />
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -69,10 +74,6 @@ Button.propTypes = {
 }
 
 const styles = theme => ps({
-  touchable: {
-    padding: 12,
-  },
-
   base: {
     height: 36,
     paddingHorizontal: 16,

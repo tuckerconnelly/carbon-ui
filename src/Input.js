@@ -1,5 +1,6 @@
-import React from './React'
-const { Animated, Component, PropTypes, Text, TextInput, View } = React
+import React, { Component, PropTypes } from 'react'
+import { Animated, Text, TextInput, View } from 'react-native-universal'
+import matchMedia from 'react-native-match-media'
 import Uranium from 'uranium'
 import Color from 'color'
 import ps from 'react-native-ps'
@@ -26,6 +27,9 @@ class Input extends Component {
       labelAV: new Animated.Value(this.props.value ? 1 : 0),
       colorAV: new Animated.Value(0),
     }
+  }
+
+  componentDidMount() {
   }
 
   get styles() {
@@ -69,6 +73,7 @@ class Input extends Component {
 
   render() {
     const { placeholder, style, theme, disabled, error, ...other } = this.props
+    const { colorAV, labelAV, focused } = this.state
     return (
       <View style={[this.styles.base, style]}>
         <TextInput
@@ -85,46 +90,42 @@ class Input extends Component {
         <Animated.Text
           css={[
             this.styles.placeholder,
-            this.state.focused && this.styles.placeholderFocus,
+            focused && this.styles.placeholderFocus,
             disabled && this.styles.disabled,
-            {
-              top: this.state.labelAV.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
+          ]}
+          style={{
+            top: labelAV.interpolate({
+              inputRange: [0, 1],
+              outputRange: !matchMedia(Breakpoints.ml.split('@media ')[1]).matches ?
+                [
                   this.styles.placeholder.top,
                   this.styles.placeholderFocus.top,
+                ] :
+                [
+                  this.styles.placeholder[Breakpoints.ml].top,
+                  this.styles.placeholderFocus[Breakpoints.ml].top,
                 ],
-              }),
-              color: this.state.colorAV.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
-                  this.styles.placeholder.color,
-                  this.styles.placeholderFocus.color,
-                ],
-              }),
-              fontSize: this.state.labelAV.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
-                  this.styles.placeholder.fontSize,
-                  this.styles.placeholderFocus.fontSize,
-                ],
-              }),
-              [Breakpoints.ml]: {
-                top: this.state.labelAV.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [
-                    this.styles.placeholder[Breakpoints.ml].top,
-                    this.styles.placeholderFocus[Breakpoints.ml].top,
-                  ],
-                }),
-              },
-            },
-          ]}
+            }),
+            color: colorAV.interpolate({
+              inputRange: [0, 1],
+              outputRange: [
+                this.styles.placeholder.color,
+                this.styles.placeholderFocus.color,
+              ],
+            }),
+            fontSize: labelAV.interpolate({
+              inputRange: [0, 1],
+              outputRange: [
+                this.styles.placeholder.fontSize,
+                this.styles.placeholderFocus.fontSize,
+              ],
+            }),
+          }}
           onPress={this.focusInput}>
           {placeholder}
         </Animated.Text>
         <AnimatedDivider
-          color={this.state.colorAV.interpolate({
+          color={colorAV.interpolate({
             inputRange: [0, 1],
             outputRange: [
               theme.divider,
@@ -163,16 +164,14 @@ const styles = theme => ps({
   },
 
   textInput: {
-    height: 32,
-    paddingVertical: 8,
-    marginTop: 28,
+    height: 16,
+    marginTop: 40,
 
     ...Type.subheading,
+    lineHeight: 16,
 
     [Breakpoints.ml]: {
-      height: 28,
-      paddingTop: 4,
-      marginTop: 24,
+      marginTop: 32,
 
       ...Type.subheading[Breakpoints.ml],
     },
@@ -185,15 +184,14 @@ const styles = theme => ps({
 
   placeholder: {
     position: 'absolute',
-    top: 36,
-
-    height: 20,
+    top: 40,
 
     ...Type.subheading,
     color: Colors.blackHint,
+    lineHeight: 16,
 
     [Breakpoints.ml]: {
-      top: 28,
+      top: 32,
 
       ...Type.subheading[Breakpoints.ml],
     },
@@ -210,6 +208,7 @@ const styles = theme => ps({
   },
 
   divider: {
+    marginTop: 8,
     marginBottom: 8,
 
     [Breakpoints.ml]: {

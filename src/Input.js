@@ -164,14 +164,15 @@ const styles = theme => ps({
   },
 
   textInput: {
-    height: 16,
-    marginTop: 40,
+    height: 32,
+    paddingHorizontal: 0,
+    paddingVertical: 4,
+    marginTop: 32,
 
     ...Type.subheading,
-    lineHeight: 16,
 
     [Breakpoints.ml]: {
-      marginTop: 32,
+      marginTop: 28,
 
       ...Type.subheading[Breakpoints.ml],
     },
@@ -184,11 +185,10 @@ const styles = theme => ps({
 
   placeholder: {
     position: 'absolute',
-    top: 40,
+    top: 36,
 
     ...Type.subheading,
     color: Colors.blackHint,
-    lineHeight: 16,
 
     [Breakpoints.ml]: {
       top: 32,
@@ -208,7 +208,6 @@ const styles = theme => ps({
   },
 
   divider: {
-    marginTop: 8,
     marginBottom: 8,
 
     [Breakpoints.ml]: {

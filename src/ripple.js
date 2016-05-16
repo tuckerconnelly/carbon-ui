@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, Easing, View } from 'react-native-universal'
+import { Animated, Easing, TouchableWithoutFeedback, View } from 'react-native-universal'
 
-class Ripple extends Component {
+class TouchableRipple extends Component {
   constructor(props, context) {
     super(props, context)
 
@@ -28,7 +28,7 @@ class Ripple extends Component {
   setResponder() { return true }
 
   start(e) {
-    const { spread, opacity, velocity } = this.props
+    const { rippleSpread, rippleOpacity, rippleVelocity, onPressIn } = this.props
     const { width, height } = this.position
 
     this.setState({
@@ -38,11 +38,11 @@ class Ripple extends Component {
         {
           startTime: Date.now(),
 
-          size: Math.sqrt(width * width + height * height) * spread,
+          size: Math.sqrt(width * width + height * height) * rippleSpread,
           x: e.nativeEvent.pageX - this.position.pageX,
           y: e.nativeEvent.pageY - this.position.pageY,
           scale: new Animated.Value(0),
-          opacity: new Animated.Value(opacity),
+          opacity: new Animated.Value(rippleOpacity),
         },
       ],
     }, () => {
@@ -52,17 +52,20 @@ class Ripple extends Component {
         scale,
         {
           toValue: 1,
-          duration: size / velocity,
+          duration: size / rippleVelocity,
           easing: Easing.out(Easing.ease),
         }
       ).start()
     })
+
+    onPressIn && onPressIn()
   }
 
   end() {
+    const { rippleVelocity, onPressOut } = this.props
     const { opacity, startTime, size } = this.state.ripples[this.state.ripples.length - 1]
 
-    const duration = size / this.props.velocity
+    const duration = size / rippleVelocity
 
     // Adjust duration to account for time between mousedown and
     // mouseup
@@ -86,64 +89,67 @@ class Ripple extends Component {
     // Clean up after fade out
     const index = this.state.ripples.length - 1
     setTimeout(() => this.state.ripples.slice(index, 1), duration)
+
+    onPressOut && onPressOut()
   }
 
   render() {
-    const { color } = this.props
+    const { rippleColor, ...other } = this.props
     return (
-      <View
-        ref="container"
-        onLayout={this.getDimensions}
-        style={styles.container}
-        onStartShouldSetResponder={this.setResponder}
-        onResponderGrant={this.start}
-        onResponderRelease={this.end}>
-      <View ref="test" />
-      {
-        this.state.ripples.map((ripple, i) =>
-          <Animated.View
-            key={i}
-            style={{
-              position: 'absolute',
-              left: ripple.x,
-              top: ripple.y,
+      <TouchableWithoutFeedback
+        {...other}
+        onPressIn={this.start}
+        onPressOut={this.end}>
+        <View style={styles.container} ref="container">
+          {
+            this.state.ripples.map((ripple, i) =>
+              <Animated.View
+                key={i}
+                style={{
+                  position: 'absolute',
+                  left: ripple.x,
+                  top: ripple.y,
 
-              width: ripple.size,
-              height: ripple.size,
-              borderRadius: ripple.size / 2,
+                  width: ripple.size,
+                  height: ripple.size,
+                  borderRadius: ripple.size / 2,
 
-              backgroundColor: color,
+                  backgroundColor: rippleColor,
 
-              opacity: ripple.opacity,
+                  opacity: ripple.opacity,
 
-              transform: [
-                { translateX: -ripple.size / 2 },
-                { translateY: -ripple.size / 2 },
-                { scale: ripple.scale },
-              ],
-            }} />
-        )
-      }
-      </View>
+                  transform: [
+                    { translateX: -ripple.size / 2 },
+                    { translateY: -ripple.size / 2 },
+                    { scale: ripple.scale },
+                  ],
+                }} />
+            )
+          }
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 }
 
-Ripple.propTypes = {
-  color: PropTypes.string,
-  spread: PropTypes.number,
-  opacity: PropTypes.number,
-  velocity: PropTypes.number,
+TouchableRipple.propTypes = {
+  rippleColor: PropTypes.string,
+  rippleSpread: PropTypes.number,
+  rippleOpacity: PropTypes.number,
+  rippleVelocity: PropTypes.number,
+
+  onPressIn: PropTypes.func,
+  onPressOut: PropTypes.func,
 }
 
-Ripple.defaultProps = {
-  color: 'black',
-  spread: 2,
-  opacity: 0.2,
-  velocity: 1, // px/ms
+TouchableRipple.defaultProps = {
+  rippleColor: 'black',
+  rippleSpread: 2,
+  rippleOpacity: 0.2,
+  rippleVelocity: 1, // px/ms
 }
 
-export default Ripple
+export default TouchableRipple
 
 const styles = {
   container: {

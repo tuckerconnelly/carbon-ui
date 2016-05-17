@@ -23,6 +23,8 @@ class TouchableRipple extends Component {
         pageY,
       }
     })
+
+    this.props.onLayout && this.props.onLayout()
   }
 
   setResponder() { return true }
@@ -94,10 +96,11 @@ class TouchableRipple extends Component {
   }
 
   render() {
-    const { rippleColor, ...other } = this.props
+    const { rippleColor, children, ...other } = this.props
     return (
       <TouchableWithoutFeedback
         {...other}
+        onLayout={this.getDimensions}
         onPressIn={this.start}
         onPressOut={this.end}>
         <View style={styles.container} ref="container">
@@ -126,6 +129,7 @@ class TouchableRipple extends Component {
                 }} />
             )
           }
+          {children}
         </View>
       </TouchableWithoutFeedback>
     )
@@ -138,8 +142,11 @@ TouchableRipple.propTypes = {
   rippleOpacity: PropTypes.number,
   rippleVelocity: PropTypes.number,
 
+  children: PropTypes.node,
+
   onPressIn: PropTypes.func,
   onPressOut: PropTypes.func,
+  onLayout: PropTypes.func,
 }
 
 TouchableRipple.defaultProps = {
@@ -153,12 +160,6 @@ export default TouchableRipple
 
 const styles = {
   container: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-
     overflow: 'hidden',
   },
 }

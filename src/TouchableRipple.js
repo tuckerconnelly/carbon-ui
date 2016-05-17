@@ -33,32 +33,28 @@ class TouchableRipple extends Component {
     const { rippleSpread, rippleOpacity, rippleVelocity, onPressIn } = this.props
     const { width, height } = this.position
 
-    this.setState({
-      // Create a new ripple
-      ripples: [
-        ...this.state.ripples,
-        {
-          startTime: Date.now(),
+    const newRipple = {
+      startTime: Date.now(),
 
-          size: Math.sqrt(width * width + height * height) * rippleSpread,
-          x: e.nativeEvent.pageX - this.position.pageX,
-          y: e.nativeEvent.pageY - this.position.pageY,
-          scale: new Animated.Value(0),
-          opacity: new Animated.Value(rippleOpacity),
-        },
-      ],
-    }, () => {
-      // And then start the expansion animation
-      const { scale, size } = this.state.ripples[this.state.ripples.length - 1]
-      Animated.timing(
-        scale,
-        {
-          toValue: 1,
-          duration: size / rippleVelocity,
-          easing: Easing.out(Easing.ease),
-        }
-      ).start()
-    })
+      size: Math.sqrt(width * width + height * height) * rippleSpread,
+      x: e.nativeEvent.pageX - this.position.pageX,
+      y: e.nativeEvent.pageY - this.position.pageY,
+      scale: new Animated.Value(0),
+      opacity: new Animated.Value(rippleOpacity),
+    }
+
+    this.setState({ ripples: [...this.state.ripples, newRipple] })
+
+    // Start the expansion animation
+    const { scale, size } = newRipple
+    Animated.timing(
+      scale,
+      {
+        toValue: 1,
+        duration: size / rippleVelocity,
+        easing: Easing.out(Easing.ease),
+      }
+    ).start()
 
     onPressIn && onPressIn()
   }
@@ -110,22 +106,28 @@ class TouchableRipple extends Component {
                 key={i}
                 style={{
                   position: 'absolute',
-                  left: ripple.x,
-                  top: ripple.y,
+                  left: ripple.scale.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [ripple.x, ripple.x - ripple.size / 2],
+                  }),
+                  top: ripple.scale.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [ripple.y, ripple.y - ripple.size / 2],
+                  }),
 
-                  width: ripple.size,
-                  height: ripple.size,
+                  width: ripple.scale.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, ripple.size],
+                  }),
+                  height: ripple.scale.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, ripple.size],
+                  }),
                   borderRadius: ripple.size / 2,
 
                   backgroundColor: rippleColor,
 
                   opacity: ripple.opacity,
-
-                  transform: [
-                    { translateX: -ripple.size / 2 },
-                    { translateY: -ripple.size / 2 },
-                    { scale: ripple.scale },
-                  ],
                 }} />
             )
           }

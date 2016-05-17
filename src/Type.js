@@ -4,38 +4,38 @@ import Uranium from 'uranium'
 
 import styles from './styles/Type'
 
-export const Display4 = ({ children, style }) =>
-  <Text style={[styles.display4, style]}>{children}</Text>
+export const Display4 = ({ children, style, ...other }) =>
+  <Text style={[styles.display4, style]} {...other}>{children}</Text>
 
-export const Display3 = ({ children, style }) =>
-  <Text style={[styles.display3, style]}>{children}</Text>
+export const Display3 = ({ children, style, ...other }) =>
+  <Text style={[styles.display3, style]} {...other}>{children}</Text>
 
-export const Display2 = ({ children, style }) =>
-  <Text style={[styles.display2, style]}>{children}</Text>
+export const Display2 = ({ children, style, ...other }) =>
+  <Text style={[styles.display2, style]} {...other}>{children}</Text>
 
-export const Display1 = ({ children, style }) =>
-  <Text style={[styles.display1, style]}>{children}</Text>
+export const Display1 = ({ children, style, ...other }) =>
+  <Text style={[styles.display1, style]} {...other}>{children}</Text>
 
-export const Headline = ({ children, style }) =>
-  <Text style={[styles.headline, style]}>{children}</Text>
+export const Headline = ({ children, style, ...other }) =>
+  <Text style={[styles.headline, style]} {...other}>{children}</Text>
 
-export const Title = ({ children, style }) =>
-  <Text style={[styles.title, style]}>{children}</Text>
+export const Title = ({ children, style, ...other }) =>
+  <Text style={[styles.title, style]} {...other}>{children}</Text>
 
-export const Subheading = Uranium(({ children }) =>
-  <Text css={styles.subheading}>{children}</Text>
+export const Subheading = Uranium(({ children, css, ...other }) =>
+  <Text css={[styles.subheading, css]} {...other}>{children}</Text>
 )
 
-export const Body2 = Uranium(({ children }) =>
-  <Text css={styles.body2}>{children}</Text>
+export const Body2 = Uranium(({ children, css, ...other }) =>
+  <Text css={[styles.body2, css]} {...other}>{children}</Text>
 )
 
-export const Body1 = Uranium(({ children }) =>
-  <Text css={styles.body1}>{children}</Text>
+export const Body1 = Uranium(({ children, css, ...other }) =>
+  <Text css={[styles.body1, css]} {...other}>{children}</Text>
 )
 
-export const Caption = ({ children, style }) =>
-  <Text style={[styles.caption, style]}>{children}</Text>
+export const Caption = ({ children, style, ...other }) =>
+  <Text style={[styles.caption, style]} {...other}>{children}</Text>
 
 
 const propTypes = {

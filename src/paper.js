@@ -3,7 +3,6 @@ import { View } from 'react-native-universal'
 import Uranium from 'uranium'
 
 import Shadows from './styles/Shadows'
-import { gu } from './styles/Grid'
 
 const Paper = ({ style, css, children, elevation, ...other }) =>
   <View
@@ -35,8 +34,8 @@ export default Uranium(Paper)
 
 const styles = {
   base: {
-    padding: 4 * gu,
-    marginBottom: 4 * gu,
+    padding: 16,
+    marginBottom: 16,
 
     backgroundColor: 'white',
   },

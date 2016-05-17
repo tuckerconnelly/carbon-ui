@@ -6,8 +6,7 @@ import ps from 'react-native-ps'
 import { animate } from 'uranium'
 
 import connectTheme from './connectTheme'
-import { Animations, Colors, Type } from './styles'
-import { Breakpoints } from './styles/Grid'
+import { Animations, Breakpoints, Colors, Type } from './styles'
 import Divider from './Divider'
 import Error from './Error'
 

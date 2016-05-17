@@ -4,8 +4,7 @@ import ps from 'react-native-ps'
 import { animate } from 'uranium'
 import { omit } from 'lodash'
 
-import { Animations, Type } from './styles'
-import { Breakpoints } from './styles/Grid'
+import { Animations, Breakpoints, Type } from './styles'
 import connectTheme from './connectTheme'
 
 class Error extends Component {

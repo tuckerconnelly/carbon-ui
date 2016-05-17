@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { TouchableWithoutFeedback, View } from 'react-native-universal'
+import { View } from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import Color from 'color'
@@ -7,8 +7,8 @@ import Color from 'color'
 import connectTheme from './connectTheme'
 import Shadows from './styles/Shadows'
 import { Breakpoints } from './styles/Grid'
-import { Body1 } from 'carbon-ui/lib/Type'
-import Ripple from './Ripple'
+import { Body2 } from 'carbon-ui/lib/Type'
+import TouchableRipple from './TouchableRipple'
 
 const Button = ({
   children,
@@ -29,34 +29,32 @@ const Button = ({
   // Uppercase and style if the child is a string
   // Otherwise it's probably an icon or image, so let it through
   const formattedChildren = typeof children === 'string' ?
-    <Body1>{children.toUpperCase()}</Body1> :
+    <Body2 style={tStyles.text}>{children.toUpperCase()}</Body2> :
     children
 
   return (
-    <TouchableWithoutFeedback
-      css={[
-        tStyles.base,
-
-        flat && tStyles.flat,
-        raised && tStyles.raised,
-        fab && tStyles.fab,
-        icon && tStyles.icon,
-
-        disabled && flat && tStyles.flat.disabled,
-        disabled && raised && tStyles.raised.disabled,
-        disabled && fab && tStyles.fab.disabled,
-        disabled && icon && tStyles.icon.disabled,
-
-        style,
-      ]}
-      style={tStyles.touchable}
-      hitSlop={{ top: 12, right: 12, bottom: 12, left: 12 }}
+    <TouchableRipple
+      hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
       {...other}>
-      <View>
+      <View
+        css={[
+          tStyles.base,
+
+          flat && tStyles.flat,
+          raised && tStyles.raised,
+          fab && tStyles.fab,
+          icon && tStyles.icon,
+
+          disabled && flat && tStyles.flat.disabled,
+          disabled && raised && tStyles.raised.disabled,
+          disabled && fab && tStyles.fab.disabled,
+          disabled && icon && tStyles.icon.disabled,
+
+          style,
+        ]}>
         {formattedChildren}
-        <Ripple />
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableRipple>
   )
 }
 
@@ -75,14 +73,19 @@ Button.propTypes = {
 
 const styles = theme => ps({
   base: {
+    flex: 1,
+    justifyContent: 'center',
     height: 36,
     paddingHorizontal: 16,
-    paddingVertical: 10,
     marginHorizontal: 8,
 
     [Breakpoints.ml]: {
       height: 32,
     },
+  },
+
+  text: {
+    lineHeight: 16,
   },
 
   flat: {

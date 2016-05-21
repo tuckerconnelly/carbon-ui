@@ -13,14 +13,6 @@ import Error from './Error'
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 
 class Input extends Component {
-  constructor(props) {
-    super(props)
-
-    this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
-    this.focusInput = this.focusInput.bind(this)
-  }
-
   // If the component starts with a value, start the
   // placeholder in its focused state
   labelAV = new Animated.Value(this.props.value ? 1 : 0)
@@ -30,7 +22,7 @@ class Input extends Component {
     return styles(this.props.theme)
   }
 
-  handleFocus() {
+  handleFocus = () => {
     if (this.props.disabled) {
       this.refs.input.blur()
       return
@@ -39,7 +31,7 @@ class Input extends Component {
     Animated.timing(this.colorAV, { ...Animations.default, toValue: 1 }).start()
   }
 
-  handleBlur() {
+  handleBlur = () => {
     Animated.timing(this.colorAV, { ...Animations.default, toValue: 0 }).start()
 
     // Only return color to its original state if the input
@@ -49,7 +41,7 @@ class Input extends Component {
     Animated.timing(this.labelAV, { ...Animations.default, toValue: 0 }).start()
   }
 
-  focusInput() {
+  focusInput = () => {
     this.refs.input.focus()
   }
 

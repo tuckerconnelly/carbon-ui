@@ -1,5 +1,5 @@
 export { default as Animations } from './Animations'
 export { default as Colors } from './Colors'
-export { default as Breakpoints } from './Breakpoints'
+export { Breakpoints, gu } from './Grid'
 export { default as Shadows } from './Shadows'
 export { default as Type } from './Type'

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import Color from 'color'
@@ -12,12 +11,10 @@ import TouchableRipple from './TouchableRipple'
 
 const Button = ({
   children,
-  style,
 
   disabled,
   flat,
   raised,
-  fab,
   icon,
 
   theme,
@@ -35,25 +32,19 @@ const Button = ({
   return (
     <TouchableRipple
       hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
+      css={[
+        tStyles.base,
+
+        flat && tStyles.flat,
+        raised && tStyles.raised,
+        icon && tStyles.icon,
+
+        disabled && flat && tStyles.flat.disabled,
+        disabled && raised && tStyles.raised.disabled,
+        disabled && icon && tStyles.icon.disabled,
+      ]}
       {...other}>
-      <View
-        css={[
-          tStyles.base,
-
-          flat && tStyles.flat,
-          raised && tStyles.raised,
-          fab && tStyles.fab,
-          icon && tStyles.icon,
-
-          disabled && flat && tStyles.flat.disabled,
-          disabled && raised && tStyles.raised.disabled,
-          disabled && fab && tStyles.fab.disabled,
-          disabled && icon && tStyles.icon.disabled,
-
-          style,
-        ]}>
-        {formattedChildren}
-      </View>
+      {formattedChildren}
     </TouchableRipple>
   )
 }
@@ -65,7 +56,6 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   flat: PropTypes.bool,
   raised: PropTypes.bool,
-  fab: PropTypes.bool,
   icon: PropTypes.bool,
 
   theme: PropTypes.object.isRequired,
@@ -74,6 +64,7 @@ Button.propTypes = {
 const styles = theme => ps({
   base: {
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
     height: 36,
     paddingHorizontal: 16,
@@ -86,6 +77,7 @@ const styles = theme => ps({
 
   text: {
     lineHeight: 16,
+    textAlign: 'center',
   },
 
   flat: {
@@ -126,10 +118,6 @@ const styles = theme => ps({
         ...Shadows.dp2,
       },
     },
-  },
-
-  fab: {
-
   },
 
   icon: {

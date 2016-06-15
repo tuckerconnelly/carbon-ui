@@ -17,7 +17,7 @@ class Error extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.children && nextProps.children) this.show(nextProps.children)
-    else if (this.props.children && !nextProps.children) this.hide()
+    if (this.props.children && !nextProps.children) this.hide()
   }
 
   heightAV = new Animated.Value(this.props.children ? 1 : 0)
@@ -26,18 +26,16 @@ class Error extends Component {
   show(text) {
     this.setState({ text })
     Animated.sequence([
-      Animated.timing(this.heightAV, { ...Animations.default, toValue: 1 }),
-      Animated.timing(this.opacityAV, { ...Animations.default, toValue: 1 }),
+      Animations.standard(this.heightAV),
+      Animations.standard(this.opacityAV),
     ]).start()
   }
 
   hide() {
     Animated.sequence([
-      Animated.timing(this.opacityAV, { ...Animations.default, toValue: 0 }),
-      Animated.timing(this.heightAV, { ...Animations.default, toValue: 0 }),
-    ]).start()
-
-    setTimeout(() => { this.setState({ text: '' }) }, Animations.default.duration)
+      Animations.standard(this.heightAV, 0),
+      Animations.standard(this.opacityAV, 0),
+    ]).start(() => { this.setState({ text: '' }) })
   }
 
   render() {

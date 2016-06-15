@@ -25,6 +25,7 @@ export default (component) => {
       return (
         <WrappedComponent
           {...this.props}
+          ref="node"
           theme={this.context.theme} />
       )
     }

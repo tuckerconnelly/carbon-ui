@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Animated, Easing, View } from 'react-native-universal'
+import ps from 'react-native-ps'
 import Uranium from 'uranium'
 
 
@@ -8,17 +9,35 @@ class TouchableRipple extends Component {
     ripples: [],
   };
 
+  componentWillUnmount() {
+    clearInterval(this._cleanupTimeout)
+  }
+
   getDimensions = e => {
+    // NOTE When hot-reloading, the container ref isn't available. Not sure why
+    if (!this.refs.container) return
+
     this.refs.container.measure((x, y, width, height, pageX, pageY) => {
       this.position = { width, height, pageX, pageY }
+      this.refs.container.forceUpdate()
     })
 
     this.props.onLayout && this.props.onLayout(e)
   }
 
+  measure = cb => { this.refs.container.measure(cb) }
+
+  position = {}
+
   start = e => {
-    const { rippleSpread, rippleOpacity, rippleVelocity, onPressIn, onResponderGrant } = this.props
+    const {
+      rippleSpread, rippleOpacity, rippleVelocity,
+      disabled,
+      onPressIn, onResponderGrant,
+    } = this.props
     const { width, height } = this.position
+
+    if (disabled) return
 
     const newRipple = {
       startTime: Date.now(),
@@ -32,7 +51,7 @@ class TouchableRipple extends Component {
 
     this.setState({ ripples: [...this.state.ripples, newRipple] })
 
-    // Start the expansion animation
+    // Start the expansion Animations
     const { scale, size } = newRipple
     Animated.timing(
       scale,
@@ -47,9 +66,14 @@ class TouchableRipple extends Component {
     onPressIn && onPressIn(e)
   }
 
+  _cleanupTimeout
+
   end = e => {
-    const { rippleVelocity, onPressOut, onResponderRelease } = this.props
-    const { opacity, startTime, size } = this.state.ripples[this.state.ripples.length - 1]
+    const ripple = this.state.ripples[this.state.ripples.length - 1]
+    if (!ripple) return
+
+    const { rippleVelocity, disabled, onPress, onPressOut, onResponderRelease } = this.props
+    const { opacity, startTime, size } = ripple
 
     const duration = size / rippleVelocity
 
@@ -74,19 +98,28 @@ class TouchableRipple extends Component {
 
     // Clean up after fade out
     const index = this.state.ripples.length - 1
-    setTimeout(() => this.state.ripples.slice(index, 1), duration)
+    this._cleanupTimeout = setTimeout(() =>
+      this.setState({ ripples: this.state.ripples.splice(index, 1) })
+    , duration + 10)
+
+    if (disabled) return
 
     onResponderRelease && onResponderRelease(e)
     onPressOut && onPressOut(e)
+    onPress && onPress(e)
   }
 
   grantResponder() { return true }
 
   render() {
-    const { rippleColor, children, style, ...other } = this.props
+    const { rippleColor, disabled, children, style, ...other } = this.props
     return (
       <View
-        style={[style, styles.container]}
+        style={[
+          styles.container,
+          disabled && styles.containerDisabled,
+          style,
+        ]}
         ref="container"
         onLayout={this.getDimensions}
         onStartShouldSetResponder={this.grantResponder}
@@ -135,12 +168,14 @@ TouchableRipple.propTypes = {
   rippleSpread: PropTypes.number,
   rippleOpacity: PropTypes.number,
   rippleVelocity: PropTypes.number,
+  disabled: PropTypes.bool,
 
   children: PropTypes.node,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 
   onResponderGrant: PropTypes.func,
   onResponderRelease: PropTypes.func,
+  onPress: PropTypes.func,
   onPressIn: PropTypes.func,
   onPressOut: PropTypes.func,
   onLayout: PropTypes.func,
@@ -151,12 +186,26 @@ TouchableRipple.defaultProps = {
   rippleSpread: 2,
   rippleOpacity: 0.2,
   rippleVelocity: 1, // px/ms
+  disabled: false,
 }
 
 export default Uranium(TouchableRipple)
 
-const styles = {
+const styles = ps({
   container: {
     overflow: 'hidden',
   },
-}
+
+  web: {
+    container: {
+      cursor: 'pointer',
+
+      // Fix overflow-hidden with border-radius on webkit
+      WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // eslint-disable-line max-len
+    },
+
+    containerDisabled: {
+      cursor: 'default',
+    },
+  },
+})

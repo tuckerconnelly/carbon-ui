@@ -13,9 +13,19 @@ import Error from './Error'
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 
 class Input extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.value && nextProps.value) {
+      Animations.standard(this.singleLineLabelAV).start()
+    }
+    if (this.props.value && !nextProps.value) {
+      Animations.standard(this.singleLineLabelAV, 0).start()
+    }
+  }
+
   // If the component starts with a value, start the
   // placeholder in its focused state
   labelAV = new Animated.Value(this.props.value ? 1 : 0)
+  singleLineLabelAV = new Animated.Value(this.props.value ? 1 : 0)
   colorAV = new Animated.Value(0)
 
   get styles() {
@@ -24,38 +34,50 @@ class Input extends Component {
 
   handleFocus = () => {
     if (this.props.disabled) {
-      this.refs.input.blur()
+      this.refs.textInput.blur()
       return
     }
-    Animated.timing(this.labelAV, { ...Animations.default, toValue: 1 }).start()
-    Animated.timing(this.colorAV, { ...Animations.default, toValue: 1 }).start()
+    Animations.standard(this.labelAV).start()
+    Animations.standard(this.colorAV).start()
   }
 
   handleBlur = () => {
-    Animated.timing(this.colorAV, { ...Animations.default, toValue: 0 }).start()
+    Animations.standard(this.colorAV, 0).start()
 
     // Only return color to its original state if the input
     // has a value
     if (this.props.value) return
 
-    Animated.timing(this.labelAV, { ...Animations.default, toValue: 0 }).start()
+    Animations.standard(this.labelAV, 0).start()
   }
 
   focusInput = () => {
-    this.refs.input.focus()
+    this.refs.textInput.focus()
   }
 
   render() {
-    const { placeholder, style, theme, disabled, error, ...other } = this.props
+    const {
+      style,
+      textInputStyle,
+      placeholderStyle,
+      placeholder,
+      theme,
+      disabled,
+      error,
+      singleLine,
+      ...other,
+    } = this.props
     const { styles } = this
 
     return (
-      <View style={[this.styles.base, style]}>
+      <View style={[styles.base, style]}>
         <TextInput
-          ref="input"
+          ref="textInput"
           css={[
-            this.styles.textInput,
-            disabled && this.styles.disabled,
+            styles.textInput,
+            singleLine && styles.singleLine,
+            disabled && styles.disabled,
+            textInputStyle,
           ]}
           selectionColor={Color(theme.accent).alpha(0.87).rgbString()}
           underlineColorAndroid="transparent"
@@ -64,12 +86,30 @@ class Input extends Component {
           onBlur={this.handleBlur} />
         <Animated.Text
           css={[
-            this.styles.placeholder,
-            disabled && this.styles.disabled,
+            styles.placeholder,
+            singleLine && styles.placeholderSingleLine,
+            disabled && styles.disabled,
+            placeholderStyle,
           ]}
           style={[
-            animate(['top', 'fontSize'], styles.placeholder, styles.placeholderFocus, this.labelAV), // eslint-disable-line max-len
-            animate('color', styles.placeholder, styles.placeholderFocus, this.colorAV),
+            !singleLine && animate(
+              ['top', 'fontSize'],
+              styles.placeholder,
+              styles.placeholderFocus,
+              this.labelAV
+            ),
+            !singleLine && animate(
+              'color',
+              styles.placeholder,
+              styles.placeholderFocus,
+              this.colorAV
+            ),
+            singleLine && animate(
+              'opacity',
+              styles.placeholderSingleLine,
+              styles.placeholderSingleLineFocus,
+              this.singleLineLabelAV,
+            ),
           ]}
           onPress={this.focusInput}>
           {placeholder}
@@ -83,7 +123,7 @@ class Input extends Component {
             ],
           })}
           type={disabled && 'dotted'}
-          css={this.styles.divider} />
+          css={styles.divider} />
         <Error>{error}</Error>
       </View>
     )
@@ -91,39 +131,53 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  textInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  placeholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   placeholder: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
+  singleLine: PropTypes.bool,
 
   theme: PropTypes.object.isRequired,
 }
 
 Input.defaultProps = {
   style: {},
+  textInputStyle: {},
+  placeholderStyle: {},
   placeholder: '',
   disabled: false,
+  singleLine: false,
 }
 
 const styles = theme => ps({
   base: {
     alignSelf: 'stretch',
+    flex: 1,
   },
 
   textInput: {
+    alignSelf: 'stretch',
     height: 32,
     paddingHorizontal: 0,
     paddingVertical: 4,
     marginTop: 32,
 
     ...Type.subheading,
-    lineHeight: 16,
 
     [Breakpoints.ml]: {
       marginTop: 28,
 
       ...Type.subheading[Breakpoints.ml],
+    },
+  },
+
+  singleLine: {
+    marginTop: 12,
+    [Breakpoints.ml]: {
+      marginTop: 8,
     },
   },
 
@@ -138,6 +192,7 @@ const styles = theme => ps({
 
     ...Type.subheading,
     color: Colors.blackHint,
+    textAlign: 'left',
 
     overflow: 'visible',
 
@@ -156,6 +211,20 @@ const styles = theme => ps({
     [Breakpoints.ml]: {
       top: 8,
     },
+  },
+
+  placeholderSingleLine: {
+    top: 16,
+
+    opacity: 1,
+
+    [Breakpoints.ml]: {
+      top: 12,
+    },
+  },
+
+  placeholderSingleLineFocus: {
+    opacity: 0,
   },
 
   divider: {

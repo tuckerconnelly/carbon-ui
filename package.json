@@ -2,7 +2,7 @@
   "name": "carbon-ui",
   "version": "0.0.0",
   "description": "Material Design framework for React",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "babel -d lib src",

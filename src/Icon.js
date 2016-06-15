@@ -11,6 +11,7 @@ export default ({ style, name, size, ...other }) =>
         width: size,
 
         fontSize: size,
+        lineHeight: size,
       },
       style,
     ]}

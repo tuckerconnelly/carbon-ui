@@ -16,8 +16,9 @@ class Error extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.children && nextProps.children) this.show(nextProps.children)
-    if (this.props.children && !nextProps.children) this.hide()
+    if (!this.props.children && nextProps.children) return this.show(nextProps.children)
+    if (this.props.children && !nextProps.children) return this.hide()
+    if (this.props.children !== nextProps.children) return this.changeTo(nextProps.children)
   }
 
   heightAV = new Animated.Value(this.props.children ? 1 : 0)
@@ -25,17 +26,20 @@ class Error extends Component {
 
   show(text) {
     this.setState({ text })
-    Animated.sequence([
-      Animations.standard(this.heightAV),
-      Animations.standard(this.opacityAV),
-    ]).start()
+    Animations.staggered(this.heightAV, this.opacityAV).start()
   }
 
   hide() {
-    Animated.sequence([
-      Animations.standard(this.heightAV, 0),
-      Animations.standard(this.opacityAV, 0),
-    ]).start(() => { this.setState({ text: '' }) })
+    Animations.staggered(this.heightAV, this.opacityAV, 0).start(
+      () => { this.setState({ text: '' }) }
+    )
+  }
+
+  changeTo(text) {
+    Animations.standard(this.opacityAV, 0, -150).start(() => {
+      this.setState({ text })
+      Animations.standard(this.opacityAV, 1, 150).start()
+    })
   }
 
   render() {
@@ -73,6 +77,7 @@ const styles = theme => ps({
     color: theme.error,
 
     opacity: 0,
+    overflow: 'hidden',
   },
 
   shown: {

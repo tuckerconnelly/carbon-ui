@@ -1,19 +1,60 @@
-import React, { Component, PropTypes } from 'react'
-import { Animated, Easing, View } from 'react-native-universal'
+/* eslint-disable react/prefer-es6-class, react/prop-types */
+
+import React, { PropTypes } from 'react'
+import {
+  Animated,
+  Easing,
+  TouchableWithoutFeedback,
+  Touchable,
+  View,
+} from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
 
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
 
-class TouchableRipple extends Component {
-  state = {
-    ripples: [],
-  };
+const TouchableRipple = React.createClass({
+  propTypes: {
+    ...TouchableWithoutFeedback.propTypes,
+    rippleColor: PropTypes.string,
+    rippleSpread: PropTypes.number,
+    rippleOpacity: PropTypes.number,
+    rippleVelocity: PropTypes.number,
+    
+    children: PropTypes.node,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+
+    onResponderGrant: PropTypes.func,
+    onResponderRelease: PropTypes.func,
+    onPress: PropTypes.func,
+    onPressIn: PropTypes.func,
+    onPressOut: PropTypes.func,
+    onLayout: PropTypes.func,
+  },
+
+  mixins: [Touchable.Mixin],
+
+  getDefaultProps() {
+    return {
+      rippleColor: 'black',
+      rippleSpread: 2,
+      rippleOpacity: 0.2,
+      rippleVelocity: 1, // px/ms
+    }
+  },
+
+  getInitialState() {
+    return {
+      ...this.touchableGetInitialState(),
+      ripples: [],
+    }
+  },
 
   componentWillUnmount() {
     clearInterval(this._cleanupTimeout)
-  }
+  },
 
-  getDimensions = e => {
+  getDimensions(e) {
     // NOTE When hot-reloading, the container ref isn't available. Not sure why
     if (!this.refs.container) return
 
@@ -23,18 +64,68 @@ class TouchableRipple extends Component {
     })
 
     this.props.onLayout && this.props.onLayout(e)
-  }
+  },
 
-  measure = cb => { this.refs.container.measure(cb) }
+  measure(cb) { this.refs.container.measure(cb) },
 
-  position = {}
+  /**
+   * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
+   * defined on your component.
+   */
+  touchableHandleActivePressIn(e) {
+    this.start(e)
+    this.props.onPressIn && this.props.onPressIn(e)
+  },
 
-  start = e => {
-    const {
-      rippleSpread, rippleOpacity, rippleVelocity,
-      disabled,
-      onPressIn, onResponderGrant,
-    } = this.props
+  touchableHandleActivePressOut(e) {
+    this.end(e)
+    this.props.onPressOut && this.props.onPressOut(e)
+  },
+
+  touchableHandlePress(e) {
+    this.props.onPress && this.props.onPress(e)
+  },
+
+  touchableHandleLongPress(e) {
+    this.props.onLongPress && this.props.onLongPress(e)
+  },
+
+  touchableGetPressRectOffset() {
+    return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET
+  },
+
+  touchableGetHitSlop() {
+    return this.props.hitSlop
+  },
+
+  touchableGetHighlightDelayMS() {
+    return this.props.delayPressIn || 0
+  },
+
+  touchableGetLongPressDelayMS() {
+    return this.props.delayLongPress === 0 ? 0 :
+      this.props.delayLongPress || 500
+  },
+
+  touchableGetPressOutDelayMS() {
+    return this.props.delayPressOut
+  },
+
+  _onKeyEnter(e, callback) {
+    const ENTER = 13
+    if (e.keyCode === ENTER) {
+      callback && callback(e)
+    }
+  },
+
+  _onKeyDown(e) { this._onKeyEnter(e, this.touchableHandleActivePressIn) },
+  _onKeyUp(e) { this._onKeyEnter(e, this.touchableHandleActivePressOut) },
+  _onKeyPress(e) { this._onKeyEnter(e, this.touchableHandlePress) },
+
+  position: {},
+
+  start(e) {
+    const { rippleSpread, rippleOpacity, rippleVelocity, disabled } = this.props
     const { width, height } = this.position
 
     if (disabled) return
@@ -61,18 +152,15 @@ class TouchableRipple extends Component {
         easing: Easing.out(Easing.ease),
       }
     ).start()
+  },
 
-    onResponderGrant && onResponderGrant(e)
-    onPressIn && onPressIn(e)
-  }
+  _cleanupTimeout: null,
 
-  _cleanupTimeout
-
-  end = e => {
+  end(e) {
     const ripple = this.state.ripples[this.state.ripples.length - 1]
     if (!ripple) return
 
-    const { rippleVelocity, disabled, onPress, onPressOut, onResponderRelease } = this.props
+    const { rippleVelocity, onPress, onPressOut, onResponderRelease } = this.props
     const { opacity, startTime, size } = ripple
 
     const duration = size / rippleVelocity
@@ -101,15 +189,7 @@ class TouchableRipple extends Component {
     this._cleanupTimeout = setTimeout(() =>
       this.setState({ ripples: this.state.ripples.splice(index, 1) })
     , duration + 10)
-
-    if (disabled) return
-
-    onResponderRelease && onResponderRelease(e)
-    onPressOut && onPressOut(e)
-    onPress && onPress(e)
-  }
-
-  grantResponder() { return true }
+  },
 
   render() {
     const { rippleColor, disabled, children, style, ...other } = this.props
@@ -122,9 +202,15 @@ class TouchableRipple extends Component {
         ]}
         ref="container"
         onLayout={this.getDimensions}
-        onStartShouldSetResponder={this.grantResponder}
-        onResponderGrant={this.start}
-        onResponderRelease={this.end}
+        onKeyDown={this._onKeyDown}
+        onKeyUp={this._onKeyUp}
+        onKeyPress={this._onKeyPress}
+        onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
+        onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
+        onResponderGrant={this.touchableHandleResponderGrant}
+        onResponderMove={this.touchableHandleResponderMove}
+        onResponderRelease={this.touchableHandleResponderRelease}
+        onResponderTerminate={this.touchableHandleResponderTerminate}
         {...other}>
         {children}
         {
@@ -160,34 +246,8 @@ class TouchableRipple extends Component {
         }
       </View>
     )
-  }
-}
-
-TouchableRipple.propTypes = {
-  rippleColor: PropTypes.string,
-  rippleSpread: PropTypes.number,
-  rippleOpacity: PropTypes.number,
-  rippleVelocity: PropTypes.number,
-  disabled: PropTypes.bool,
-
-  children: PropTypes.node,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-
-  onResponderGrant: PropTypes.func,
-  onResponderRelease: PropTypes.func,
-  onPress: PropTypes.func,
-  onPressIn: PropTypes.func,
-  onPressOut: PropTypes.func,
-  onLayout: PropTypes.func,
-}
-
-TouchableRipple.defaultProps = {
-  rippleColor: 'black',
-  rippleSpread: 2,
-  rippleOpacity: 0.2,
-  rippleVelocity: 1, // px/ms
-  disabled: false,
-}
+  },
+})
 
 export default Uranium(TouchableRipple)
 

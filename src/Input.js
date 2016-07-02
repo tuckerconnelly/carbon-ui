@@ -15,10 +15,10 @@ const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 class Input extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.value && nextProps.value) {
-      Animations.standard(this.singleLineLabelAV).start()
+      Animations.standard(this.singleLineLabelAV, 1, -200).start()
     }
     if (this.props.value && !nextProps.value) {
-      Animations.standard(this.singleLineLabelAV, 0).start()
+      Animations.standard(this.singleLineLabelAV, 0, -200).start()
     }
   }
 
@@ -155,7 +155,6 @@ Input.defaultProps = {
 const styles = theme => ps({
   base: {
     alignSelf: 'stretch',
-    flex: 1,
   },
 
   textInput: {

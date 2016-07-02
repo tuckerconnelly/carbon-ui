@@ -4,13 +4,21 @@ import ps from 'react-native-ps'
 import { animate } from 'uranium'
 import { omit } from 'lodash'
 
-import { Animations, Breakpoints, Type } from './styles'
+import { Animations, Breakpoints, Type, gu } from './styles'
 import connectTheme from './connectTheme'
+
+const PIXELS_PER_CHARACTER = 7
+
+// Can't animate to height: auto, so multiline errors get cut off
+// Calculating height temporarily until it's possible to animate maxHeight
+export function calculateLines(text, width) {
+  const charactersPerLine = width / PIXELS_PER_CHARACTER
+  return Math.round((text || '').length / charactersPerLine)
+}
 
 class Error extends Component {
   // Using state.text to delay the removal of the text so it.
   // can animate/fade out.
-  // See the setTimeout in hide()
   state = {
     text: this.props.children,
   }
@@ -21,6 +29,11 @@ class Error extends Component {
     if (this.props.children !== nextProps.children) return this.changeTo(nextProps.children)
   }
 
+  setWidth = ({ nativeEvent: { layout: { width } } }) => {
+    this.width = width
+  }
+
+  width = 0
   heightAV = new Animated.Value(this.props.children ? 1 : 0)
   opacityAV = new Animated.Value(this.props.children ? 1 : 0)
 
@@ -30,8 +43,8 @@ class Error extends Component {
   }
 
   hide() {
-    Animations.staggered(this.heightAV, this.opacityAV, 0).start(
-      () => { this.setState({ text: '' }) }
+    Animations.staggered(this.heightAV, this.opacityAV, 0).start(() =>
+      this.setState({ text: '' })
     )
   }
 
@@ -42,20 +55,24 @@ class Error extends Component {
     })
   }
 
+  get styles() { return styles(this.props.theme) }
+
   render() {
     const { style, theme, ...other } = this.props
 
-    const tStyles = styles(theme)
+    const estimatedLines = calculateLines(this.state.text, this.width)
 
     return (
       <Animated.Text
         style={[
-          tStyles.base,
+          this.styles.base,
           style,
-          animate(['height', 'marginBottom'], tStyles.base, tStyles.shown, this.heightAV),
-          animate('opacity', tStyles.base, tStyles.shown, this.opacityAV),
+          animate('height', 0, estimatedLines * 4 * gu, this.heightAV),
+          animate('marginBottom', this.styles.base, this.styles.shown, this.heightAV),
+          animate('opacity', this.styles.base, this.styles.shown, this.opacityAV),
         ]}
-        {...omit(other, 'children')}>
+        {...omit(other, 'children')}
+        onLayout={this.setWidth}>
         {this.state.text}
       </Animated.Text>
     )
@@ -70,7 +87,6 @@ Error.propTypes = {
 
 const styles = theme => ps({
   base: {
-    height: 0,
     marginBottom: 0,
 
     ...Type.caption,
@@ -81,7 +97,6 @@ const styles = theme => ps({
   },
 
   shown: {
-    height: 16,
     marginBottom: 8,
 
     opacity: 1,
@@ -95,7 +110,7 @@ const styles = theme => ps({
   android: {
     base: {
       // Android doesn't like height: 0
-      height: 1,
+      maxHeight: 1,
     },
   },
 })

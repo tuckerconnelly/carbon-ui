@@ -63,7 +63,6 @@ Button.propTypes = {
 
 const styles = theme => ps({
   base: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     height: 36,

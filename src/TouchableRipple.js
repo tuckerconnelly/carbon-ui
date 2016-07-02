@@ -20,7 +20,7 @@ const TouchableRipple = React.createClass({
     rippleSpread: PropTypes.number,
     rippleOpacity: PropTypes.number,
     rippleVelocity: PropTypes.number,
-    
+
     children: PropTypes.node,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 
@@ -156,11 +156,11 @@ const TouchableRipple = React.createClass({
 
   _cleanupTimeout: null,
 
-  end(e) {
+  end() {
     const ripple = this.state.ripples[this.state.ripples.length - 1]
     if (!ripple) return
 
-    const { rippleVelocity, onPress, onPressOut, onResponderRelease } = this.props
+    const { rippleVelocity } = this.props
     const { opacity, startTime, size } = ripple
 
     const duration = size / rippleVelocity
@@ -188,7 +188,7 @@ const TouchableRipple = React.createClass({
     const index = this.state.ripples.length - 1
     this._cleanupTimeout = setTimeout(() =>
       this.setState({ ripples: this.state.ripples.splice(index, 1) })
-    , duration + 10)
+    , adjustedDuration + 10)
   },
 
   render() {

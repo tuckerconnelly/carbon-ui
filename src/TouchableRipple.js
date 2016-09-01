@@ -10,6 +10,7 @@ import {
 } from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
+import { omit } from 'lodash'
 
 const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
 
@@ -193,6 +194,7 @@ const TouchableRipple = React.createClass({
 
   render() {
     const { rippleColor, disabled, children, style, ...other } = this.props
+
     return (
       <View
         style={[
@@ -211,7 +213,7 @@ const TouchableRipple = React.createClass({
         onResponderMove={this.touchableHandleResponderMove}
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
-        {...other}>
+        {...omit(other, Object.keys(TouchableRipple.propTypes))}>
         {children}
         {
           this.state.ripples.map((ripple, i) =>

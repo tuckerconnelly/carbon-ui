@@ -12,7 +12,7 @@ const PIXELS_PER_CHARACTER = 7
 // Can't animate to height: auto, so multiline errors get cut off
 // Calculating height temporarily until it's possible to animate maxHeight
 export function calculateLines(text, width) {
-  const charactersPerLine = width / PIXELS_PER_CHARACTER
+  const charactersPerLine = (width / PIXELS_PER_CHARACTER) || 1
   return Math.round((text || '').length / charactersPerLine)
 }
 

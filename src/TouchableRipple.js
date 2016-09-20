@@ -61,7 +61,9 @@ const TouchableRipple = React.createClass({
 
     this.refs.container.measure((x, y, width, height, pageX, pageY) => {
       this.position = { width, height, pageX, pageY }
-      this.refs.container.forceUpdate()
+      // Weirdly, forceUpdate doesn't work when running in Release schema on iOS
+      // Guarding for now
+      this.refs.container.forceUpdate && this.refs.container.forceUpdate()
     })
 
     this.props.onLayout && this.props.onLayout(e)

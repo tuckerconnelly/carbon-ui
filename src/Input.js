@@ -15,10 +15,10 @@ const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 class Input extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.value && nextProps.value) {
-      Animations.standard(this.singleLineLabelAV, 1, -200).start()
+      Animations.standard(this.singleLineLabelAV, 1, 100).start()
     }
     if (this.props.value && !nextProps.value) {
-      Animations.standard(this.singleLineLabelAV, 0, -200).start()
+      Animations.standard(this.singleLineLabelAV, 0, 100).start()
     }
   }
 

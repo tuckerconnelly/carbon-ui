@@ -18,68 +18,68 @@ export const Curves = {
 // (longest desktop - shortest desktop) / (longest mobile - shortest mobile)
 // or (200 - 150) / (375 - 195)
 // 195 is the shortest mobile duration
-const interpolateDesktopValue = from => 150 + 0.28 * (from - 195)
+const interpolateDesktopValue = from => 150 + (0.28 * (from - 195))
 
 // Creates a function that calculates the duration value for different screen
 // sizes
 // The resulting function accepts an "add" parameter that gets added to the value
 // before interpolation
-const createDurationValueFn = value => (add = 0) => {
+const getResponsiveDurationFn = value => () => {
   const desktopMediaQuery = Breakpoints.ml.split('@media')[1]
   const tabletMediaQuery = Breakpoints.md.split('@media')[1]
   // Desktop, not in MD spec so I interpolated it
-  if (matchMedia(desktopMediaQuery).matches) return interpolateDesktopValue(value + add)
+  if (matchMedia(desktopMediaQuery).matches) return interpolateDesktopValue(value)
   // Tablet, according to MD spec 30% longer than mobile
-  if (matchMedia(tabletMediaQuery).matches) return (value + add) * 1.3
+  if (matchMedia(tabletMediaQuery).matches) return value * 1.3
   // Mobile
-  return value + add
+  return value
 }
 
 export const Durations = {
-  standard: createDurationValueFn(300),
-  large: createDurationValueFn(375),
-  entering: createDurationValueFn(225),
-  leaving: createDurationValueFn(195),
-  custom: createDurationValueFn(0),
+  standard: getResponsiveDurationFn(300),
+  large: getResponsiveDurationFn(375),
+  entering: getResponsiveDurationFn(225),
+  leaving: getResponsiveDurationFn(195),
+  custom: getResponsiveDurationFn,
 }
 
 const Animations = {
-  standard: (av, toValue = 1, add) => Animated.timing(av, {
-    duration: Durations.standard(add),
+  standard: (av, toValue = 1, duration) => Animated.timing(av, {
+    duration: duration ? Durations.custom(duration)() : Durations.standard(),
     easing: Curves.standard,
     toValue,
   }),
-  large: (av, toValue = 1, add) => Animated.timing(av, {
-    duration: Durations.large(add),
+  large: (av, toValue = 1, duration) => Animated.timing(av, {
+    duration: duration ? Durations.custom(duration)() : Durations.large(),
     easing: Curves.standard,
     toValue,
   }),
-  entrance: (av, toValue = 1, add) => Animated.timing(av, {
-    duration: Durations.entering(add),
+  entrance: (av, toValue = 1, duration) => Animated.timing(av, {
+    duration: duration ? Durations.custom(duration)() : Durations.entering(),
     easing: Curves.deceleration,
     toValue,
   }),
-  exit: (av, toValue = 1, add) => Animated.timing(av, {
-    duration: Durations.leaving(add),
+  exit: (av, toValue = 1, duration) => Animated.timing(av, {
+    duration: duration ? Durations.custom(duration)() : Durations.leaving(),
     easing: Curves.acceleration,
     toValue,
   }),
-  tempExit: (av, toValue = 1, add) => Animated.timing(av, {
-    duration: Durations.leaving(add),
+  tempExit: (av, toValue = 1, duration) => Animated.timing(av, {
+    duration: duration ? Durations.custom(duration)() : Durations.leaving(),
     easing: Curves.sharp,
     toValue,
   }),
   staggered: (av, staggerAV, toValue = 1, staggerAmount = 50) =>
     Animated.stagger(staggerAmount, [
       Animated.timing(toValue ? av : staggerAV, {
-        duration: Durations.standard(-staggerAmount),
+        duration: Durations.custom(300 - staggerAmount)(),
         easing: Curves.standard,
         toValue,
       }),
       Animated.timing(toValue ? staggerAV : av, {
-        duration: Durations.standard(-staggerAmount),
+        duration: Durations.custom(300 - staggerAmount)(),
         easing: Curves.standard,
-        delay: Durations.custom(staggerAmount),
+        delay: Durations.custom(staggerAmount)(),
         toValue,
       }),
     ]),

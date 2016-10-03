@@ -49,9 +49,9 @@ class Error extends Component {
   }
 
   changeTo(text) {
-    Animations.standard(this.opacityAV, 0, -150).start(() => {
+    Animations.standard(this.opacityAV, 0, 150).start(() => {
       this.setState({ text })
-      Animations.standard(this.opacityAV, 1, 150).start()
+      Animations.standard(this.opacityAV, 1, 450).start()
     })
   }
 

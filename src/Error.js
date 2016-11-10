@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { Animated } from 'react-native-universal'
 import ps from 'react-native-ps'
 import { animate } from 'uranium'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 
 import { Animations, Breakpoints, Type, gu } from './styles'
 import connectTheme from './connectTheme'
@@ -27,6 +27,7 @@ class Error extends Component {
     if (!this.props.children && nextProps.children) return this.show(nextProps.children)
     if (this.props.children && !nextProps.children) return this.hide()
     if (this.props.children !== nextProps.children) return this.changeTo(nextProps.children)
+    return null
   }
 
   setWidth = ({ nativeEvent: { layout: { width } } }) => {
@@ -58,7 +59,7 @@ class Error extends Component {
   get styles() { return styles(this.props.theme) }
 
   render() {
-    const { style, theme, ...other } = this.props
+    const { style, ...other } = this.props
 
     const estimatedLines = calculateLines(this.state.text, this.width)
 
@@ -103,14 +104,6 @@ const styles = theme => ps({
 
     [Breakpoints.ml]: {
       marginBottom: 4,
-    },
-  },
-
-
-  android: {
-    base: {
-      // Android doesn't like height: 0
-      maxHeight: 1,
     },
   },
 })

@@ -19,7 +19,11 @@
     "new-cap": 0,
     "no-use-before-define": 0,
 
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+
     "react/jsx-closing-bracket-location": [1, "after-props"],
+    "react/jsx-filename-extension": 0
   },
 
   "ecmaFeatures": {

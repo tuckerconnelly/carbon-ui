@@ -1,5 +1,4 @@
 import { Animated, Easing } from 'react-native-universal'
-import matchMedia from 'react-native-match-media'
 
 import { Breakpoints } from './Grid'
 
@@ -28,9 +27,9 @@ const getResponsiveDurationFn = value => () => {
   const desktopMediaQuery = Breakpoints.ml.split('@media')[1]
   const tabletMediaQuery = Breakpoints.md.split('@media')[1]
   // Desktop, not in MD spec so I interpolated it
-  if (matchMedia(desktopMediaQuery).matches) return interpolateDesktopValue(value)
+  if (global.matchMedia(desktopMediaQuery).matches) return interpolateDesktopValue(value)
   // Tablet, according to MD spec 30% longer than mobile
-  if (matchMedia(tabletMediaQuery).matches) return value * 1.3
+  if (global.matchMedia(tabletMediaQuery).matches) return value * 1.3
   // Mobile
   return value
 }

@@ -1,4 +1,4 @@
-material-react
+carbon-ui
 ==========
 
 ## License

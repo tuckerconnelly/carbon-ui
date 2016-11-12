@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, Text, TextInput, View } from 'react-native-universal'
-import Uranium from 'uranium'
+import { Animated, TextInput, View } from 'react-native-universal'
 import Color from 'color'
 import ps from 'react-native-ps'
-import { animate } from 'uranium'
+import Uranium, { animate } from 'uranium'
 
 import connectTheme from './connectTheme'
 import { Animations, Breakpoints, Colors, Type } from './styles'
@@ -28,13 +27,15 @@ class Input extends Component {
   singleLineLabelAV = new Animated.Value(this.props.value ? 1 : 0)
   colorAV = new Animated.Value(0)
 
+  _textInput: null
+
   get styles() {
     return styles(this.props.theme)
   }
 
   handleFocus = () => {
     if (this.props.disabled) {
-      this.refs.textInput.blur()
+      this._textInput.blur()
       return
     }
     Animations.standard(this.labelAV).start()
@@ -52,7 +53,7 @@ class Input extends Component {
   }
 
   focusInput = () => {
-    this.refs.textInput.focus()
+    this._textInput.focus()
   }
 
   render() {
@@ -65,14 +66,15 @@ class Input extends Component {
       disabled,
       error,
       singleLine,
-      ...other,
+      ...other
     } = this.props
+
     const { styles } = this
 
     return (
       <View style={[styles.base, style]}>
         <TextInput
-          ref="textInput"
+          ref={c => { this._textInput = c }}
           css={[
             styles.textInput,
             singleLine && styles.singleLine,

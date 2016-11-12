@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import invariant from 'invariant'
 
-export default (component) => {
+export default component => {
   let WrappedComponent = component
 
   // Handle stateless components
@@ -21,11 +21,13 @@ export default (component) => {
         '<ThemeProvider> needs to exist in component ancestry.')
     }
 
+    _node = null
+
     render() {
       return (
         <WrappedComponent
           {...this.props}
-          ref="node"
+          ref={c => { this._node = c }}
           theme={this.context.theme} />
       )
     }

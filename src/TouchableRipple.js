@@ -57,19 +57,21 @@ const TouchableRipple = React.createClass({
 
   getDimensions(e) {
     // NOTE When hot-reloading, the container ref isn't available. Not sure why
-    if (!this.refs.container) return
+    if (!this._container) return
 
-    this.refs.container.measure((x, y, width, height, pageX, pageY) => {
+    this._container.measure((x, y, width, height, pageX, pageY) => {
       this.position = { width, height, pageX, pageY }
       // Weirdly, forceUpdate doesn't work when running in Release schema on iOS
       // Guarding for now
-      this.refs.container.forceUpdate && this.refs.container.forceUpdate()
+      this._container.forceUpdate && this._container.forceUpdate()
     })
 
     this.props.onLayout && this.props.onLayout(e)
   },
 
-  measure(cb) { this.refs.container.measure(cb) },
+  _container: null,
+
+  measure(cb) { this._container.measure(cb) },
 
   /**
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
@@ -136,7 +138,7 @@ const TouchableRipple = React.createClass({
     const newRipple = {
       startTime: Date.now(),
 
-      size: Math.sqrt(width * width + height * height) * rippleSpread,
+      size: Math.sqrt((width * width) + (height * height)) * rippleSpread,
       x: e.nativeEvent.pageX - this.position.pageX,
       y: e.nativeEvent.pageY - this.position.pageY,
       scale: new Animated.Value(0),
@@ -204,7 +206,7 @@ const TouchableRipple = React.createClass({
           disabled && styles.containerDisabled,
           style,
         ]}
-        ref="container"
+        ref={c => { this._container = c }}
         onLayout={this.getDimensions}
         onKeyDown={this._onKeyDown}
         onKeyUp={this._onKeyUp}
@@ -225,11 +227,11 @@ const TouchableRipple = React.createClass({
                 position: 'absolute',
                 left: ripple.scale.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [ripple.x, ripple.x - ripple.size / 2],
+                  outputRange: [ripple.x, ripple.x - (ripple.size / 2)],
                 }),
                 top: ripple.scale.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [ripple.y, ripple.y - ripple.size / 2],
+                  outputRange: [ripple.y, ripple.y - (ripple.size / 2)],
                 }),
 
                 width: ripple.scale.interpolate({

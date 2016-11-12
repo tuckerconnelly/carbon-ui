@@ -1,4 +1,4 @@
-/* eslint-disable react/no-multi-comp */
+/* eslint-disable react/prefer-stateless-function */
 
 import React, { PropTypes, Component } from 'react'
 import { Text } from 'react-native-universal'

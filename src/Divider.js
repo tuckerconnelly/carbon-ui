@@ -17,6 +17,8 @@ Divider.propTypes = {
   color: PropTypes.string,
   type: PropTypes.oneOf(['solid', 'dotted', 'dashed']),
   theme: PropTypes.object.isRequired,
+
+  style: PropTypes.object,
 }
 
 const styles = theme => ({

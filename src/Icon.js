@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Text } from 'react-native-universal'
 import ps from 'react-native-ps'
 
-export default ({ style, name, size, ...other }) =>
+const Icon = ({ style, name, size, ...other }) =>
   <Text
     style={[
       styles.base,
@@ -15,9 +15,18 @@ export default ({ style, name, size, ...other }) =>
       },
       style,
     ]}
-    { ...other }>
+    {...other}>
     {name}
   </Text>
+
+Icon.propTypes = {
+  name: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
+
+  style: PropTypes.object,
+}
+
+export default Icon
 
 const styles = ps({
   base: {

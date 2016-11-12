@@ -3,10 +3,10 @@ import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import Color from 'color'
 
+import { Body2 } from './Type'
 import connectTheme from './connectTheme'
 import Shadows from './styles/Shadows'
 import { Breakpoints } from './styles/Grid'
-import { Body2 } from 'carbon-ui/lib/Type'
 import TouchableRipple from './TouchableRipple'
 
 const Button = ({
@@ -18,7 +18,7 @@ const Button = ({
   icon,
 
   theme,
-  ...other,
+  ...other
 }) => {
   // Themed styles
   const tStyles = styles(theme)

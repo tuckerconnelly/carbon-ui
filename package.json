@@ -33,9 +33,15 @@
     "eslint-plugin-jsx-a11y": "^2.2.1",
     "eslint-plugin-react": "^6.2.0"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "react-native": "",
-    "react-native-ps": ""
+    "react-native-match-media": "",
+    "react-native-web": ""
+  },
+  "peerDependencies": {
+    "react-native-universal": "0.0.1",
+    "uranium": "github:tuckerconnelly/uranium",
+    "react-native-ps": "0.0.4"
   },
   "dependencies": {
     "color": "^0.11.3"

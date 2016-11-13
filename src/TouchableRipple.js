@@ -20,7 +20,8 @@ const TouchableRipple = React.createClass({
     rippleColor: PropTypes.string,
     rippleSpread: PropTypes.number,
     rippleOpacity: PropTypes.number,
-    rippleVelocity: PropTypes.number,
+    rippleDuration: PropTypes.number,
+    rippleCentered: PropTypes.bool,
 
     children: PropTypes.node,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -38,9 +39,10 @@ const TouchableRipple = React.createClass({
   getDefaultProps() {
     return {
       rippleColor: 'black',
-      rippleSpread: 2,
+      rippleSpread: 1,
       rippleOpacity: 0.2,
-      rippleVelocity: 1, // px/ms
+      rippleDuration: 200, // ms
+      rippleCentered: false,
     }
   },
 
@@ -130,17 +132,19 @@ const TouchableRipple = React.createClass({
   position: {},
 
   start(e) {
-    const { rippleSpread, rippleOpacity, rippleVelocity, disabled } = this.props
+    const { rippleSpread, rippleOpacity, rippleDuration, rippleCentered, disabled } = this.props
     const { width, height } = this.position
 
     if (disabled) return
 
     const newRipple = {
-      startTime: Date.now(),
-
       size: Math.sqrt((width * width) + (height * height)) * rippleSpread,
-      x: e.nativeEvent.pageX - this.position.pageX,
-      y: e.nativeEvent.pageY - this.position.pageY,
+      x: rippleCentered ?
+        width / 2 :
+        e.nativeEvent.pageX - this.position.pageX,
+      y: rippleCentered ?
+        height / 2 :
+        e.nativeEvent.pageY - this.position.pageY,
       scale: new Animated.Value(0),
       opacity: new Animated.Value(rippleOpacity),
     }
@@ -148,12 +152,12 @@ const TouchableRipple = React.createClass({
     this.setState({ ripples: [...this.state.ripples, newRipple] })
 
     // Start the expansion Animations
-    const { scale, size } = newRipple
+    const { scale } = newRipple
     Animated.timing(
       scale,
       {
         toValue: 1,
-        duration: size / rippleVelocity,
+        duration: rippleDuration,
         easing: Easing.out(Easing.ease),
       }
     ).start()
@@ -165,26 +169,14 @@ const TouchableRipple = React.createClass({
     const ripple = this.state.ripples[this.state.ripples.length - 1]
     if (!ripple) return
 
-    const { rippleVelocity } = this.props
-    const { opacity, startTime, size } = ripple
-
-    const duration = size / rippleVelocity
-
-    // Adjust duration to account for time between mousedown and
-    // mouseup
-    // User mouses down, 200ms passes, user mouses up
-    // Duration of fadeout should be 200ms less now
-    // Minimum duration of duration/2
-    const adjustedDuration = Math.max(
-      duration - (Date.now() - startTime),
-      duration / 2
-    )
+    const { rippleDuration } = this.props
+    const { opacity } = ripple
 
     Animated.timing(
       opacity,
       {
         toValue: 0,
-        duration: adjustedDuration,
+        duration: rippleDuration,
         easing: Easing.out(Easing.ease),
       }
     ).start()
@@ -193,7 +185,7 @@ const TouchableRipple = React.createClass({
     const index = this.state.ripples.length - 1
     this._cleanupTimeout = setTimeout(() =>
       this.setState({ ripples: this.state.ripples.splice(index, 1) })
-    , adjustedDuration + 10)
+    , rippleDuration + 10)
   },
 
   render() {
@@ -265,9 +257,6 @@ const styles = ps({
   web: {
     container: {
       cursor: 'pointer',
-
-      // Fix overflow-hidden with border-radius on webkit
-      WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // eslint-disable-line max-len
     },
 
     containerDisabled: {

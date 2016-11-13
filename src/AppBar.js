@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react'
+import { View } from 'react-native'
 import Uranium from 'uranium'
-import { Paper, IconToggle, Title, Colors, connectTheme, gu } from './index'
+import ps from 'react-native-ps'
+import { IconToggle, Title, Colors, Breakpoints, Shadows, connectTheme, gu } from './index'
 
 /**
  * The app bar, formerly known as the action bar in Android, is a special kind
  * of toolbar that’s used for branding, navigation, search, and actions.
  */
-const AppBar = ({ title, leftIcon, onLeftIconPress, theme, children }) => {
+const AppBar = ({ title, leftIcon, onLeftIconPress, theme, css, children, ...other }) => {
   const tStyles = styles(theme)
   return (
-    <Paper
-      elevation={4}
-      style={tStyles.base}>
+    <View css={[tStyles.base, css]} {...other}>
       <IconToggle
         iconName={leftIcon}
         style={tStyles.icon}
@@ -20,7 +20,7 @@ const AppBar = ({ title, leftIcon, onLeftIconPress, theme, children }) => {
         onPress={onLeftIconPress} />
       <Title style={tStyles.title}>{title}</Title>
       {children}
-    </Paper>
+    </View>
   )
 }
 
@@ -42,6 +42,7 @@ AppBar.propTypes = {
    * Children inserted after the title
    */
   children: PropTypes.node,
+  css: PropTypes.object,
 
   // connectTheme
   theme: PropTypes.object,
@@ -53,16 +54,28 @@ AppBar.defaultProps = {
 
 export default connectTheme(Uranium(AppBar))
 
-const styles = theme => ({
+const IOS_HEADING_SIZE = 20
+const styles = theme => ps({
   base: {
     height: 14 * gu,
-    paddingHorizontal: 4 * gu,
-    paddingVertical: 1 * gu,
+    padding: 1 * gu,
 
     flexDirection: 'row',
     alignItems: 'center',
 
     backgroundColor: theme.primary,
+
+    ...Shadows.dp4,
+
+    zIndex: 100,
+
+    [Breakpoints.sm]: {
+      height: 12 * gu,
+    },
+
+    [Breakpoints.ml]: {
+      height: 16 * gu,
+    },
   },
 
   icon: {
@@ -75,5 +88,17 @@ const styles = theme => ({
 
   title: {
     color: Colors.white,
+  },
+
+  // Account for heading on iOS in portrait mode
+  ios: {
+    base: {
+      height: (14 * gu) + IOS_HEADING_SIZE,
+      paddingTop: IOS_HEADING_SIZE,
+
+      [Breakpoints.sm]: {
+        paddingTop: 4,
+      },
+    },
   },
 })

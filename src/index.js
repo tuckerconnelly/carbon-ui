@@ -2,6 +2,7 @@ export * from './styles'
 
 export { default as connectTheme } from './connectTheme'
 export { default as ThemeProvider } from './ThemeProvider'
+export { default as themes } from './themes'
 export { default as WebStyles } from './WebStyles'
 
 export { default as Button } from './Button'

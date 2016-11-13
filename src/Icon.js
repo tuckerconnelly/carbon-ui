@@ -2,16 +2,18 @@ import React, { PropTypes } from 'react'
 import { Text } from 'react-native-universal'
 import ps from 'react-native-ps'
 
-const Icon = ({ style, name, size, ...other }) =>
+const SIZE = 24
+
+const Icon = ({ name, style, ...other }) =>
   <Text
     style={[
       styles.base,
       {
-        height: size,
-        width: size,
+        height: SIZE,
+        width: SIZE,
 
-        fontSize: size,
-        lineHeight: size,
+        fontSize: SIZE,
+        lineHeight: SIZE,
       },
       style,
     ]}
@@ -21,7 +23,6 @@ const Icon = ({ style, name, size, ...other }) =>
 
 Icon.propTypes = {
   name: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
 
   style: PropTypes.object,
 }

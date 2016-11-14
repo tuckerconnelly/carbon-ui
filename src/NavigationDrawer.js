@@ -30,8 +30,6 @@ class NavigationDrawer extends Component {
   render() {
     const { onOverlayPress, children } = this.props
 
-    console.log(animate(styles.menuClosed, styles.menuOpen, this._openAV))
-
     if (!this.state.shown) return <View />
 
     return (
@@ -100,7 +98,6 @@ const styles = {
     bottom: 0,
 
     width: 70 * gu,
-    padding: 4 * gu,
 
     backgroundColor: Colors.white,
 

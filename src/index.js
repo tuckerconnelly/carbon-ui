@@ -7,6 +7,8 @@ export { default as WebStyles } from './WebStyles'
 
 export { default as AppBar } from './AppBar'
 export { default as NavigationDrawer } from './NavigationDrawer'
+export { default as List } from './List'
+export { default as ListItem } from './ListItem'
 export { default as Button } from './Button'
 export { default as IconToggle } from './IconToggle'
 export { default as Divider } from './Divider'

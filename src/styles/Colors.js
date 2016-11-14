@@ -278,8 +278,10 @@ export default {
   blackPrimary: 'rgba(0, 0, 0, 0.87)',
   blackSecondary: 'rgba(0, 0, 0, 0.54)',
   blackHint: 'rgba(0, 0, 0, 0.38)',
+  blackTransparent: 'rgba(0, 0, 0, 0)',
 
   whitePrimary: 'rgba(255, 255, 255, 1)',
   whiteSecondary: 'rgba(255, 255, 255, 0.70)',
   whiteHint: 'rgba(255, 255, 255, 0.50)',
+  whiteTransparent: 'rgba(255, 255, 255, 0)',
 }

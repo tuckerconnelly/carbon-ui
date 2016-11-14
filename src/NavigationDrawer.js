@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Animated, TouchableWithoutFeedback, View } from 'react-native-universal'
+import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 import { Animations, Breakpoints, Shadows, Colors, gu } from './index'
 
@@ -73,7 +74,7 @@ NavigationDrawer.defaultProps = {
 
 export default Uranium(NavigationDrawer)
 
-const styles = {
+const styles = ps({
   base: {
     position: 'absolute',
     left: 0,
@@ -123,4 +124,13 @@ const styles = {
       left: 0,
     },
   },
-}
+
+
+  // HACK Elevation overrides zIndex on android--this puts the base higher than
+  // everything else (namely, the AppBar)
+  android: {
+    base: {
+      elevation: 16,
+    },
+  },
+})

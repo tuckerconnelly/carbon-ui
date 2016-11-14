@@ -12,7 +12,7 @@ const IconToggle = ({ iconName, style, iconStyle, ...other }) => { // eslint-dis
   return (
     <TouchableRipple
       rippleCentered
-      rippleSpread={0.67}
+      rippleSpread={0.34}
       style={[styles.base, style]}
       {...other}>
       <Icon name={iconName} style={iconStyle} />

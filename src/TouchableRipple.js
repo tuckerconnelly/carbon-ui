@@ -41,7 +41,7 @@ const TouchableRipple = React.createClass({
       rippleColor: 'black',
       rippleSpread: 1,
       rippleOpacity: 0.2,
-      rippleDuration: 200, // ms
+      rippleDuration: 300, // ms
       rippleCentered: false,
     }
   },
@@ -61,12 +61,7 @@ const TouchableRipple = React.createClass({
     // NOTE When hot-reloading, the container ref isn't available. Not sure why
     if (!this._container) return
 
-    this._container.measure((x, y, width, height, pageX, pageY) => {
-      this.position = { width, height, pageX, pageY }
-      // Weirdly, forceUpdate doesn't work when running in Release schema on iOS
-      // Guarding for now
-      this._container.forceUpdate && this._container.forceUpdate()
-    })
+    this.layout = e.nativeEvent.layout
 
     this.props.onLayout && this.props.onLayout(e)
   },
@@ -133,18 +128,18 @@ const TouchableRipple = React.createClass({
 
   start(e) {
     const { rippleSpread, rippleOpacity, rippleDuration, rippleCentered, disabled } = this.props
-    const { width, height } = this.position
+    const { width, height, x, y } = this.layout
 
     if (disabled) return
 
     const newRipple = {
-      size: Math.sqrt((width * width) + (height * height)) * rippleSpread,
+      size: Math.sqrt((width * width) + (height * height)) * 2 * rippleSpread,
       x: rippleCentered ?
         width / 2 :
-        e.nativeEvent.pageX - this.position.pageX,
+        e.nativeEvent.pageX - x,
       y: rippleCentered ?
         height / 2 :
-        e.nativeEvent.pageY - this.position.pageY,
+        e.nativeEvent.pageY - y,
       scale: new Animated.Value(0),
       opacity: new Animated.Value(rippleOpacity),
     }

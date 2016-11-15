@@ -42,3 +42,8 @@
 
       }
     """
+  'Animate component definition':
+    'prefix': 'cac'
+    'body': """
+      const Animated$1 = Animated.createAnimatedComponent($1)
+    """

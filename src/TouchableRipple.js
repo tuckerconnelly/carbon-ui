@@ -56,17 +56,6 @@ const TouchableRipple = React.createClass({
     clearInterval(this._cleanupTimeout)
   },
 
-  getDimensions(e) {
-    // NOTE When hot-reloading, the container ref isn't available. Not sure why
-    if (!this._container) return
-
-    this.layout = e.nativeEvent.layout
-
-    this.props.onLayout && this.props.onLayout(e)
-  },
-
-  _container: null,
-
   measure(cb) { this._container.measure(cb) },
 
   /**
@@ -123,22 +112,41 @@ const TouchableRipple = React.createClass({
   _onKeyUp(e) { this._onKeyEnter(e, this.touchableHandleActivePressOut) },
   _onKeyPress(e) { this._onKeyEnter(e, this.touchableHandlePress) },
 
-  position: {},
+  _layoutChanged: false,
+  _layout: null,
 
-  start(e) {
-    const { rippleSpread, rippleOpacity, rippleDuration, rippleCentered, disabled } = this.props
-    const { width, height, x, y } = this.layout
+  async getLayout() {
+    if (this._layoutChanged) {
+      this._layout = await new Promise(resolve => {
+        this._container.measure((x, y, width, height, pageX, pageY) => {
+          resolve({ x, y, width, height, pageX, pageY })
+        })
+      })
+    }
+    return this._layout
+  },
 
-    if (disabled) return
+  _container: null,
+  _handleLayout(e) {
+    this._layoutChanged = true
+
+    this.props.onLayout && this.props.onLayout(e)
+  },
+
+  async start(e) {
+    if (this.props.disabled) return
+
+    const { rippleSpread, rippleOpacity, rippleDuration, rippleCentered } = this.props
+    const { width, height, pageX, pageY } = await this.getLayout()
 
     const newRipple = {
       size: Math.sqrt((width * width) + (height * height)) * 2 * rippleSpread,
       x: rippleCentered ?
         width / 2 :
-        e.nativeEvent.pageX - x,
+        e.nativeEvent.pageX - pageX,
       y: rippleCentered ?
         height / 2 :
-        e.nativeEvent.pageY - y,
+        e.nativeEvent.pageY - pageY,
       scale: new Animated.Value(0),
       opacity: new Animated.Value(rippleOpacity),
     }
@@ -193,7 +201,7 @@ const TouchableRipple = React.createClass({
           style,
         ]}
         ref={c => { this._container = c }}
-        onLayout={this.getDimensions}
+        onLayout={this._handleLayout}
         onKeyDown={this._onKeyDown}
         onKeyUp={this._onKeyUp}
         onKeyPress={this._onKeyPress}

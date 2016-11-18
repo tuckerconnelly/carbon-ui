@@ -34,35 +34,34 @@ class ListItem extends Component {
   _hoverAV = new Animated.Value(0)
 
   render() {
-    const { leftIcon, primaryText, active, theme } = this.props
+    const { leftIcon, primaryText, active, theme, ...other } = this.props
 
     const tStyles = styles(theme)
 
-    // HACK I think a circular dependency somewhere is causing TouchableRipple
-    // to be undefined in the closure, so putting it here for now
-    const AnimatedTouchableRipple = Animated.createAnimatedComponent(TouchableRipple)
-
     return (
-      <AnimatedTouchableRipple
-        css={[
-          tStyles.base,
-          animate(['backgroundColor'], tStyles.base, tStyles.hovered, this._hoverAV),
-        ]}
+      <TouchableRipple
+        css={tStyles.base}
         onMouseEnter={() => this.setState({ hovered: true })}
-        onMouseLeave={() => this.setState({ hovered: false })}>
-        {leftIcon &&
-          <Icon
-            name={leftIcon}
-            style={[
-              tStyles.icon,
-              active && tStyles.active,
-            ]} />
-        }
-        <Subheading
-          style={active && tStyles.active}>
-          {primaryText}
-        </Subheading>
-      </AnimatedTouchableRipple>
+        onMouseLeave={() => this.setState({ hovered: false })}
+        {...other}>
+        <Animated.View
+          style={animate(['backgroundColor'], tStyles.base, tStyles.hovered, this._hoverAV)}>
+          {leftIcon &&
+            <Icon
+              name={leftIcon}
+              style={[
+                tStyles.icon,
+                active && tStyles.active,
+              ]} />
+          }
+          <Subheading
+            style={active ? tStyles.active : undefined}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {primaryText}
+          </Subheading>
+        </Animated.View>
+      </TouchableRipple>
     )
   }
 }
@@ -95,7 +94,7 @@ const styles = theme => ({
     justifyContent: 'center',
 
     height: 12 * gu,
-    paddingLeft: 4 * gu,
+    paddingHorizontal: 4 * gu,
 
     backgroundColor: Colors.white,
 

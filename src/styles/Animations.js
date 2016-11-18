@@ -43,28 +43,33 @@ export const Durations = {
 }
 
 const Animations = {
-  standard: (av, toValue = 1, duration) => Animated.timing(av, {
+  standard: (av, toValue = 1, duration, delay) => Animated.timing(av, {
     duration: duration ? Durations.custom(duration)() : Durations.standard(),
+    delay: delay && Durations.custom(delay)(),
     easing: Curves.standard,
     toValue,
   }),
-  large: (av, toValue = 1, duration) => Animated.timing(av, {
+  large: (av, toValue = 1, duration, delay) => Animated.timing(av, {
     duration: duration ? Durations.custom(duration)() : Durations.large(),
+    delay,
     easing: Curves.standard,
     toValue,
   }),
-  entrance: (av, toValue = 1, duration) => Animated.timing(av, {
+  entrance: (av, toValue = 1, duration, delay) => Animated.timing(av, {
     duration: duration ? Durations.custom(duration)() : Durations.entering(),
+    delay,
     easing: Curves.deceleration,
     toValue,
   }),
-  exit: (av, toValue = 1, duration) => Animated.timing(av, {
+  exit: (av, toValue = 1, duration, delay) => Animated.timing(av, {
     duration: duration ? Durations.custom(duration)() : Durations.leaving(),
+    delay,
     easing: Curves.acceleration,
     toValue,
   }),
-  tempExit: (av, toValue = 1, duration) => Animated.timing(av, {
+  tempExit: (av, toValue = 1, duration, delay) => Animated.timing(av, {
     duration: duration ? Durations.custom(duration)() : Durations.leaving(),
+    delay,
     easing: Curves.sharp,
     toValue,
   }),

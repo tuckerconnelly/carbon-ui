@@ -36,12 +36,12 @@
     "eslint-plugin-react": "^6.6.0"
   },
   "peerDependencies": {
-    "react-native": "",
-    "react-native-match-media": "",
-    "react-native-web": "",
-    "react-native-ps": "0.0.4",
-    "react-native-universal": "0.0.1",
-    "uranium": "github:tuckerconnelly/uranium"
+    "react-native": ">=0.36.0",
+    "react-native-match-media": ">=0.1.0",
+    "react-native-web": "tuckerconnelly/react-native-web",
+    "react-native-ps": ">=0.0.4",
+    "react-native-universal": ">=0.0.1",
+    "uranium": "tuckerconnelly/uranium"
   },
   "dependencies": {
     "color": "^0.11.4"

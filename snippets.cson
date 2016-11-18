@@ -29,7 +29,7 @@
 
       const $1 = () =>
         <View
-          style={styles.root}>
+          style={styles.base}>
         </View>
 
       $1.propTypes = {
@@ -39,10 +39,35 @@
       export default $1
 
       const styles = {
-
+        base: {}
       }
     """
-  'Animate component definition':
+  'React component':
+    'prefix': 'rcomp'
+    'body': """
+      import React, { Component, PropTypes } from 'react'
+      import { View } from 'react-native-universal'
+
+      class $1 extends Component {
+        render() {
+          return (
+            <View style={styles.base}>
+            </View>
+          )
+        }
+      }
+
+      $1.propTypes = {
+
+      }
+
+      export default $1
+
+      const styles = {
+        base: {},
+      }
+  """
+  'Animated component definition':
     'prefix': 'cac'
     'body': """
       const Animated$1 = Animated.createAnimatedComponent($1)

@@ -56,6 +56,27 @@ const TouchableRipple = React.createClass({
     clearInterval(this._cleanupTimeout)
   },
 
+  async getLayout() {
+    if (this._layoutChanged) {
+      this._layout = await new Promise(resolve => {
+        this._container.measure((x, y, width, height, pageX, pageY) => {
+          resolve({ x, y, width, height, pageX, pageY })
+        })
+      })
+    }
+    return this._layout
+  },
+
+  _layoutChanged: false,
+  _layout: null,
+  _container: null,
+
+  _handleLayout(e) {
+    this._layoutChanged = true
+
+    this.props.onLayout && this.props.onLayout(e)
+  },
+
   measure(cb) { this._container.measure(cb) },
 
   /**
@@ -112,27 +133,6 @@ const TouchableRipple = React.createClass({
   _onKeyUp(e) { this._onKeyEnter(e, this.touchableHandleActivePressOut) },
   _onKeyPress(e) { this._onKeyEnter(e, this.touchableHandlePress) },
 
-  _layoutChanged: false,
-  _layout: null,
-
-  async getLayout() {
-    if (this._layoutChanged) {
-      this._layout = await new Promise(resolve => {
-        this._container.measure((x, y, width, height, pageX, pageY) => {
-          resolve({ x, y, width, height, pageX, pageY })
-        })
-      })
-    }
-    return this._layout
-  },
-
-  _container: null,
-  _handleLayout(e) {
-    this._layoutChanged = true
-
-    this.props.onLayout && this.props.onLayout(e)
-  },
-
   async start(e) {
     if (this.props.disabled) return
 
@@ -184,9 +184,8 @@ const TouchableRipple = React.createClass({
     ).start()
 
     // Clean up after fade out
-    const index = this.state.ripples.length - 1
     this._cleanupTimeout = setTimeout(() =>
-      this.setState({ ripples: this.state.ripples.splice(index, 1) })
+      this.setState({ ripples: this.state.ripples.splice(0, 1) })
     , rippleDuration + 10)
   },
 

@@ -3,27 +3,27 @@ import { Breakpoints } from './Grid'
 
 export default {
   display4: {
-    color: Colors.blackPrimary,
+    color: Colors.blackSecondary,
     fontFamily: 'Roboto-Light',
     fontSize: 112,
     // NOTE Not currently in MD spec, making educated guess
     lineHeight: 112,
   },
   display3: {
-    color: Colors.blackPrimary,
+    color: Colors.blackSecondary,
     fontFamily: 'Roboto-Regular',
     fontSize: 56,
     // NOTE Not in MD spec
     lineHeight: 56,
   },
   display2: {
-    color: Colors.blackPrimary,
+    color: Colors.blackSecondary,
     fontFamily: 'Roboto-Regular',
     fontSize: 45,
     lineHeight: 48,
   },
   display1: {
-    color: Colors.blackPrimary,
+    color: Colors.blackSecondary,
     fontFamily: 'Roboto-Regular',
     fontSize: 34,
     lineHeight: 40,
@@ -63,7 +63,7 @@ export default {
     [Breakpoints.ml]: { fontSize: 13 },
   },
   caption: {
-    color: Colors.blackPrimary,
+    color: Colors.blackSecondary,
     fontFamily: 'Roboto-Regular',
     fontSize: 12,
     // NOTE Not in MD spec

@@ -1,30 +1,40 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Text } from 'react-native-universal'
 import ps from 'react-native-ps'
 
 const SIZE = 24
 
-const Icon = ({ name, style, ...other }) =>
-  <Text
-    style={[
-      styles.base,
-      {
-        height: SIZE,
-        width: SIZE,
+// Stateful so refs can be attached, mostly so Animated.createAnimatedComponent
+// works, which needs to attach a ref to the animating component
+class Icon extends Component { // eslint-disable-line react/prefer-stateless-function
+  render() {
+    const { name, style, children, ...other } = this.props
 
-        fontSize: SIZE,
-        lineHeight: SIZE,
-      },
-      style,
-    ]}
-    {...other}>
-    {name}
-  </Text>
+    return (
+      <Text
+        style={[
+          styles.base,
+          {
+            height: SIZE,
+            width: SIZE,
+
+            fontSize: SIZE,
+            lineHeight: SIZE,
+          },
+        ].concat(style)}
+        {...other}>
+        {name}
+        {children}
+      </Text>
+    )
+  }
+}
 
 Icon.propTypes = {
   name: PropTypes.string.isRequired,
 
-  style: PropTypes.object,
+  children: PropTypes.node,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 export default Icon

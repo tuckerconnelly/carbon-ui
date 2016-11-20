@@ -9,6 +9,9 @@ export default ps({
   ios: {
     dp0: {
       shadowColor: 'transparent',
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: iosOpacity,
+      shadowRadius: 0,
     },
     dp2: {
       shadowColor: 'black',
@@ -75,30 +78,33 @@ export default ps({
   // Taken from Material Design Lite
   web: {
     dp0: {
-      boxShadow: 'none',
+      boxShadow: `
+        0 0px 0px 0px rgba(0, 0, 0, 0),
+        0 0px 0px 0px rgba(0, 0, 0, 0)
+      `,
     },
     dp2: {
       boxShadow: `
-        0 2px 2px 0 rgba(0, 0, 0, ${penumbraOpacity}),
+        0 2px 2px 0px rgba(0, 0, 0, ${penumbraOpacity}),
         0 3px 1px -2px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
     dp3: {
       boxShadow: `
-        0 3px 4px 0 rgba(0, 0, 0, ${penumbraOpacity}),
+        0 3px 4px 0px rgba(0, 0, 0, ${penumbraOpacity}),
         0 3px 3px -2px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
     dp4: {
       boxShadow: `
-        0 4px 5px 0 rgba(0, 0, 0, ${penumbraOpacity}),
-        0 1px 10px -2px rgba(0, 0, 0, ${umbraOpacity})
+        0 4px 5px 0px rgba(0, 0, 0, ${penumbraOpacity}),
+        0 1px 10px -2px rgba(25, 184, 222, ${umbraOpacity})
       `,
     },
     dp6: {
       boxShadow: `
-        0 6px 10px 0 rgba(0, 0, 0, ${penumbraOpacity}),
-        0 1px 18px 0 rgba(0, 0, 0, ${umbraOpacity})
+        0 6px 10px 0px rgba(0, 0, 0, ${penumbraOpacity}),
+        0 1px 18px 0px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
     dp8: {

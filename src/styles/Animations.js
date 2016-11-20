@@ -73,15 +73,15 @@ const Animations = {
     easing: Curves.sharp,
     toValue,
   }),
-  staggered: (av, staggerAV, toValue = 1, staggerAmount = 50) =>
+  staggered: (av, staggerAV, toValue = 1, duration = 300, staggerAmount = 50) =>
     Animated.stagger(staggerAmount, [
       Animated.timing(toValue ? av : staggerAV, {
-        duration: Durations.custom(300 - staggerAmount)(),
+        duration: Durations.custom(duration - staggerAmount)(),
         easing: Curves.standard,
         toValue,
       }),
       Animated.timing(toValue ? staggerAV : av, {
-        duration: Durations.custom(300 - staggerAmount)(),
+        duration: Durations.custom(duration - staggerAmount)(),
         easing: Curves.standard,
         delay: Durations.custom(staggerAmount)(),
         toValue,

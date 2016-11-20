@@ -3,13 +3,13 @@ import Color from 'color'
 import Colors from '../styles/Colors'
 
 export default {
-  primary: Colors.lightBlue400,
-  primaryLight: Colors.lightBlue100,
-  primaryDark: Colors.lightBlue700,
+  primary: Colors.cyan500,
+  primaryLight: Colors.cyan200,
+  primaryDark: Colors.cyan700,
 
-  accent: Colors.orangeA200,
-  accentLight: Colors.orangeA100,
-  accentDark: Colors.orangeA400,
+  accent: Colors.pinkA200,
+  accentLight: Colors.pinkA100,
+  accentDark: Colors.pinkA400,
 
   button: {
     flat: {

@@ -40,11 +40,11 @@ class ListItem extends Component {
 
     return (
       <TouchableRipple
-        css={tStyles.base}
         onMouseEnter={() => this.setState({ hovered: true })}
         onMouseLeave={() => this.setState({ hovered: false })}
         {...other}>
         <Animated.View
+          css={tStyles.base}
           style={animate(['backgroundColor'], tStyles.base, tStyles.hovered, this._hoverAV)}>
           {leftIcon &&
             <Icon

@@ -6,7 +6,7 @@ import connectTheme from './connectTheme'
 const Divider = ({ color, type, style, theme, ...other }) =>
   <View
     style={[
-      styles(theme).base,
+      tStyles(theme).base,
       color && { borderColor: color },
       type && { borderStyle: type },
       style,
@@ -21,7 +21,7 @@ Divider.propTypes = {
   style: PropTypes.object,
 }
 
-const styles = theme => ({
+const tStyles = theme => ({
   base: {
     alignSelf: 'stretch',
     height: 0,

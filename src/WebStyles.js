@@ -64,4 +64,9 @@ export default () =>
         font-family: 'MaterialIcons-Regular';
         src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v14/2fcrYFNaTjcS6g4U3t-Y5RV6cRhDpPC5P4GCEJpqGoc.woff) format('woff');
       }
+
+      @font-face {
+        font-family: 'RobotoMono-Regular';
+        src: local('Roboto Mono'), local('RobotoMono-Regular'), url(https://fonts.gstatic.com/s/robotomono/v4/hMqPNLsu_dywMa4C_DEpY7rIa-7acMAeDBVuclsi6Gc.woff) format('woff');
+      }
       ` }} />

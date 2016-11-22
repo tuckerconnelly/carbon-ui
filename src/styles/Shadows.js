@@ -49,6 +49,12 @@ export default ps({
       shadowOpacity: iosOpacity,
       shadowRadius: 8,
     },
+    dp24: {
+      shadowColor: 'black',
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: iosOpacity,
+      shadowRadius: 12,
+    },
   },
 
   android: {
@@ -72,6 +78,9 @@ export default ps({
     },
     dp16: {
       elevation: 16,
+    },
+    dp24: {
+      elevation: 24,
     },
   },
 
@@ -117,6 +126,12 @@ export default ps({
       boxShadow: `
         0 16px 24px 2px rgba(0, 0, 0, ${penumbraOpacity}),
         0 6px 30px 5px rgba(0, 0, 0, ${umbraOpacity})
+      `,
+    },
+    dp24: {
+      boxShadow: `
+        0 24px 32px 3px rgba(0, 0, 0, ${penumbraOpacity}),
+        0 12px 36px 8px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
   },

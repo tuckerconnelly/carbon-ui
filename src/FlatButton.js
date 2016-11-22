@@ -31,7 +31,6 @@ const Button = ({
     <TouchableRipple
       hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
       css={[styles.base, disabled && styles.disabled, css]}
-      rippleColor={theme.primary}
       {...other}>
       {formattedChildren}
     </TouchableRipple>
@@ -67,6 +66,8 @@ const tStyles = theme => ps({
   text: {
     lineHeight: 16,
     textAlign: 'center',
+
+    color: theme.primary,
   },
 
   active: {

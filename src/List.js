@@ -25,10 +25,10 @@ export default Uranium(List)
 
 const styles = ps({
   base: {
-    paddingTop: 8,
+    paddingVertical: 8,
 
     [Breakpoints.ml]: {
-      paddingTop: 4,
+      paddingVertical: 4,
     },
   },
 })

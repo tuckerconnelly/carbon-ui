@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { View, Animated } from 'react-native-universal'
 import { animate } from 'uranium'
 
-import { Title, Animations, Colors, Shadows, gu } from './index'
+import { Title, Animations, Colors, Elevation, gu } from './index'
 
 class Dialog extends Component {
   state = { visible: this.props.active }
@@ -14,7 +14,7 @@ class Dialog extends Component {
       Animations.entrance(this._showAV).start()
     }
     if (active && !next.active) {
-      Animations.exit(this._showAV).start(() => {
+      Animations.exit(this._showAV, 0).start(() => {
         this.setState({ visible: false })
       })
     }
@@ -26,13 +26,13 @@ class Dialog extends Component {
     const { title, actions, children } = this.props
     const { visible } = this.state
 
-    if (!visible) return <View />
-
     return (
       <Animated.View
         style={[
           styles.overlay,
           animate(['backgroundColor'], styles.overlay, styles.overlayVisible, this._showAV),
+          // HACK Just returning a <View /> if !visible freezes iOS for some reason :P
+          !visible && styles.hidden,
         ]}>
         <Animated.View
           style={[
@@ -88,6 +88,13 @@ const styles = {
     elevation: 24,
   },
 
+  hidden: {
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+  },
+
   overlayVisible: {
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
@@ -98,7 +105,7 @@ const styles = {
 
     opacity: 0,
 
-    ...Shadows.dp24,
+    ...Elevation.dp24,
   },
 
   dialogVisible: {

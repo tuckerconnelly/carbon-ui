@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react'
 import { View } from 'react-native-universal'
 import Uranium from 'uranium'
 
-import Shadows from './styles/Shadows'
+import Elevation from './styles/Shadows'
 
 const Paper = ({ style, css, children, elevation, ...other }) =>
   <View
     css={[
       styles.base,
-      { ...Shadows[`dp${elevation}`] },
+      { ...Elevation[`dp${elevation}`] },
     ].concat(style, css)}
     {...other}>
     {children}

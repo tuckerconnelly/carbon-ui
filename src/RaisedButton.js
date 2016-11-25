@@ -9,7 +9,7 @@ import {
 
   Breakpoints,
   Colors,
-  Shadows,
+  Elevation,
 
   connectTheme,
 } from './index'
@@ -66,12 +66,12 @@ const tStyles = theme => ps({
 
     backgroundColor: theme.primary,
 
-    ...Shadows.dp2,
+    ...Elevation.dp2,
 
     [Breakpoints.ml]: {
       height: 32,
 
-      ...Shadows.none,
+      ...Elevation.none,
     },
   },
 
@@ -82,7 +82,7 @@ const tStyles = theme => ps({
   },
 
   pressed: {
-    ...Shadows.dp4,
+    ...Elevation.dp4,
   },
 
   disabled: {
@@ -96,7 +96,7 @@ const tStyles = theme => ps({
   },
 
   hovered: {
-    ...Shadows.dp2,
+    ...Elevation.dp2,
   },
 })
 

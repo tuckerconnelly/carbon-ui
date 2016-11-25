@@ -10,19 +10,18 @@ import {
   Animations,
   Breakpoints,
   Colors,
-  Shadows,
+  Elevation,
   gu,
 
   connectTheme,
 } from './index'
 
+const ELEVATE_DURATION = 175
+
 /**
  * The app bar, formerly known as the action bar in Android, is a special kind
  * of toolbar that’s used for branding, navigation, search, and actions.
  */
-
-const ELEVATE_DURATION = 175
-
 class AppBar extends Component {
   componentWillReceiveProps(next) {
     const { elevated } = this.props
@@ -51,7 +50,7 @@ class AppBar extends Component {
       <Animated.View
         css={[
           styles.base,
-          animate(Shadows.dp0, Shadows.dp4, this._elevateAV),
+          animate(Elevation.dp0, Elevation.dp4, this._elevateAV),
           css,
         ]}
         {...otherWithoutAppBarProps}>
@@ -114,7 +113,7 @@ const tStyles = theme => ps({
 
     backgroundColor: theme.primary,
 
-    ...Shadows.dp4,
+    ...Elevation.dp4,
 
     zIndex: 100,
 

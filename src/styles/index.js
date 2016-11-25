@@ -1,5 +1,5 @@
 export { default as Animations, Curves, Durations } from './Animations'
 export { default as Colors } from './Colors'
-export { Breakpoints, gu } from './Grid'
-export { default as Shadows } from './Shadows'
+export { Breakpoints, gu } from './Responsive'
+export { default as Elevation } from './Elevation'
 export { default as Type } from './Type'

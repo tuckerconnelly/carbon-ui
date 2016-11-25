@@ -1,4 +1,5 @@
 export { default as AppBar } from './AppBar'
+export { default as DataTable } from './DataTable'
 export { default as NavigationDrawer } from './NavigationDrawer'
 export { default as List } from './List'
 export { default as ListItem } from './ListItem'

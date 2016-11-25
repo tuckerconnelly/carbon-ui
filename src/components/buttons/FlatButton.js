@@ -9,7 +9,7 @@ import {
   Breakpoints,
 
   connectTheme,
-} from './index'
+} from '../../index'
 
 const Button = ({
   disabled,

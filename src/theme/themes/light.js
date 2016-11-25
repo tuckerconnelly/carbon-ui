@@ -1,6 +1,6 @@
 import Color from 'color'
 
-import Colors from '../styles/Colors'
+import { Colors } from '../../index'
 
 export default {
   primary: Colors.cyan500,

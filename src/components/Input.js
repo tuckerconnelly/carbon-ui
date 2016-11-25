@@ -4,10 +4,7 @@ import Color from 'color'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 
-import connectTheme from './connectTheme'
-import { Animations, Breakpoints, Colors, Type } from './styles'
-import Divider from './Divider'
-import Error from './Error'
+import { Divider, Error, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
 
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 

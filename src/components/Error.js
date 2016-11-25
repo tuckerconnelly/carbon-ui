@@ -4,8 +4,7 @@ import ps from 'react-native-ps'
 import { animate } from 'uranium'
 import omit from 'lodash/omit'
 
-import { Animations, Breakpoints, Type, gu } from './styles'
-import connectTheme from './connectTheme'
+import { Animations, Breakpoints, Type, gu, connectTheme } from '../index'
 
 const PIXELS_PER_CHARACTER = 7
 

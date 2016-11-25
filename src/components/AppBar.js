@@ -14,7 +14,7 @@ import {
   gu,
 
   connectTheme,
-} from './index'
+} from '../index'
 
 const ELEVATE_DURATION = 175
 

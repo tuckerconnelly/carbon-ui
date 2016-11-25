@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react'
 import { Text } from 'react-native-universal'
 import Uranium from 'uranium'
 
-import styles from './styles/Type'
+import { Type as styles } from '../index'
 
 // Using Class instead of function because refs can't be applied to function
 // components

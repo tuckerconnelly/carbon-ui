@@ -1,5 +1,5 @@
 import Colors from './Colors'
-import { Breakpoints } from './Grid'
+import { Breakpoints } from './Responsive'
 
 export default {
   display4: {

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { View } from 'react-native-universal'
 import Uranium from 'uranium'
 
-import Elevation from './styles/Shadows'
+import { Elevation } from '../index'
 
 const Paper = ({ style, css, children, elevation, ...other }) =>
   <View

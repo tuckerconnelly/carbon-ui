@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { View, Animated } from 'react-native-universal'
 import { animate } from 'uranium'
 
-import { Title, Animations, Colors, Elevation, gu } from './index'
+import { Title, Animations, Colors, Elevation, gu } from '../index'
 
 class Dialog extends Component {
   state = { visible: this.props.active }

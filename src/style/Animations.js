@@ -1,6 +1,6 @@
 import { Animated, Easing } from 'react-native-universal'
 
-import { Breakpoints } from './Grid'
+import { Breakpoints } from './Responsive'
 
 export const Curves = {
   standard: Easing.bezier(0.4, 0, 0.2, 1),

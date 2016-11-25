@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { View } from 'react-native-universal'
 
-import connectTheme from './connectTheme'
+import { connectTheme } from '../index'
 
 const Divider = ({ color, type, style, theme, ...other }) =>
   <View

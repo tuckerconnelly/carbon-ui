@@ -12,7 +12,7 @@ import {
   Elevation,
 
   connectTheme,
-} from './index'
+} from '../../index'
 
 const Button = ({
   disabled,

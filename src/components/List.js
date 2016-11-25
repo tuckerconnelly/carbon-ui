@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { ScrollView } from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
-import { Breakpoints } from './index'
+import { Breakpoints } from '../index'
 
 /**
  * Lists are best suited to presenting a homogeneous data type or sets of data

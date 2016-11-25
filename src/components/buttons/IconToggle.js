@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { TouchableRipple, Icon, gu } from './index'
+import { TouchableRipple, Icon, gu } from '../../index'
 
 /**
  * Icons are appropriate for toggle buttons that allow a single choice to be

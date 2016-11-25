@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Animated, TouchableWithoutFeedback, View } from 'react-native-universal'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
-import { Animations, Breakpoints, Elevation, Colors, gu } from './index'
+import { Animations, Breakpoints, Elevation, Colors, gu } from '../index'
 
 /**
  * The navigation drawer slides in from the left and contains the navigation

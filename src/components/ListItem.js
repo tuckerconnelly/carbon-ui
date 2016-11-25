@@ -12,7 +12,7 @@ import {
   Colors,
   gu,
   connectTheme,
-} from './index'
+} from '../index'
 
 const HOVER_FADE_DURATION = 175
 const EXPAND_DURATION = 150

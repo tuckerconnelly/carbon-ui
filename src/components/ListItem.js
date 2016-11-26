@@ -223,7 +223,7 @@ const tStyles = theme => ({
   },
 
   active: {
-    color: theme.primary,
+    color: theme.colors.primary,
   },
 
   nestedList: {

@@ -98,7 +98,7 @@ const styles = theme => ps({
     marginBottom: 0,
 
     ...Type.caption,
-    color: theme.error,
+    color: theme.colors.error,
 
     opacity: 0,
     overflow: 'hidden',

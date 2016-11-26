@@ -74,7 +74,7 @@ const tStyles = theme => ps({
     alignItems: 'center',
     justifyContent: 'center',
 
-    backgroundColor: theme.primary,
+    backgroundColor: theme.colors.primary,
 
     ...Elevation.dp2,
 
@@ -96,13 +96,13 @@ const tStyles = theme => ps({
   },
 
   disabled: {
-    color: theme.button.raised.disabledText,
+    color: theme.colors.button.raised.disabledText,
 
-    backgroundColor: theme.button.raised.disabled,
+    backgroundColor: theme.colors.button.raised.disabled,
   },
 
   focused: {
-    backgroundColor: Color(theme.primary).darken(0.12).hexString(),
+    backgroundColor: Color(theme.colors.primary).darken(0.12).hexString(),
   },
 
   hovered: {

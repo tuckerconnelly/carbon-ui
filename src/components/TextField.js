@@ -85,7 +85,7 @@ class TextField extends Component {
             disabled && styles.disabled,
             textInputStyle,
           ]}
-          selectionColor={Color(theme.accent).alpha(0.87).rgbString()}
+          selectionColor={Color(theme.colors.accent).alpha(0.87).rgbString()}
           underlineColorAndroid="transparent"
           {...other}
           onFocus={this.handleFocus}
@@ -124,8 +124,8 @@ class TextField extends Component {
           color={this.colorAV.interpolate({
             inputRange: [0, 1],
             outputRange: [
-              theme.divider,
-              Color(theme.accent).alpha(0.87).rgbString(),
+              theme.colors.divider,
+              Color(theme.colors.accent).alpha(0.87).rgbString(),
             ],
           })}
           type={disabled && 'dotted'}
@@ -237,7 +237,7 @@ const styles = theme => ps({
   placeholderFocus: {
     top: 12,
     ...Type.caption,
-    color: Color(theme.accent).alpha(0.87).rgbString(),
+    color: Color(theme.colors.accent).alpha(0.87).rgbString(),
 
     [Breakpoints.ml]: {
       top: 8,
@@ -275,4 +275,7 @@ const styles = theme => ps({
   },
 })
 
-export default connectTheme(Uranium(TextField))
+export default
+  connectTheme(
+  Uranium(
+  TextField))

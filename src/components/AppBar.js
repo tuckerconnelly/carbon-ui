@@ -100,7 +100,10 @@ AppBar.defaultProps = {
   elevated: true,
 }
 
-export default connectTheme(Uranium(AppBar))
+export default
+  connectTheme(
+  Uranium(
+  AppBar))
 
 const IOS_HEADING_SIZE = 20
 const tStyles = theme => ps({
@@ -111,7 +114,7 @@ const tStyles = theme => ps({
     flexDirection: 'row',
     alignItems: 'center',
 
-    backgroundColor: theme.primary,
+    backgroundColor: theme.colors.primary,
 
     ...Elevation.dp4,
 

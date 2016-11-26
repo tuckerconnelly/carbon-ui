@@ -81,15 +81,15 @@ const tStyles = theme => ps({
     lineHeight: 16,
     textAlign: 'center',
 
-    color: theme.primary,
+    color: theme.colors.primary,
   },
 
   active: {
-    backgroundColor: theme.button.flat.pressed,
+    backgroundColor: theme.colors.button.flat.pressed,
   },
 
   disabled: {
-    backgroundColor: theme.button.flat.disabled,
+    backgroundColor: theme.colors.button.flat.disabled,
   },
 })
 

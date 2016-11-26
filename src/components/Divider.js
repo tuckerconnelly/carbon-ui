@@ -32,8 +32,10 @@ const tStyles = theme => ({
     alignSelf: 'stretch',
     height: 0,
     borderTopWidth: 1,
-    borderColor: theme.divider,
+    borderColor: theme.colors.divider,
   },
 })
 
-export default connectTheme(Divider)
+export default
+  connectTheme(
+  Divider)

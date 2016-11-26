@@ -15,7 +15,7 @@ export function calculateLines(text, width) {
   return Math.round((text || '').length / charactersPerLine)
 }
 
-class Error extends Component {
+class InputError extends Component {
   // Using state.text to delay the removal of the text so it.
   // can animate/fade out.
   state = {
@@ -79,7 +79,7 @@ class Error extends Component {
   }
 }
 
-Error.propTypes = {
+InputError.propTypes = {
   theme: PropTypes.object.isRequired,
   style: PropTypes.object,
   children: PropTypes.node,
@@ -107,4 +107,4 @@ const styles = theme => ps({
   },
 })
 
-export default connectTheme(Error)
+export default connectTheme(InputError)

@@ -4,7 +4,7 @@ import Color from 'color'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 
-import { Divider, Error, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
+import { Divider, InputError, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
 
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 
@@ -123,7 +123,7 @@ class Input extends Component {
           })}
           type={disabled && 'dotted'}
           css={styles.divider} />
-        <Error>{error}</Error>
+        <InputError>{error}</InputError>
       </View>
     )
   }

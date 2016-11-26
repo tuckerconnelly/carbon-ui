@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Animated, View } from 'react-native-universal'
 import Uranium, { animate } from 'uranium'
 import omit from 'lodash/omit'
+import get from 'lodash/get'
 import {
   Icon,
   Subheading,
@@ -23,22 +24,27 @@ const EXPAND_DURATION = 150
  * Can become a nested menu item it has ListItem for children.
  */
 class ListItem extends Component {
-  state = { hovered: false }
+  state = {
+    hovered: false,
+    expanded: this.props.expanded,
+  }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentWillUpdate(nextProps, nextState) {
     const { expanded } = this.props
     const { hovered } = this.state
 
-    if (!prevState.hovered && hovered) {
+    if (!hovered && nextState.hovered) {
       Animations.standard(this._hoverAV, 1, HOVER_FADE_DURATION).start()
-    } else if (prevState.hovered && !hovered) {
+    } else if (hovered && !nextState.hovered) {
       Animations.standard(this._hoverAV, 0, HOVER_FADE_DURATION).start()
     }
 
-    if (!prevProps.expanded && expanded) {
+    if (!expanded && nextProps.expanded) {
       Animations.standard(this._expandIconAV, 1, EXPAND_DURATION).start()
-      Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 1, EXPAND_DURATION).start()
-    } else if (prevProps.expanded && !expanded) {
+      Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 1, EXPAND_DURATION)
+        .start(() => this.setState({ expanded: true }))
+    } else if (expanded && !nextProps.expanded) {
+      this.setState({ expanded: false })
       Animations.standard(this._expandIconAV, 0, EXPAND_DURATION).start()
       Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 0, EXPAND_DURATION).start()
     }
@@ -52,7 +58,17 @@ class ListItem extends Component {
   render() {
     const AnimatedIcon = Animated.createAnimatedComponent(Icon)
 
-    const { leftIcon, primaryText, active, onPress, children, style, theme, ...other } = this.props
+    const {
+      leftIcon,
+      primaryText,
+      active,
+      nestingDepth,
+      onPress,
+      children,
+      style,
+      theme,
+      ...other
+    } = this.props
 
     const styles = tStyles(theme)
     const childrenCount = React.Children.count(children)
@@ -102,13 +118,14 @@ class ListItem extends Component {
               styles.nestedList,
               animate('maxHeight', 0, (childrenCount * styles.base.height) + 40, this._expandHeightAV),
               animate('opacity', 0, 1, this._expandOpacityAV),
+              this.state.expanded && { maxHeight: undefined },
             ]}>
             {/* Man, all this just to add padding to children elements */}
             {React.Children.map(children, listItem =>
               React.cloneElement(listItem, {
                 ...listItem.props,
                 style: {
-                  ...styles.nestedListItem,
+                  paddingLeft: get(style, 'paddingLeft', 0) + nestingDepth,
                   ...listItem.props.style,
                 },
               })
@@ -134,6 +151,11 @@ ListItem.propTypes = {
    */
   active: PropTypes.bool,
   /**
+   * The depth, in px, of nested items. Only applies if there are children
+   * ListItems. The default is the Material Design spec value.
+   */
+  nestingDepth: PropTypes.number,
+  /**
    * Controls the expanded/collapses state if there are ListItem children
    */
   expanded: PropTypes.bool,
@@ -147,6 +169,10 @@ ListItem.propTypes = {
 
   // connectTheme
   theme: PropTypes.object.isRequired,
+}
+
+ListItem.defaultProps = {
+  nestingDepth: 18 * gu,
 }
 
 export default
@@ -202,9 +228,5 @@ const tStyles = theme => ({
 
   nestedList: {
     overflow: 'hidden',
-  },
-
-  nestedListItem: {
-    paddingLeft: 18 * gu,
   },
 })

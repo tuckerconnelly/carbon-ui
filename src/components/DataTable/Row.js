@@ -3,8 +3,6 @@ import { View } from 'react-native-universal'
 import ps from 'react-native-ps'
 
 import { gu } from '../../index'
-import HeaderCell from './HeaderCell'
-import Cell from './Cell'
 
 const HeaderRow = ({ children, style, ...other }) =>
   <View style={[styles.base].concat(style)} {...other}>
@@ -20,10 +18,10 @@ const HeaderRow = ({ children, style, ...other }) =>
   </View>
 
 HeaderRow.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.instanceOf(HeaderCell),
-    PropTypes.instanceOf(Cell),
-  ]).isRequired,
+  /**
+   * A collection of Cells
+   */
+  children: PropTypes.node.isRequired,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,

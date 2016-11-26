@@ -17,10 +17,10 @@ const DataTable = ({ children, style, ...other }) =>
   </View>
 
 DataTable.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.instanceOf(HeaderRow),
-    PropTypes.instanceOf(Row),
-  ]).isRequired,
+  /**
+   * The first child should be a HeaderRow, and the rest regular Rows.
+   */
+  children: PropTypes.node.isRequired,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,

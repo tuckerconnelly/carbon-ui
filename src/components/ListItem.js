@@ -39,13 +39,16 @@ class ListItem extends Component {
       Animations.standard(this._hoverAV, 0, HOVER_FADE_DURATION).start()
     }
 
+    // HACK No idea why, but Animated has trouble starting multiple animations
+    // from componentWillUpdate. componentDidUpdate is fine, but need to use
+    // setState here. Using setTimeout to start the icon one.
     if (!expanded && nextProps.expanded) {
-      Animations.standard(this._expandIconAV, 1, EXPAND_DURATION).start()
+      setTimeout(() => Animations.standard(this._expandIconAV, 1, EXPAND_DURATION).start())
       Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 1, EXPAND_DURATION)
         .start(() => this.setState({ expanded: true }))
     } else if (expanded && !nextProps.expanded) {
       this.setState({ expanded: false })
-      Animations.standard(this._expandIconAV, 0, EXPAND_DURATION).start()
+      setTimeout(() => Animations.standard(this._expandIconAV, 0, EXPAND_DURATION).start())
       Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 0, EXPAND_DURATION).start()
     }
   }

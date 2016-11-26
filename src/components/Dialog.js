@@ -4,6 +4,10 @@ import { animate } from 'uranium'
 
 import { Title, Animations, Colors, Elevation, gu } from '../index'
 
+/**
+ * Dialogs inform users about a specific task and may contain critical
+ * information, require decisions, or involve multiple tasks.
+ */
 class Dialog extends Component {
   state = { visible: this.props.active }
 
@@ -55,14 +59,22 @@ class Dialog extends Component {
 }
 
 Dialog.propTypes = {
+  /**
+   * The title of the dialog.
+   */
   title: PropTypes.string,
+  /**
+   * The actions, can be an array (say, of FlatButtons) or a full element itself.
+   */
+  actions: PropTypes.node,
   /**
    * Whether or not the Dialog is active.
    */
-  actions: PropTypes.node,
   active: PropTypes.bool,
-
-  children: PropTypes.node,
+  /**
+   * The contents of the dialog
+   */
+  children: PropTypes.node.isRequired,
 }
 
 Dialog.defaultProps = {

@@ -8,7 +8,8 @@ import Row from './Row'
 import Cell from './Cell'
 
 /**
- * Its a table yo.
+ * Data tables display sets of raw data. They usually appear in desktop
+ * enterprise products.
  */
 const DataTable = ({ children, style, ...other }) =>
   <View style={[styles.base].concat(style)} {...other}>
@@ -16,8 +17,14 @@ const DataTable = ({ children, style, ...other }) =>
   </View>
 
 DataTable.propTypes = {
-  children: PropTypes.node.isRequired,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  children: PropTypes.oneOfType([
+    PropTypes.instanceOf(HeaderRow),
+    PropTypes.instanceOf(Row),
+  ]).isRequired,
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
 }
 
 export default DataTable

@@ -2,8 +2,11 @@ import React, { PropTypes } from 'react'
 import { View } from 'react-native-universal'
 import Uranium from 'uranium'
 
-import { Elevation } from '../index'
+import { Colors, Elevation } from '../index'
 
+/**
+ * Generic Paper component. Like the <div /> of Material Design.
+ */
 const Paper = ({ style, css, children, elevation, ...other }) =>
   <View
     css={[
@@ -15,14 +18,17 @@ const Paper = ({ style, css, children, elevation, ...other }) =>
   </View>
 
 Paper.propTypes = {
+  /**
+   * The elevation of the paper
+   */
+  elevation: PropTypes.number,
+
   children: PropTypes.node,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
   ]),
   css: PropTypes.object,
-
-  elevation: PropTypes.number,
 }
 
 Paper.defaultProps = {
@@ -37,6 +43,6 @@ const styles = {
     padding: 16,
     marginBottom: 16,
 
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
   },
 }

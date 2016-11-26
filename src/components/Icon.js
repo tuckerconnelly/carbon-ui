@@ -6,6 +6,14 @@ const SIZE = 24
 
 // Stateful so refs can be attached, mostly so Animated.createAnimatedComponent
 // works, which needs to attach a ref to the animating component
+
+/**
+ * A system icon, or UI icon, symbolizes a command, file, device, or directory.
+ * System icons are also used to represent common actions like trash, print,
+ * and save.
+ *
+ * The Icon's name maps to the material icons font.
+ */
 class Icon extends Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const { name, style, children, ...other } = this.props
@@ -31,6 +39,9 @@ class Icon extends Component { // eslint-disable-line react/prefer-stateless-fun
 }
 
 Icon.propTypes = {
+  /**
+   * The name of the icon, from the material icons font.
+   */
   name: PropTypes.string.isRequired,
 
   children: PropTypes.node,

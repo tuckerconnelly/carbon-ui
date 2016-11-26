@@ -14,7 +14,11 @@ import {
   connectTheme,
 } from '../../index'
 
-const Button = ({
+/**
+ * Raised buttons behave like a piece of material resting on another sheet –
+ * they lift and fill with color on press.
+ */
+const RaisedButton = ({
   disabled,
 
   children,
@@ -43,9 +47,15 @@ const Button = ({
   )
 }
 
-Button.propTypes = {
+RaisedButton.propTypes = {
+  /**
+   * Disables the button if set to true.
+   */
   disabled: PropTypes.bool,
 
+  /**
+   * The inside of the button. If it's text, it'll be UPPERCASEd.
+   */
   children: PropTypes.node,
   css: PropTypes.object,
 
@@ -100,4 +110,7 @@ const tStyles = theme => ps({
   },
 })
 
-export default connectTheme(Uranium(Button))
+export default
+  connectTheme(
+  Uranium(
+  RaisedButton))

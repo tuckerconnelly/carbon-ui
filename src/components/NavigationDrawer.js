@@ -56,8 +56,7 @@ class NavigationDrawer extends Component {
 
 NavigationDrawer.propTypes = {
   /**
-   * `true` if open, `false` if closed. Will animate open/closed when this prop
-   * switches.
+   * Will open the drawer if set to true.
    */
   open: PropTypes.bool,
   /**

@@ -8,6 +8,13 @@ import { Divider, TextFieldError, Animations, Breakpoints, Colors, Type, connect
 
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 
+/**
+ * Text fields allow users to input text, select text, and lookup data via
+ * auto-completion.
+ *
+ * This component wraps React Native's TextInput, so it accepts all the same
+ * props.
+ */
 class TextField extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.value && nextProps.value) {
@@ -130,23 +137,49 @@ class TextField extends Component {
 }
 
 TextField.propTypes = {
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  textInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  placeholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  placeholder: PropTypes.string,
+  /**
+   * The value of the TextField.
+   */
   value: PropTypes.string,
+  /**
+   * The placeholder, for when the value is blank.
+   */
+  placeholder: PropTypes.string,
+  /**
+   * Will disabled the TextField if set to true.
+   */
   disabled: PropTypes.bool,
+  /**
+   * The error to display under the TextField
+   */
   error: PropTypes.string,
+  /**
+   * Will make the TextField a single-line TextField, without a label.
+   */
   singleLine: PropTypes.bool,
+  /**
+   * The style passed to the React Native TextInput
+   */
+  textInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  /**
+   * The style passed to the placeholder.
+   */
+  placeholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  /**
+   * Passed through to the underlying TextInput.
+   */
+  onChangeText: PropTypes.func,
 
+  // connectTheme
   theme: PropTypes.object.isRequired,
+
+  /**
+   * The style of the containing View.
+   */
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 TextField.defaultProps = {
-  style: {},
-  textInputStyle: {},
-  placeholderStyle: {},
-  placeholder: '',
   disabled: false,
   singleLine: false,
 }

@@ -81,13 +81,12 @@ AppBar.propTypes = {
    */
   onLeftIconPress: PropTypes.func,
   /**
-   * `true` if the AppBar is elevated and has shadows. `false` if you want a
-   * flat AppBar
+   * Will make the AppBar flat and without shadows if false.
    */
   elevated: PropTypes.bool,
 
   /**
-   * Children inserted after the title
+   * children are inserted after the title
    */
   children: PropTypes.node,
   css: PropTypes.object,
@@ -98,6 +97,7 @@ AppBar.propTypes = {
 
 AppBar.defaultProps = {
   leftIcon: 'menu',
+  elevated: true,
 }
 
 export default connectTheme(Uranium(AppBar))

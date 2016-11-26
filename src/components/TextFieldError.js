@@ -15,7 +15,10 @@ export function calculateLines(text, width) {
   return Math.round((text || '').length / charactersPerLine)
 }
 
-class InputError extends Component {
+/**
+ * Error component for the TextField.
+ */
+class TextFieldError extends Component {
   // Using state.text to delay the removal of the text so it.
   // can animate/fade out.
   state = {
@@ -79,10 +82,15 @@ class InputError extends Component {
   }
 }
 
-InputError.propTypes = {
-  theme: PropTypes.object.isRequired,
+TextFieldError.propTypes = {
   style: PropTypes.object,
+  /**
+   * The error text. The height expands to show it.
+   */
   children: PropTypes.node,
+
+  // connectTheme
+  theme: PropTypes.object.isRequired,
 }
 
 const styles = theme => ps({
@@ -107,4 +115,6 @@ const styles = theme => ps({
   },
 })
 
-export default connectTheme(InputError)
+export default
+  connectTheme(
+  TextFieldError)

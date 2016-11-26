@@ -18,7 +18,9 @@ const HOVER_FADE_DURATION = 175
 const EXPAND_DURATION = 150
 
 /**
- * Individual items for the <List /> component
+ * Individual items for the <List /> component.
+ *
+ * Can become a nested menu item it has ListItem for children.
  */
 class ListItem extends Component {
   state = { hovered: false }
@@ -136,7 +138,8 @@ ListItem.propTypes = {
    */
   expanded: PropTypes.bool,
   /**
-   * Pass additional ListItems as children to make this ListItem expandable
+   * Pass additional ListItems as children to make this ListItem nested
+   * and expandable.
    */
   children: PropTypes.node,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

@@ -13,24 +13,43 @@ import { omit } from 'lodash'
 
 const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
 
+/**
+ * Ink ripples confirm user input by immediately expanding outward from the
+ * point of touch. The card lifts to indicate an active state.
+ */
 const TouchableRipple = React.createClass({
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
+    /**
+     * The color of the ripple.
+     */
     rippleColor: PropTypes.string,
+    /**
+     * How large the ripple gets. It's multipled by the diagonal length of the
+     * TouchableRipple.
+     */
     rippleSpread: PropTypes.number,
+    /**
+     * The opacity of the ripple
+     */
     rippleOpacity: PropTypes.number,
+    /**
+     * The duration of the ripple _and_ the ripple fade out, in ms. So multiply
+     * it by 2 to get the full duration.
+     */
     rippleDuration: PropTypes.number,
+    /**
+     * Will center the ripple if set to true.
+     */
     rippleCentered: PropTypes.bool,
 
+    /**
+     * The contents of the ripple. Unlike other Touchables, doesn't need to be
+     * a single element.
+     */
     children: PropTypes.node,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-
-    onResponderGrant: PropTypes.func,
-    onResponderRelease: PropTypes.func,
-    onPress: PropTypes.func,
-    onPressIn: PropTypes.func,
-    onPressOut: PropTypes.func,
-    onLayout: PropTypes.func,
+    ...TouchableWithoutFeedback.propTypes,
   },
 
   mixins: [Touchable.Mixin],

@@ -24,7 +24,7 @@ IconToggle.propTypes = {
   /**
    * The name of the icon, from material icons: https://material.io/icons/
    */
-  iconName: PropTypes.string,
+  iconName: PropTypes.string.isRequired,
 
   /**
    * The style of the containing TouchableRipple (which is a View)

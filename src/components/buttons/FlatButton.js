@@ -11,6 +11,10 @@ import {
   connectTheme,
 } from '../../index'
 
+/**
+ * Flat buttons are printed on material. They do not lift, but fill with color
+ * on press.
+ */
 const Button = ({
   disabled,
   children,
@@ -38,13 +42,23 @@ const Button = ({
 }
 
 Button.propTypes = {
+  /**
+   * Disables the button if set to true.
+   */
   disabled: PropTypes.bool,
 
-  children: PropTypes.node,
+  /**
+   * The inside of the button. If it's text, it'll be UPPERCASEd.
+   */
+  children: PropTypes.node.isRequired,
   css: PropTypes.object,
 
   // connectTheme
   theme: PropTypes.object.isRequired,
+}
+
+Button.defaultProps = {
+  disabled: false,
 }
 
 const tStyles = theme => ps({

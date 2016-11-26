@@ -4,11 +4,11 @@ import Color from 'color'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 
-import { Divider, InputError, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
+import { Divider, TextFieldError, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
 
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 
-class Input extends Component {
+class TextField extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.value && nextProps.value) {
       Animations.standard(this.singleLineLabelAV, 1, 100).start()
@@ -123,13 +123,13 @@ class Input extends Component {
           })}
           type={disabled && 'dotted'}
           css={styles.divider} />
-        <InputError>{error}</InputError>
+        <TextFieldError>{error}</TextFieldError>
       </View>
     )
   }
 }
 
-Input.propTypes = {
+TextField.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   textInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   placeholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -142,7 +142,7 @@ Input.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-Input.defaultProps = {
+TextField.defaultProps = {
   style: {},
   textInputStyle: {},
   placeholderStyle: {},
@@ -242,4 +242,4 @@ const styles = theme => ps({
   },
 })
 
-export default connectTheme(Uranium(Input))
+export default connectTheme(Uranium(TextField))

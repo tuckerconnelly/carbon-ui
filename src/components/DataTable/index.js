@@ -15,13 +15,10 @@ import Cell from './Cell'
  *
  *      import React from 'react'
  *      import { View } from 'react-native-universal'
- *      import { Subheading, DataTable, gu } from 'carbon-ui'
+ *      import { DataTable, gu } from 'carbon-ui'
  *
  *      export default () =>
  *        <View>
- *          <Subheading style={{ marginLeft: 6 * gu }}>
- *            Really important coffee data
- *          </Subheading>
  *          <DataTable>
  *            <DataTable.HeaderRow>
  *              <DataTable.HeaderCell>Name</DataTable.HeaderCell>

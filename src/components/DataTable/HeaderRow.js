@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react'
 import { View } from 'react-native-universal'
 import ps from 'react-native-ps'
 
-import { gu } from '../index'
+import { gu } from '../../index'
 
 const HeaderRow = ({ children, style, ...other }) =>
   <View style={[styles.base].concat(style)} {...other}>
     {React.Children.map(children, (child, i) =>
       // Give the first cell a left padding of 24, per spec
-      i > 0 ?
+      i === 0 ?
         React.cloneElement(child, {
           ...child.props,
           style: [styles.firstCell].concat(child.props.style),
@@ -37,7 +37,7 @@ const styles = ps({
   },
 
   firstCell: {
-    paddingLeft: 4 * gu,
+    paddingLeft: 6 * gu,
   },
 
   web: {

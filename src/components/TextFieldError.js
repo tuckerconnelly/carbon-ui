@@ -8,15 +8,15 @@ import { Animations, Breakpoints, Type, gu, connectTheme } from '../index'
 
 const PIXELS_PER_CHARACTER = 7
 
-// Can't animate to height: auto, so multiline errors get cut off
-// Calculating height temporarily until it's possible to animate maxHeight
+// Estimate lines to animate maxHeight
 export function calculateLines(text, width) {
   const charactersPerLine = (width / PIXELS_PER_CHARACTER) || 1
-  return Math.round((text || '').length / charactersPerLine)
+  return Math.ceil((text || '').length / charactersPerLine)
 }
 
 /**
- * Error component for the TextField.
+ * Error component for the TextField. Normally you wouldn't use this, but you
+ * you could use it for a generic form error or something.
  */
 class TextFieldError extends Component {
   // Using state.text to delay the removal of the text so it.
@@ -26,13 +26,13 @@ class TextFieldError extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.children && nextProps.children) return this.show(nextProps.children)
-    if (this.props.children && !nextProps.children) return this.hide()
-    if (this.props.children !== nextProps.children) return this.changeTo(nextProps.children)
+    if (!this.props.children && nextProps.children) return this._show(nextProps.children)
+    if (this.props.children && !nextProps.children) return this._hide()
+    if (this.props.children !== nextProps.children) return this._changeTo(nextProps.children)
     return null
   }
 
-  setWidth = ({ nativeEvent: { layout: { width } } }) => {
+  _setWidth = ({ nativeEvent: { layout: { width } } }) => {
     this.width = width
   }
 
@@ -40,18 +40,18 @@ class TextFieldError extends Component {
   heightAV = new Animated.Value(this.props.children ? 1 : 0)
   opacityAV = new Animated.Value(this.props.children ? 1 : 0)
 
-  show(text) {
+  _show(text) {
     this.setState({ text })
     Animations.staggered(this.heightAV, this.opacityAV).start()
   }
 
-  hide() {
+  _hide() {
     Animations.staggered(this.heightAV, this.opacityAV, 0).start(() =>
       this.setState({ text: '' })
     )
   }
 
-  changeTo(text) {
+  _changeTo(text) {
     Animations.standard(this.opacityAV, 0, 150).start(() => {
       this.setState({ text })
       Animations.standard(this.opacityAV, 1, 450).start()
@@ -70,12 +70,12 @@ class TextFieldError extends Component {
         style={[
           this.styles.base,
           style,
-          animate('height', 0, estimatedLines * 4 * gu, this.heightAV),
+          animate('maxHeight', 0, estimatedLines * 4 * gu, this.heightAV),
           animate('marginBottom', this.styles.base, this.styles.shown, this.heightAV),
           animate('opacity', this.styles.base, this.styles.shown, this.opacityAV),
         ]}
         {...omit(other, 'children')}
-        onLayout={this.setWidth}>
+        onLayout={this._setWidth}>
         {this.state.text}
       </Animated.Text>
     )

@@ -22,6 +22,8 @@ const EXPAND_DURATION = 150
  * Individual items for the <List /> component.
  *
  * Can become a nested menu item it has ListItem for children.
+ *
+ * Examples in the List page.
  */
 class ListItem extends Component {
   state = {

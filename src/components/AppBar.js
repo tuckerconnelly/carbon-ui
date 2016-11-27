@@ -19,8 +19,20 @@ import {
 const ELEVATE_DURATION = 175
 
 /**
+ *
  * The app bar, formerly known as the action bar in Android, is a special kind
  * of toolbar that’s used for branding, navigation, search, and actions.
+ *
+ *     import React from 'react'
+ *     import { View } from 'react-native-universal'
+ *     import { AppBar } from 'carbon-ui'
+ *
+ *     export default () =>
+ *       <View>
+ *         <AppBar title="The app" />
+ *       </View>
+ *
+ *
  */
 class AppBar extends Component {
   componentWillReceiveProps(next) {
@@ -55,7 +67,7 @@ class AppBar extends Component {
         ]}
         {...otherWithoutAppBarProps}>
         <IconToggle
-          iconName={leftIcon}
+          name={leftIcon}
           style={styles.icon}
           iconStyle={styles.iconIcon}
           rippleColor={Colors.white}

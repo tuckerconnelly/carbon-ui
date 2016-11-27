@@ -6,7 +6,7 @@ import { Body2, gu } from '../../index'
 
 const HeaderCell = ({ children, style, ...other }) => {
   const defaultedChildren = typeof children === 'string' ?
-    <Body2>{children}</Body2> :
+    <Body2 ellipsizeMode="tail" numberOfLines={1}>{children}</Body2> :
     children
   return (
     <View style={[styles.base].concat(style)} {...other}>

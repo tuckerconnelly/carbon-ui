@@ -4,7 +4,8 @@ import Color from 'color'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 
-import { Divider, TextFieldError, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
+import { TextFieldError, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
+import Divider from './Divider'
 
 const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 
@@ -14,6 +15,54 @@ const AnimatedDivider = Animated.createAnimatedComponent(Divider)
  *
  * This component wraps React Native's TextInput, so it accepts all the same
  * props.
+ *
+ * ### Examples
+ *
+ *      import React, { Component } from 'react'
+ *      import { View } from 'react-native-universal'
+ *      import { TextField } from 'carbon-ui'
+ *
+ *      export default class Example extends Component {
+ *        state = {
+ *          form: {
+ *            textFieldOne: '',
+ *            textFieldTwo: 'Edit this one to see an error',
+ *          },
+ *          errors: {}
+ *        }
+ *
+ *        _setFormValue = (field, val) => {
+ *          // Set an example error
+ *          if (field === 'textFieldTwo') {
+ *            this.setState({
+ *              errors: { textFieldTwo: 'Something went wrong'}
+ *            })
+ *          }
+ *
+ *          this.setState({ form: { ...this.state.form, [field]: val }})
+ *        }
+ *
+ *        render() {
+ *          return (
+ *            <View>
+ *              <TextField
+ *                placeholder="Text field one"
+ *                value={this.state.form.textFieldOne}
+ *                onChangeText={val => this._setFormValue('textFieldOne', val)} />
+ *              <TextField
+ *                placeholder="Text field two"
+ *                singleLine
+ *                value={this.state.form.textFieldTwo}
+ *                error={this.state.errors.textFieldTwo}
+ *                onChangeText={val => this._setFormValue('textFieldTwo', val)} />
+ *              <TextField
+ *                placeholder="Disabled"
+ *                singleLine
+ *                disabled />
+ *            </View>
+ *          )
+ *        }
+ *      }
  */
 class TextField extends Component {
   componentWillReceiveProps(nextProps) {

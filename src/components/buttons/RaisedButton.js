@@ -17,6 +17,19 @@ import {
 /**
  * Raised buttons behave like a piece of material resting on another sheet –
  * they lift and fill with color on press.
+ *
+ * ### Examples
+ *
+ *      import React from 'react'
+ *      import { View } from 'react-native-universal'
+ *      import { RaisedButton } from 'carbon-ui'
+ *
+ *      export default () =>
+ *        <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
+ *          <RaisedButton>Click me!</RaisedButton>
+ *          <RaisedButton disabled>Out of commission</RaisedButton>
+ *        </View>
+ *
  */
 const RaisedButton = ({
   disabled,
@@ -33,7 +46,9 @@ const RaisedButton = ({
   // Uppercase and style if the child is a string
   // Otherwise it's probably an icon or image, so let it through
   const formattedChildren = typeof children === 'string' ?
-    <Body2 style={styles.text}>{children.toUpperCase()}</Body2> :
+    <Body2 style={[styles.text, disabled && styles.disabledText]}>
+      {children.toUpperCase()}
+    </Body2> :
     children
 
   return (
@@ -41,6 +56,7 @@ const RaisedButton = ({
       hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
       css={[styles.base, disabled && styles.disabled, css]}
       rippleColor={Colors.white}
+      disabled={disabled}
       {...other}>
       {formattedChildren}
     </TouchableRipple>
@@ -96,9 +112,11 @@ const tStyles = theme => ps({
   },
 
   disabled: {
-    color: theme.colors.button.raised.disabledText,
-
     backgroundColor: theme.colors.button.raised.disabled,
+  },
+
+  disabledText: {
+    color: theme.colors.button.raised.disabledText,
   },
 
   focused: {

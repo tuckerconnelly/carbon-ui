@@ -7,6 +7,26 @@ import { Title, Animations, Colors, Elevation, gu } from '../index'
 /**
  * Dialogs inform users about a specific task and may contain critical
  * information, require decisions, or involve multiple tasks.
+ *
+ * ### Examples
+ *
+ *      import React from 'react'
+ *      import { View } from 'react-native-universal'
+ *      import { Dialog, FlatButton, Body1 } from 'carbon-ui'
+ *
+ *      export default () =>
+ *        <View style={{ height: 300 }}>
+ *          <Dialog
+ *            title="Title"
+ *            actions={[
+ *              <FlatButton>No</FlatButton>,
+ *              <FlatButton>Yes</FlatButton>
+ *            ]}
+ *            active>
+ *            <Body1>Body of the dialog here</Body1>
+ *           </Dialog>
+ *        </View>
+ *
  */
 class Dialog extends Component {
   state = { visible: this.props.active }
@@ -144,6 +164,7 @@ const styles = {
     paddingLeft: 6 * gu,
     paddingVertical: 2 * gu,
 
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 }

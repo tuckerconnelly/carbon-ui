@@ -16,6 +16,26 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
 /**
  * Ink ripples confirm user input by immediately expanding outward from the
  * point of touch. The card lifts to indicate an active state.
+ *
+ * ### Examples
+ *
+ *      import React from 'react'
+ *      import { View } from 'react-native-universal'
+ *      import { Paper, TouchableRipple, Body1, Colors, gu } from 'carbon-ui'
+ *
+ *      export default () =>
+ *        <View>
+ *          <TouchableRipple>
+ *            <View style={{ padding: 4 * gu }}>
+ *              <Body1>Simple TouchableRipple</Body1>
+ *            </View>
+ *          </TouchableRipple>
+ *          <TouchableRipple rippleColor={Colors.pinkA200}>
+ *            <View style={{ padding: 4 * gu }}>
+ *              <Body1>Colorful ripple</Body1>
+ *            </View>
+ *          </TouchableRipple>
+ *        </View>
  */
 const TouchableRipple = React.createClass({
   propTypes: {

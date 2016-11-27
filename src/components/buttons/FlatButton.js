@@ -14,6 +14,17 @@ import {
 /**
  * Flat buttons are printed on material. They do not lift, but fill with color
  * on press.
+ *
+ * ### Examples
+ *
+ *      import React from 'react'
+ *      import { View } from 'react-native-universal'
+ *      import { FlatButton } from 'carbon-ui'
+ *
+ *      export default () =>
+ *        <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
+ *          <FlatButton>Hey I'm a button</FlatButton>
+ *        </View>
  */
 const Button = ({
   disabled,

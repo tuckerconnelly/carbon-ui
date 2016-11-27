@@ -8,7 +8,7 @@ const HeaderRow = ({ children, style, ...other }) =>
   <View style={[styles.base].concat(style)} {...other}>
     {React.Children.map(children, (child, i) =>
       // Give the first cell a left padding of 24, per spec
-      i > 0 ?
+      i === 0 ?
         React.cloneElement(child, {
           ...child.props,
           style: [styles.firstCell].concat(child.props.style),

@@ -1,21 +1,37 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { View } from 'react-native-universal'
 import Uranium from 'uranium'
 
 import { Colors, Elevation } from '../index'
 
 /**
- * Generic Paper component. Like the <div /> of Material Design.
+ * Generic Paper component. The <div /> of Material Design.
+ *
+ * ### Examples
+ *
+ *     import React from 'react'
+ *     import { Paper, Body1 } from 'carbon-ui'
+ *
+ *     export default () =>
+ *       <Paper elevation={8}>
+ *         <Body1>Hey I'm just some paper</Body1>
+ *       </Paper>
  */
-const Paper = ({ style, css, children, elevation, ...other }) =>
-  <View
-    css={[
-      styles.base,
-      { ...Elevation[`dp${elevation}`] },
-    ].concat(style, css)}
-    {...other}>
-    {children}
-  </View>
+class Paper extends Component {
+  render() {
+    const { style, css, children, elevation, ...other } = this.props
+    return (
+      <View
+        css={[
+          styles.base,
+          { ...Elevation[`dp${elevation}`] },
+        ].concat(style, css)}
+        {...other}>
+        {children}
+      </View>
+    )
+  }
+}
 
 Paper.propTypes = {
   /**

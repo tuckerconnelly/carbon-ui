@@ -58,6 +58,7 @@ const styles = {
   base: {
     padding: 16,
     marginBottom: 16,
+    borderRadius: 2,
 
     backgroundColor: Colors.white,
   },

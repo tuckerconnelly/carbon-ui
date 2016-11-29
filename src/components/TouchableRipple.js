@@ -207,7 +207,8 @@ const TouchableRipple = React.createClass({
   _cleanupTimeout: null,
 
   end() {
-    const ripple = this.state.ripples[this.state.ripples.length - 1]
+    const { ripples } = this.state
+    const ripple = ripples[ripples.length - 1]
     if (!ripple) return
 
     const { rippleDuration } = this.props
@@ -220,12 +221,12 @@ const TouchableRipple = React.createClass({
         duration: rippleDuration,
         easing: Easing.out(Easing.ease),
       }
-    ).start()
-
-    // Clean up after fade out
-    this._cleanupTimeout = setTimeout(() =>
-      this.setState({ ripples: this.state.ripples.splice(0, 1) })
-    , rippleDuration + 10)
+    ).start(() => {
+      // Clean up after fade out
+      const pureRipples = [...this.state.ripples]
+      pureRipples.splice(pureRipples.indexOf(ripple), 1)
+      this.setState({ ripples: pureRipples })
+    })
   },
 
   render() {

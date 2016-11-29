@@ -5,8 +5,10 @@ import omit from 'lodash/omit'
 import get from 'lodash/get'
 import {
   Icon,
-  Subheading,
   TouchableRipple,
+
+  Subheading,
+  Body1,
 
   Animations,
   Breakpoints,
@@ -66,6 +68,8 @@ class ListItem extends Component {
     const {
       leftIcon,
       primaryText,
+      secondaryText,
+      secondaryTextLines,
       active,
       nestingDepth,
       onPress,
@@ -105,6 +109,14 @@ class ListItem extends Component {
               ellipsizeMode="tail">
               {primaryText}
             </Subheading>
+            {secondaryText &&
+              <Body1
+                numberOfLines={secondaryTextLines}
+                ellipsizeMode="tail"
+                style={styles.secondaryText}>
+                {secondaryText}
+              </Body1>
+            }
             {childrenCount > 0 &&
               <AnimatedIcon
                 name="keyboard_arrow_down"
@@ -121,7 +133,7 @@ class ListItem extends Component {
           <Animated.View
             style={[
               styles.nestedList,
-              animate('maxHeight', 0, (childrenCount * styles.base.height) + 40, this._expandHeightAV),
+              animate('maxHeight', 0, (childrenCount * 72) + 40, this._expandHeightAV),
               animate('opacity', 0, 1, this._expandOpacityAV),
               this.state.expanded && { maxHeight: undefined },
             ]}>
@@ -147,6 +159,14 @@ ListItem.propTypes = {
    * The primary text for the item
    */
   primaryText: PropTypes.string,
+  /**
+   * The secondary text for the item. Gets cut off at 2 lines.
+   */
+  secondaryText: PropTypes.string,
+  /**
+   * The number of lines before the ellipsis will show in the secondary text.
+   */
+  secondaryTextLines: PropTypes.oneOf([1, 2]),
   /**
    * Usually an <Icon /> or <Avatar />
    */
@@ -178,6 +198,7 @@ ListItem.propTypes = {
 
 ListItem.defaultProps = {
   nestingDepth: 18 * gu,
+  secondaryTextLines: 1,
 }
 
 export default
@@ -187,18 +208,23 @@ export default
 
 const tStyles = theme => ({
   base: {
-    height: 12 * gu,
+    paddingVertical: 3 * gu,
     paddingHorizontal: 4 * gu,
 
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'column',
 
     backgroundColor: Colors.white,
 
     [Breakpoints.ml]: {
-      height: 10 * gu,
+      paddingVertical: 2 * gu,
     },
+  },
+
+  secondaryText: {
+    color: Colors.blackSecondary,
+    lineHeight: 6 * gu,
   },
 
   leftIcon: {

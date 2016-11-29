@@ -9,6 +9,7 @@ import {
 
   Subheading,
   Body1,
+  Caption,
 
   Animations,
   Breakpoints,
@@ -19,6 +20,7 @@ import {
 
 const HOVER_FADE_DURATION = 175
 const EXPAND_DURATION = 150
+const RIGHT_TEXT_WIDTH = 14 * gu
 
 /**
  * Individual items for the <List /> component.
@@ -70,6 +72,8 @@ class ListItem extends Component {
       primaryText,
       secondaryText,
       secondaryTextLines,
+      rightText,
+      rightIcon,
       active,
       nestingDepth,
       onPress,
@@ -82,6 +86,8 @@ class ListItem extends Component {
     const styles = tStyles(theme)
     const childrenCount = React.Children.count(children)
     const otherWithoutCustomProps = omit(other, 'expanded')
+
+    const thereIsSomethingOnTheRight = rightText || rightIcon || childrenCount > 0
 
     return (
       <View>
@@ -104,7 +110,10 @@ class ListItem extends Component {
                 ]} />
             }
             <Subheading
-              style={active ? styles.active : undefined}
+              style={[
+                active && styles.active,
+                thereIsSomethingOnTheRight && styles.primaryTextGivenRightEl,
+              ]}
               numberOfLines={1}
               ellipsizeMode="tail">
               {primaryText}
@@ -113,19 +122,49 @@ class ListItem extends Component {
               <Body1
                 numberOfLines={secondaryTextLines}
                 ellipsizeMode="tail"
-                style={styles.secondaryText}>
+                style={[
+                  styles.secondaryText,
+                  rightIcon && styles.secondaryTextGivenRightEl,
+                ]}>
                 {secondaryText}
               </Body1>
             }
-            {childrenCount > 0 &&
+            {rightText &&
+              <Caption
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                css={styles.rightText}>
+                {rightText}
+              </Caption>
+            }
+            {(childrenCount > 0 && !rightIcon) &&
               <AnimatedIcon
                 name="keyboard_arrow_down"
-                css={styles.rightIcon}
+                css={[
+                  styles.rightIcon,
+                  rightText && styles.rightIconGivenRightText,
+                ]}
                 style={animate(
                   styles.expandIconCollapsed,
                   styles.expandIconExpanded,
                   this._expandIconAV
                 )} />
+            }
+            {rightIcon &&
+              typeof rightIcon === 'string' ?
+                <Icon
+                  name={rightIcon}
+                  css={[
+                    styles.rightIcon,
+                    rightText && styles.rightIconGivenRightText,
+                  ]} /> :
+                  <View
+                    css={[
+                      styles.rightIcon,
+                      rightText && styles.rightIconGivenRightText,
+                    ]}>
+                    {rightIcon}
+                  </View>
             }
           </Animated.View>
         </TouchableRipple>
@@ -168,9 +207,19 @@ ListItem.propTypes = {
    */
   secondaryTextLines: PropTypes.oneOf([1, 2]),
   /**
-   * Usually an <Icon /> or <Avatar />
+   * Will put an <Icon /> with the passed value on the left of the ListItem
    */
   leftIcon: PropTypes.string,
+  /**
+   * If a string, will put an <Icon /> with the passed value on the right of
+   * the list item. If it's an element, it'll place the element on the right of
+   * the list item.
+   */
+  rightIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  /**
+   * The caption text on the top right of the ListItem
+   */
+  rightText: PropTypes.string,
   /**
    * `true` if the list item is currently selected
    */
@@ -231,10 +280,39 @@ const tStyles = theme => ({
     marginRight: 8 * gu,
   },
 
+  primaryTextGivenRightEl: {
+    marginRight: RIGHT_TEXT_WIDTH,
+  },
+
+  secondaryTextGivenRightEl: {
+    marginRight: RIGHT_TEXT_WIDTH,
+  },
+
   rightIcon: {
     position: 'absolute',
     right: 4 * gu,
     top: 3 * gu,
+
+    [Breakpoints.ml]: {
+      top: 2 * gu,
+    },
+  },
+
+  rightIconGivenRightText: {
+    top: 9 * gu,
+
+    [Breakpoints.ml]: {
+      top: 8 * gu,
+    },
+  },
+
+  rightText: {
+    position: 'absolute',
+    right: 4 * gu,
+    top: 3 * gu,
+
+    width: RIGHT_TEXT_WIDTH,
+    textAlign: 'right',
 
     [Breakpoints.ml]: {
       top: 2 * gu,

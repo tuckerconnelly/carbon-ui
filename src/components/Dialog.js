@@ -117,6 +117,7 @@ const styles = {
     backgroundColor: 'rgba(0, 0, 0, 0)',
 
     zIndex: 2400,
+    overflow: 'hidden',
     elevation: 24,
   },
 

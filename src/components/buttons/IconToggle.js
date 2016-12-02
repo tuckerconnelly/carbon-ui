@@ -59,6 +59,6 @@ const styles = {
 
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: undefined,
+    overflow: 'visible',
   },
 }

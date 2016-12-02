@@ -6,10 +6,13 @@ import {
   Easing,
   TouchableWithoutFeedback,
   Touchable,
+  TouchableNativeFeedback,
   View,
+  Platform,
 } from 'react-native-universal'
 import ps from 'react-native-ps'
 import { omit } from 'lodash'
+import Color from 'color'
 
 const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
 
@@ -230,7 +233,27 @@ const TouchableRipple = React.createClass({
   },
 
   render() {
-    const { rippleColor, disabled, children, style, ...other } = this.props
+    const { rippleColor, rippleOpacity, disabled, children, style, ...other } = this.props
+
+    if (Platform.OS === 'android') {
+      const mergedStyle = Array.isArray(style) ?
+        style.reduce((prev, curr) => ({ ...prev, ...curr })) :
+        style
+
+      return (
+        <TouchableNativeFeedback
+          background={TouchableNativeFeedback.Ripple(
+            Color(rippleColor).alpha(rippleOpacity).rgbString(),
+            mergedStyle && mergedStyle.overflow === 'visible'
+          )}
+          disabled={disabled}
+          {...other}>
+          <View style={style}>
+            {children}
+          </View>
+        </TouchableNativeFeedback>
+      )
+    }
 
     return (
       <View

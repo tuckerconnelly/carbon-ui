@@ -51,15 +51,16 @@ import { Animations, Breakpoints, Elevation, Colors, gu } from '../index'
 class NavigationDrawer extends Component {
   state = { shown: this.props.open }
 
-  componentWillReceiveProps(next) {
-    const { open } = this.props
+  async componentWillReceiveProps(next) {
+    const { open, onFinishOpening, onStartClosing } = this.props
 
     if (!open && next.open) {
       this.setState({ shown: true }, () => {
-        Animations.entrance(this._openAV).start()
+        Animations.entrance(this._openAV).start(onFinishOpening)
       })
     }
     if (open && !next.open) {
+      await onStartClosing()
       Animations.exit(this._openAV, 0).start(() => {
         this.setState({ shown: false })
       })
@@ -103,12 +104,25 @@ NavigationDrawer.propTypes = {
    * Callback for when the overlay is pressed
    */
   onOverlayPress: PropTypes.func,
+  /**
+   * Callback for when the drawer is finished opening. Use this to load in the
+   * the content afterwards if open/close animation performance is poor.
+   */
+  onFinishOpening: PropTypes.func,
+  /**
+   * Callback for when the drawer is starting to close. Use this in conjunction
+   * with onFinishOpening for performance optimization. If it returns a promise,
+   * it'll wait for the promise to resolve before starting the closing animation.
+   */
+  onStartClosing: PropTypes.func,
 
   children: PropTypes.node,
 }
 
 NavigationDrawer.defaultProps = {
   open: false,
+  onFinishOpening: () => 0,
+  onStartClosing: () => 0,
 }
 
 export default Uranium(NavigationDrawer)

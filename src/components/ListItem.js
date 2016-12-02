@@ -40,22 +40,24 @@ class ListItem extends Component {
     const { hovered } = this.state
 
     if (!hovered && nextState.hovered) {
-      Animations.standard(this._hoverAV, 1, HOVER_FADE_DURATION).start()
+      Animations.standard(this._hoverAV, { duration: HOVER_FADE_DURATION }).start()
     } else if (hovered && !nextState.hovered) {
-      Animations.standard(this._hoverAV, 0, HOVER_FADE_DURATION).start()
+      Animations.standard(this._hoverAV, { toValue: 0, duration: HOVER_FADE_DURATION }).start()
     }
 
     // HACK No idea why, but Animated has trouble starting multiple animations
     // from componentWillUpdate. componentDidUpdate is fine, but need to use
     // setState here. Using setTimeout to start the icon one.
     if (!expanded && nextProps.expanded) {
-      setTimeout(() => Animations.standard(this._expandIconAV, 1, EXPAND_DURATION).start())
-      Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 1, EXPAND_DURATION)
+      Animations.standard(this._expandIconAV, { duration: EXPAND_DURATION }).start()
+      Animations.standard(this._expandHeightAV, { duration: EXPAND_DURATION }).start()
+      Animations.standard(this._expandOpacityAV, { duration: EXPAND_DURATION, delay: 50 })
         .start(() => this.setState({ expanded: true }))
     } else if (expanded && !nextProps.expanded) {
       this.setState({ expanded: false })
-      setTimeout(() => Animations.standard(this._expandIconAV, 0, EXPAND_DURATION).start())
-      Animations.staggered(this._expandHeightAV, this._expandOpacityAV, 0, EXPAND_DURATION).start()
+      Animations.standard(this._expandIconAV, { toValue: 0, duration: EXPAND_DURATION }).start()
+      Animations.standard(this._expandHeightAV, { toValue: 0, duration: EXPAND_DURATION, delay: 50 }).start() // eslint-disable-line max-len
+      Animations.standard(this._expandOpacityAV, { toValue: 0, duration: EXPAND_DURATION }).start()
     }
   }
 

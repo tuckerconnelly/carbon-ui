@@ -43,50 +43,41 @@ export const Durations = {
 }
 
 const Animations = {
-  standard: (av, toValue = 1, duration, delay) => Animated.timing(av, {
-    duration: duration ? Durations.custom(duration)() : Durations.standard(),
-    delay: delay && Durations.custom(delay)(),
+  standard: (av, options = {}) => Animated.timing(av, {
     easing: Curves.standard,
-    toValue,
+    toValue: 1,
+    ...options,
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.standard(),
+    delay: options.delay && Durations.custom(options.delay)(),
   }),
-  large: (av, toValue = 1, duration, delay) => Animated.timing(av, {
-    duration: duration ? Durations.custom(duration)() : Durations.large(),
-    delay,
+  large: (av, options = {}) => Animated.timing(av, {
     easing: Curves.standard,
-    toValue,
+    toValue: 1,
+    ...options,
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.large(),
+    delay: options.delay && Durations.custom(options.delay)(),
   }),
-  entrance: (av, toValue = 1, duration, delay) => Animated.timing(av, {
-    duration: duration ? Durations.custom(duration)() : Durations.entering(),
-    delay,
+  entrance: (av, options = {}) => Animated.timing(av, {
     easing: Curves.deceleration,
-    toValue,
+    toValue: 1,
+    ...options,
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.entering(),
+    delay: options.delay && Durations.custom(options.delay)(),
   }),
-  exit: (av, toValue = 1, duration, delay) => Animated.timing(av, {
-    duration: duration ? Durations.custom(duration)() : Durations.leaving(),
-    delay,
+  exit: (av, options = {}) => Animated.timing(av, {
     easing: Curves.acceleration,
-    toValue,
+    toValue: 1,
+    ...options,
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.leaving(),
+    delay: options.delay && Durations.custom(options.delay)(),
   }),
-  tempExit: (av, toValue = 1, duration, delay) => Animated.timing(av, {
-    duration: duration ? Durations.custom(duration)() : Durations.leaving(),
-    delay,
+  tempExit: (av, options = {}) => Animated.timing(av, {
     easing: Curves.sharp,
-    toValue,
+    toValue: 1,
+    ...options,
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.leaving(),
+    delay: options.delay && Durations.custom(options.delay)(),
   }),
-  staggered: (av, staggerAV, toValue = 1, duration = 300, staggerAmount = 50) =>
-    Animated.stagger(staggerAmount, [
-      Animated.timing(toValue ? av : staggerAV, {
-        duration: Durations.custom(duration - staggerAmount)(),
-        easing: Curves.standard,
-        toValue,
-      }),
-      Animated.timing(toValue ? staggerAV : av, {
-        duration: Durations.custom(duration - staggerAmount)(),
-        easing: Curves.standard,
-        delay: Durations.custom(staggerAmount)(),
-        toValue,
-      }),
-    ]),
 }
 
 export default Animations

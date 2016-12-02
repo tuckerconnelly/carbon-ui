@@ -42,19 +42,20 @@ class TextFieldError extends Component {
 
   _show(text) {
     this.setState({ text })
-    Animations.staggered(this.heightAV, this.opacityAV).start()
+    Animations.standard(this.heightAV).start()
+    Animations.standard(this.opacityAV, { delay: 50 }).start()
   }
 
   _hide() {
-    Animations.staggered(this.heightAV, this.opacityAV, 0).start(() =>
-      this.setState({ text: '' })
-    )
+    Animations.standard(this.heightAV, { delay: 50, toValue: 0 }).start()
+    Animations.standard(this.opacityAV, { toValue: 0 })
+      .start(() => this.setState({ text: '' }))
   }
 
   _changeTo(text) {
-    Animations.standard(this.opacityAV, 0, 150).start(() => {
+    Animations.standard(this.opacityAV, { toValue: 0, duration: 150 }).start(() => {
       this.setState({ text })
-      Animations.standard(this.opacityAV, 1, 450).start()
+      Animations.standard(this.opacityAV, { duration: 450 }).start()
     })
   }
 

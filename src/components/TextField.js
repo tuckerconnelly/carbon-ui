@@ -67,10 +67,10 @@ const AnimatedDivider = Animated.createAnimatedComponent(Divider)
 class TextField extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.value && nextProps.value) {
-      Animations.standard(this.singleLineLabelAV, 1, 100).start()
+      Animations.standard(this.singleLineLabelAV, { duration: 100 }).start()
     }
     if (this.props.value && !nextProps.value) {
-      Animations.standard(this.singleLineLabelAV, 0, 100).start()
+      Animations.standard(this.singleLineLabelAV, { duration: 100, toValue: 0 }).start()
     }
   }
 
@@ -96,13 +96,13 @@ class TextField extends Component {
   }
 
   handleBlur = () => {
-    Animations.standard(this.colorAV, 0).start()
+    Animations.standard(this.colorAV, { toValue: 0 }).start()
 
     // Only return color to its original state if the input
     // has a value
     if (this.props.value) return
 
-    Animations.standard(this.labelAV, 0).start()
+    Animations.standard(this.labelAV, { toValue: 0 }).start()
   }
 
   focusInput = () => {

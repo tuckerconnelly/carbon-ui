@@ -61,9 +61,8 @@ class NavigationDrawer extends Component {
     }
     if (open && !next.open) {
       await onStartClosing()
-      Animations.exit(this._openAV, 0).start(() => {
-        this.setState({ shown: false })
-      })
+      Animations.exit(this._openAV, { toValue: 0 })
+        .start(() => this.setState({ shown: false }))
     }
   }
 

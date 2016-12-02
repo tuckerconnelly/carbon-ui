@@ -39,11 +39,11 @@ class AppBar extends Component {
     const { elevated } = this.props
 
     if (!elevated && next.elevated) {
-      Animations.standard(this._elevateAV, 1, ELEVATE_DURATION).start()
+      Animations.standard(this._elevateAV, { duration: ELEVATE_DURATION }).start()
     }
 
     if (elevated && !next.elevated) {
-      Animations.standard(this._elevateAV, 0, ELEVATE_DURATION).start()
+      Animations.standard(this._elevateAV, { toValue: 0, duration: ELEVATE_DURATION }).start()
     }
   }
 

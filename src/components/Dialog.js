@@ -38,7 +38,7 @@ class Dialog extends Component {
       Animations.entrance(this._showAV).start()
     }
     if (active && !next.active) {
-      Animations.exit(this._showAV, 0).start(() => {
+      Animations.exit(this._showAV, { toValue: 0 }).start(() => {
         this.setState({ visible: false })
       })
     }

@@ -10,6 +10,7 @@ export { default as TextFieldError } from './TextFieldError'
 export { default as Dialog } from './Dialog'
 export { default as Paper } from './Paper'
 export { default as TouchableRipple } from './TouchableRipple'
+export { default as ExpansionPanel } from './ExpansionPanel'
 
 export * from './buttons'
 export * from './Type'

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { View } from 'react-native-universal'
-import Uranium from 'uranium'
 
 import { Colors, Elevation } from '../index'
 
@@ -10,22 +9,22 @@ import { Colors, Elevation } from '../index'
  * ### Examples
  *
  *     import React from 'react'
- *     import { Paper, Body1 } from 'carbon-ui'
+ *     import { Paper, Body1, gu } from 'carbon-ui'
  *
  *     export default () =>
- *       <Paper elevation={8}>
+ *       <Paper elevation={8} style={{ padding: 4 * gu }}>
  *         <Body1>Hey I'm just some paper</Body1>
  *       </Paper>
  */
 class Paper extends Component {
   render() {
-    const { style, css, children, elevation, ...other } = this.props
+    const { style, children, elevation, ...other } = this.props
     return (
       <View
-        css={[
+        style={[
           styles.base,
-          { ...Elevation[`dp${elevation}`] },
-        ].concat(style, css)}
+          Elevation[`dp${elevation}`],
+        ].concat(style)}
         {...other}>
         {children}
       </View>
@@ -44,20 +43,17 @@ Paper.propTypes = {
     PropTypes.object,
     PropTypes.array,
   ]),
-  css: PropTypes.object,
 }
 
 Paper.defaultProps = {
   elevation: 2,
 }
 
-export default Uranium(Paper)
+export default Paper
 
 
 const styles = {
   base: {
-    padding: 16,
-    marginBottom: 16,
     borderRadius: 2,
 
     backgroundColor: Colors.white,

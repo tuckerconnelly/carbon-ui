@@ -83,10 +83,8 @@ class NavigationDrawer extends Component {
             ]} />
         </TouchableWithoutFeedback>
         <Animated.View
-          css={[
-            styles.menu,
-            animate(styles.menuClosed, styles.menuOpen, this._openAV),
-          ]}>
+          css={styles.menu}
+          style={animate(styles.menuClosed, styles.menuOpen, this._openAV)}>
           {children}
         </Animated.View>
       </View>

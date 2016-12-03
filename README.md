@@ -64,6 +64,18 @@ export default () =>
 - [Motion](https://carbon-ui.com/styles/motion)
 - [Components](https://carbon-ui.com/components)
 
+### Known issues
+
+**Performance on Android**
+
+Performance on Android can get pretty slow if you're not careful. Carbon UI makes good use of the Animated API, which is particularly slow on Android.
+
+Carbon UI optimizes a lot, using native animations and graceful degradations, and it'll generally be good-to-go out of the box.
+
+Long term, the React Native team is doing [good work](https://productpains.com/post/react-native/offload-some-animations-from-js-thread-for-better-perf) to improve Animated performance.
+
+If you run in to any snags, check out the [Known issues](https://carbon-ui.com/getting-started/known-issues) page in the docs for tips on improving performance, or file an issue here.
+
 ### Disclaimer
 
 This is still a beta. Expect bugs 😛

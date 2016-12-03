@@ -56,12 +56,12 @@ class NavigationDrawer extends Component {
 
     if (!open && next.open) {
       this.setState({ shown: true }, () => {
-        Animations.entrance(this._openAV, { useNativeDriver: true }).start(onFinishOpening)
+        Animations.entrance(this._openAV).start(onFinishOpening)
       })
     }
     if (open && !next.open) {
       await onStartClosing()
-      Animations.exit(this._openAV, { toValue: 0, useNativeDriver: true })
+      Animations.exit(this._openAV, { toValue: 0 })
         .start(() => this.setState({ shown: false }))
     }
   }
@@ -71,10 +71,12 @@ class NavigationDrawer extends Component {
   render() {
     const { onOverlayPress, children } = this.props
 
-    if (!this.state.shown) return <View />
-
     return (
-      <View style={styles.base}>
+      <View
+        style={[
+          styles.base,
+          !this.state.shown && styles.hidden,
+        ]}>
         <TouchableWithoutFeedback onPress={onOverlayPress}>
           <Animated.View
             style={[
@@ -128,11 +130,15 @@ const styles = ps({
   base: {
     position: 'absolute',
     left: 0,
-    right: 0,
     top: 0,
     bottom: 0,
+    right: 0,
 
     zIndex: 200,
+  },
+
+  hidden: {
+    zIndex: -1,
   },
 
   overlay: {

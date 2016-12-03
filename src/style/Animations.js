@@ -1,4 +1,4 @@
-import { Animated, Easing } from 'react-native-universal'
+import { Animated, Easing, NativeModules } from 'react-native-universal'
 
 import { Breakpoints } from './Responsive'
 
@@ -47,36 +47,41 @@ const Animations = {
     easing: Curves.standard,
     toValue: 1,
     ...options,
-    duration: options.duration ? Durations.custom(options.duration)() : Durations.standard(),
     delay: options.delay && Durations.custom(options.delay)(),
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.standard(),
+    useNativeDriver: options.useNativeDriver && NativeModules.NativeAnimatedModule,
   }),
   large: (av, options = {}) => Animated.timing(av, {
     easing: Curves.standard,
     toValue: 1,
     ...options,
-    duration: options.duration ? Durations.custom(options.duration)() : Durations.large(),
     delay: options.delay && Durations.custom(options.delay)(),
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.large(),
+    useNativeDriver: options.useNativeDriver && NativeModules.NativeAnimatedModule,
   }),
   entrance: (av, options = {}) => Animated.timing(av, {
     easing: Curves.deceleration,
     toValue: 1,
     ...options,
-    duration: options.duration ? Durations.custom(options.duration)() : Durations.entering(),
     delay: options.delay && Durations.custom(options.delay)(),
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.entering(),
+    useNativeDriver: options.useNativeDriver && NativeModules.NativeAnimatedModule,
   }),
   exit: (av, options = {}) => Animated.timing(av, {
     easing: Curves.acceleration,
     toValue: 1,
     ...options,
-    duration: options.duration ? Durations.custom(options.duration)() : Durations.leaving(),
     delay: options.delay && Durations.custom(options.delay)(),
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.leaving(),
+    useNativeDriver: options.useNativeDriver && NativeModules.NativeAnimatedModule,
   }),
   tempExit: (av, options = {}) => Animated.timing(av, {
     easing: Curves.sharp,
     toValue: 1,
     ...options,
-    duration: options.duration ? Durations.custom(options.duration)() : Durations.leaving(),
     delay: options.delay && Durations.custom(options.delay)(),
+    duration: options.duration ? Durations.custom(options.duration)() : Durations.leaving(),
+    useNativeDriver: options.useNativeDriver && NativeModules.NativeAnimatedModule,
   }),
 }
 

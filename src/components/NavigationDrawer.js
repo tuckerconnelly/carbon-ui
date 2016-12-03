@@ -56,17 +56,17 @@ class NavigationDrawer extends Component {
 
     if (!open && next.open) {
       this.setState({ shown: true }, () => {
-        Animations.entrance(this._openAV).start(onFinishOpening)
+        Animations.entrance(this._openAV, { useNativeDriver: true }).start(onFinishOpening)
       })
     }
     if (open && !next.open) {
       await onStartClosing()
-      Animations.exit(this._openAV, { toValue: 0 })
+      Animations.exit(this._openAV, { toValue: 0, useNativeDriver: true })
         .start(() => this.setState({ shown: false }))
     }
   }
 
-  _openAV = new Animated.Value(this.props.open)
+  _openAV = new Animated.Value(this.props.open ? 1 : 0)
 
   render() {
     const { onOverlayPress, children } = this.props
@@ -79,7 +79,7 @@ class NavigationDrawer extends Component {
           <Animated.View
             style={[
               styles.overlay,
-              animate('backgroundColor', Colors.blackTransparent, Colors.blackSecondary, this._openAV),
+              animate('opacity', 0, 0.54, this._openAV),
             ]} />
         </TouchableWithoutFeedback>
         <Animated.View
@@ -143,6 +143,8 @@ const styles = ps({
     right: 0,
     top: 0,
     bottom: 0,
+
+    backgroundColor: 'black',
   },
 
   menu: {
@@ -162,18 +164,18 @@ const styles = ps({
   },
 
   menuClosed: {
-    left: -70 * gu,
+    transform: [{ translateX: -70 * gu }],
 
     [Breakpoints.sm]: {
-      left: -80 * gu,
+      transform: [{ translateX: -80 * gu }],
     },
   },
 
   menuOpen: {
-    left: 0,
+    transform: [{ translateX: 0 }],
 
     [Breakpoints.sm]: {
-      left: 0,
+      transform: [{ translateX: 0 }],
     },
   },
 

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, View } from 'react-native-universal'
+import { Animated, View, Platform } from 'react-native-universal'
 import Uranium, { animate } from 'uranium'
 import omit from 'lodash/omit'
 import get from 'lodash/get'
@@ -48,16 +48,39 @@ class ListItem extends Component {
     // HACK No idea why, but Animated has trouble starting multiple animations
     // from componentWillUpdate. componentDidUpdate is fine, but need to use
     // setState here. Using setTimeout to start the icon one.
+    //
+    // PERFORMANCE OPTIMIZATION Disabling expansion animations on android
     if (!expanded && nextProps.expanded) {
-      Animations.standard(this._expandIconAV, { duration: EXPAND_DURATION }).start()
-      Animations.standard(this._expandHeightAV, { duration: EXPAND_DURATION }).start()
-      Animations.standard(this._expandOpacityAV, { duration: EXPAND_DURATION, delay: 50 })
-        .start(() => this.setState({ expanded: true }))
+      if (Platform.OS === 'android') {
+        this._expandIconAV.setValue(1)
+        this._expandHeightAV.setValue(1)
+        this._expandOpacityAV.setValue(1)
+      } else {
+        setTimeout(() =>
+          Animations.standard(this._expandIconAV, { duration: EXPAND_DURATION }).start()
+        )
+        Animations.standard(this._expandHeightAV, { duration: EXPAND_DURATION }).start()
+        Animations.standard(this._expandOpacityAV, {
+          duration: EXPAND_DURATION,
+          delay: 50,
+        }).start(() => this.setState({ expanded: true }))
+      }
     } else if (expanded && !nextProps.expanded) {
       this.setState({ expanded: false })
-      Animations.standard(this._expandIconAV, { toValue: 0, duration: EXPAND_DURATION }).start()
-      Animations.standard(this._expandHeightAV, { toValue: 0, duration: EXPAND_DURATION, delay: 50 }).start() // eslint-disable-line max-len
-      Animations.standard(this._expandOpacityAV, { toValue: 0, duration: EXPAND_DURATION }).start()
+      if (Platform.OS === 'android') {
+        this._expandIconAV.setValue(0)
+        this._expandHeightAV.setValue(0)
+        this._expandOpacityAV.setValue(0)
+      } else {
+        setTimeout(() =>
+          Animations.standard(this._expandIconAV, { toValue: 0, duration: EXPAND_DURATION }).start()
+        )
+        Animations.standard(this._expandHeightAV, { toValue: 0, duration: EXPAND_DURATION, delay: 50 }).start() // eslint-disable-line max-len
+        Animations.standard(this._expandOpacityAV, {
+          toValue: 0,
+          duration: EXPAND_DURATION,
+        }).start()
+      }
     }
   }
 
@@ -94,13 +117,14 @@ class ListItem extends Component {
     return (
       <View>
         <TouchableRipple
+          style={styles.touchable}
           onMouseEnter={() => this.setState({ hovered: true })}
           onMouseLeave={() => this.setState({ hovered: false })}
           onPress={onPress}>
           <Animated.View
-            css={styles.base}
+            css={styles.body}
             style={[
-              animate(['backgroundColor'], styles.base, styles.hovered, this._hoverAV),
+              animate(['backgroundColor'], styles.body, styles.hovered, this._hoverAV),
             ].concat(style)}
             {...otherWithoutCustomProps}>
             {leftIcon &&
@@ -258,15 +282,17 @@ export default
   ListItem))
 
 const tStyles = theme => ({
-  base: {
+  touchable: {
+    backgroundColor: Colors.white,
+  },
+
+  body: {
     paddingVertical: 3 * gu,
     paddingHorizontal: 4 * gu,
 
     alignItems: 'flex-start',
     justifyContent: 'center',
     flexDirection: 'column',
-
-    backgroundColor: Colors.white,
 
     [Breakpoints.ml]: {
       paddingVertical: 2 * gu,
@@ -322,11 +348,11 @@ const tStyles = theme => ({
   },
 
   expandIconCollapsed: {
-    transform: [{ rotateZ: '0deg' }],
+    transform: [{ rotate: '0deg' }],
   },
 
   expandIconExpanded: {
-    transform: [{ rotateZ: '-180deg' }],
+    transform: [{ rotate: '-180deg' }],
   },
 
   hovered: {

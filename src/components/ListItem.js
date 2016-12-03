@@ -25,7 +25,9 @@ const RIGHT_TEXT_WIDTH = 14 * gu
 /**
  * Individual items for the <List /> component.
  *
- * Can become a nested menu item it has ListItem for children.
+ * Can become a nested menu item it has ListItem for children. Currently you
+ * need to set the padding manually for these for performance reasons, but
+ * may be automatic in the future.
  *
  * Examples in the List page.
  */
@@ -55,7 +57,9 @@ class ListItem extends Component {
         this._expandIconAV.setValue(1)
         this._expandHeightAV.setValue(1)
         this._expandOpacityAV.setValue(1)
+        this.setState({ expanded: true, fullyExpanded: true })
       } else {
+        this.setState({ expanded: true })
         setTimeout(() =>
           Animations.standard(this._expandIconAV, { duration: EXPAND_DURATION }).start()
         )
@@ -63,23 +67,28 @@ class ListItem extends Component {
         Animations.standard(this._expandOpacityAV, {
           duration: EXPAND_DURATION,
           delay: 50,
-        }).start(() => this.setState({ expanded: true }))
+        }).start(() => this.setState({ fullyExpanded: true }))
       }
     } else if (expanded && !nextProps.expanded) {
-      this.setState({ expanded: false })
       if (Platform.OS === 'android') {
         this._expandIconAV.setValue(0)
         this._expandHeightAV.setValue(0)
         this._expandOpacityAV.setValue(0)
+        this.setState({ expanded: false, fullyExpanded: false })
       } else {
+        this.setState({ fullyExpanded: false })
         setTimeout(() =>
           Animations.standard(this._expandIconAV, { toValue: 0, duration: EXPAND_DURATION }).start()
         )
-        Animations.standard(this._expandHeightAV, { toValue: 0, duration: EXPAND_DURATION, delay: 50 }).start() // eslint-disable-line max-len
         Animations.standard(this._expandOpacityAV, {
           toValue: 0,
           duration: EXPAND_DURATION,
         }).start()
+        Animations.standard(this._expandHeightAV, {
+          delay: 50,
+          duration: EXPAND_DURATION,
+          toValue: 0,
+        }).start(() => this.setState({ expanded: false }))
       }
     }
   }
@@ -100,7 +109,6 @@ class ListItem extends Component {
       rightText,
       rightIcon,
       active,
-      nestingDepth,
       onPress,
       children,
       style,
@@ -194,24 +202,15 @@ class ListItem extends Component {
             }
           </Animated.View>
         </TouchableRipple>
-        {childrenCount > 0 &&
+        {childrenCount > 0 && this.state.expanded &&
           <Animated.View
             style={[
               styles.nestedList,
               animate('maxHeight', 0, (childrenCount * 72) + 40, this._expandHeightAV),
               animate('opacity', 0, 1, this._expandOpacityAV),
-              this.state.expanded && { maxHeight: undefined },
+              this.state.fullyExpanded && { maxHeight: undefined },
             ]}>
-            {/* Man, all this just to add padding to children elements */}
-            {React.Children.map(children, listItem =>
-              React.cloneElement(listItem, {
-                ...listItem.props,
-                style: {
-                  paddingLeft: get(style, 'paddingLeft', 0) + nestingDepth,
-                  ...listItem.props.style,
-                },
-              })
-            )}
+            {children}
           </Animated.View>
         }
       </View>
@@ -251,11 +250,6 @@ ListItem.propTypes = {
    */
   active: PropTypes.bool,
   /**
-   * The depth, in px, of nested items. Only applies if there are children
-   * ListItems. The default is the Material Design spec value.
-   */
-  nestingDepth: PropTypes.number,
-  /**
    * Controls the expanded/collapses state if there are ListItem children
    */
   expanded: PropTypes.bool,
@@ -272,7 +266,6 @@ ListItem.propTypes = {
 }
 
 ListItem.defaultProps = {
-  nestingDepth: 18 * gu,
   secondaryTextLines: 1,
 }
 

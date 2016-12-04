@@ -235,7 +235,7 @@ const TouchableRipple = React.createClass({
   render() {
     const { rippleColor, rippleOpacity, disabled, children, style, ...other } = this.props
 
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && Platform.Version >= 21) {
       const mergedStyle = Array.isArray(style) ?
         style.reduce((prev, curr) => ({ ...prev, ...curr })) :
         style

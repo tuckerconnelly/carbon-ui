@@ -76,7 +76,6 @@ List.propTypes = {
    * Usually a collection of `ListItem`s
    */
   children: PropTypes.node,
-  style: PropTypes.object,
 }
 
 export default Uranium(List)

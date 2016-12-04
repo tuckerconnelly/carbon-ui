@@ -27,7 +27,7 @@ const IconToggle = ({ name, style, iconStyle, ...other }) => { // eslint-disable
     <TouchableRipple
       rippleCentered
       rippleSpread={0.34}
-      style={[styles.base, style]}
+      style={[styles.base].concat(style)}
       {...other}>
       <Icon name={name} style={iconStyle} />
     </TouchableRipple>
@@ -43,7 +43,7 @@ IconToggle.propTypes = {
   /**
    * The style of the containing TouchableRipple (which is a View)
    */
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   /**
    * The style of the Icon element
    */

@@ -3,6 +3,9 @@ import { Animated, View } from 'react-native-universal'
 import { animate } from 'uranium'
 import { Animations, Icon, TouchableRipple, Body1, Paper, gu } from '../index'
 
+/**
+ * Expansion panels contain creation flows and allow lightweight editing of an element.
+ */
 class ExpansionPanel extends Component {
   state = { expanded: false }
 

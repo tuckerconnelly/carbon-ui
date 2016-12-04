@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { Animated, View, Platform } from 'react-native-universal'
 import Uranium, { animate } from 'uranium'
 import omit from 'lodash/omit'
-import get from 'lodash/get'
 import {
   Icon,
   TouchableRipple,

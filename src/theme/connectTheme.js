@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import invariant from 'invariant'
+import { themes } from '../index'
 
 export default component => {
   let WrappedComponent = component
@@ -14,13 +14,6 @@ export default component => {
   }
 
   class ConnectTheme extends Component {
-    constructor(props, context) {
-      super(props, context)
-      invariant(context.theme,
-        'Couldn\'t find the theme on the context. ' +
-        '<ThemeProvider> needs to exist in component ancestry.')
-    }
-
     _node = null
 
     render() {
@@ -28,7 +21,7 @@ export default component => {
         <WrappedComponent
           {...this.props}
           ref={c => { this._node = c }}
-          theme={this.context.theme} />
+          theme={this.context.theme || themes.light} />
       )
     }
   }

@@ -20,8 +20,8 @@ const ELEVATE_DURATION = 175
 
 /**
  *
- * The app bar, formerly known as the action bar in Android, is a special kind
- * of toolbar that’s used for branding, navigation, search, and actions.
+ * The app bar is a special kind of toolbar that’s used for branding,
+ * navigation, search, and actions.
  *
  *     import React from 'react'
  *     import { View } from 'react-native-universal'
@@ -50,7 +50,7 @@ class AppBar extends Component {
   _elevateAV = new Animated.Value(this.props.elevated | 0) // eslint-disable-line no-bitwise
 
   render() {
-    const { title, leftIcon, onLeftIconPress, theme, css, children, ...other } = this.props
+    const { title, navIcon, onNavIconPress, theme, children, ...other } = this.props
 
     const otherWithoutAppBarProps = omit(other,
       'elevated',
@@ -62,16 +62,18 @@ class AppBar extends Component {
       <Animated.View
         css={[
           styles.base,
+          !navIcon && styles.baseWithoutNavIcon,
           animate(Elevation.dp0, Elevation.dp4, this._elevateAV),
-          css,
         ]}
         {...otherWithoutAppBarProps}>
-        <IconToggle
-          name={leftIcon}
-          style={styles.icon}
-          iconStyle={styles.iconIcon}
-          rippleColor={Colors.white}
-          onPress={onLeftIconPress} />
+        {navIcon &&
+          <IconToggle
+            name={navIcon}
+            style={styles.icon}
+            iconStyle={styles.iconIcon}
+            rippleColor={Colors.white}
+            onPress={onNavIconPress} />
+        }
         <Title style={styles.title}>{title}</Title>
         {children}
       </Animated.View>
@@ -85,13 +87,13 @@ AppBar.propTypes = {
    */
   title: PropTypes.string,
   /**
-   * The material icon name of the left icon
+   * The material icon name of the nav icon
    */
-  leftIcon: PropTypes.string,
+  navIcon: PropTypes.string,
   /**
-   * Callback for handling presses on the left icon
+   * Callback for handling presses on the nav icon
    */
-  onLeftIconPress: PropTypes.func,
+  onNavIconPress: PropTypes.func,
   /**
    * Will make the AppBar flat and without shadows if false.
    */
@@ -108,7 +110,7 @@ AppBar.propTypes = {
 }
 
 AppBar.defaultProps = {
-  leftIcon: 'menu',
+  navIcon: 'menu',
   elevated: true,
 }
 
@@ -141,8 +143,12 @@ const tStyles = theme => ps({
     },
   },
 
+  baseWithoutNavIcon: {
+    paddingLeft: 4 * gu,
+  },
+
   icon: {
-    marginRight: 5 * gu,
+    marginRight: 8 * gu,
   },
 
   iconIcon: {

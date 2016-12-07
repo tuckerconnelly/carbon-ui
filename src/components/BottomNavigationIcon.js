@@ -23,6 +23,8 @@ class BottomNavigationIcon extends Component {
 
     const { name, text, theme, ...other } = this.props
 
+    delete other.active
+
     const styles = tStyles(theme)
 
     return (

@@ -56,11 +56,15 @@ class NavigationDrawer extends Component {
 
     if (!open && next.open) {
       this.setState({ shown: true }, () => {
-        Animations.entrance(this._openAV).start(onFinishOpening)
+        Animations.entrance(this._openAV).start(() => {
+          onFinishOpening()
+          this.setState({ fullyOpen: true })
+        })
       })
     }
     if (open && !next.open) {
       await onStartClosing()
+      this.setState({ fullyOpen: false })
       Animations.exit(this._openAV, { toValue: 0 })
         .start(() => this.setState({ shown: false }))
     }
@@ -86,7 +90,12 @@ class NavigationDrawer extends Component {
         </TouchableWithoutFeedback>
         <Animated.View
           css={styles.menu}
-          style={animate(styles.menuClosed, styles.menuOpen, this._openAV)}>
+          style={[
+            animate(styles.menuClosed, styles.menuOpen, this._openAV),
+            // Fixes a bug on chrome where scrollbar isn't lined up to the edge
+            // of the container when using translateX
+            this.state.fullyOpen && styles.menuFullyOpen,
+          ]}>
           {children}
         </Animated.View>
       </View>
@@ -189,6 +198,12 @@ const styles = ps({
   android: {
     base: {
       elevation: 16,
+    },
+  },
+
+  web: {
+    menuFullyOpen: {
+      transform: null,
     },
   },
 })

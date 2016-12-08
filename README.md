@@ -17,7 +17,7 @@ You can download them [here](https://github.com/tuckerconnelly/carbon-ui-docs/tr
 - [Exponent](https://docs.getexponent.com/versions/v11.0.0/guides/using-custom-fonts.html)
 - Web
 
-Install [tuckerconnelly/react-native-web], and then place the `<WebStyles />` component next to `<BaseStyles />` (from `tuckerconnelly/react-native-web`) in your `index.web.js`:
+Install [tuckerconnelly/react-native-web](https://github.com/tuckerconnelly/react-native-web), and then place the `<WebStyles />` component next to `<BaseStyles />` (from `tuckerconnelly/react-native-web`) in your `index.web.js`:
 
 ```js
 import React from 'react'

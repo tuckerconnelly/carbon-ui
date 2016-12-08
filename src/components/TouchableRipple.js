@@ -321,6 +321,8 @@ const styles = ps({
   web: {
     container: {
       cursor: 'pointer',
+
+      WebkitTapHighlightColor: 'transparent',
     },
 
     containerDisabled: {

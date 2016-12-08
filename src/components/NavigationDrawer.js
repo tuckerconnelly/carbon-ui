@@ -73,7 +73,7 @@ class NavigationDrawer extends Component {
   _openAV = new Animated.Value(this.props.open ? 1 : 0)
 
   render() {
-    const { onOverlayPress, children } = this.props
+    const { menuStyle, onOverlayPress, children } = this.props
 
     return (
       <View
@@ -95,7 +95,7 @@ class NavigationDrawer extends Component {
             // Fixes a bug on chrome where scrollbar isn't lined up to the edge
             // of the container when using translateX
             this.state.fullyOpen && styles.menuFullyOpen,
-          ]}>
+          ].concat(menuStyle)}>
           {children}
         </Animated.View>
       </View>
@@ -108,6 +108,10 @@ NavigationDrawer.propTypes = {
    * Will open the drawer if set to true.
    */
   open: PropTypes.bool,
+  /**
+   * The style of the menu.
+   */
+  menuStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   /**
    * Callback for when the overlay is pressed
    */

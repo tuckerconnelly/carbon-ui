@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native-universal'
 import ps from 'react-native-ps'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import Color from 'color'
 
 const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }

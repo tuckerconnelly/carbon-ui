@@ -203,6 +203,10 @@ const styles = ps({
     base: {
       elevation: 16,
     },
+
+    hidden: {
+      elevation: undefined,
+    },
   },
 
   web: {

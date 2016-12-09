@@ -80,5 +80,9 @@ If you run in to any snags, check out the [Known issues](https://carbon-ui.com/g
 
 This is still a beta. Expect bugs 😛
 
+### Connect
+
+Follow the creator on Twitter, [@TuckerConnelly](https://twitter.com/TuckerConnelly)
+
 ### License
 MIT

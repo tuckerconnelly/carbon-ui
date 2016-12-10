@@ -317,6 +317,13 @@ const styles = theme => ps({
 
 
   web: {
+    textInput: {
+      outline: 'none',
+      border: 'none',
+
+      boxSizing: 'border-box',
+    },
+
     disabled: {
       cursor: 'default',
       userSelect: 'none',

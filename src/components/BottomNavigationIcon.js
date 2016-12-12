@@ -4,6 +4,9 @@ import { animate } from 'uranium'
 
 import { Animations, TouchableRipple, Icon, Body1, Colors, connectTheme } from '../index'
 
+/**
+ * An icon in BottomNavigation
+ */
 class BottomNavigationIcon extends Component {
   componentWillReceiveProps(next) {
     const { active } = this.props

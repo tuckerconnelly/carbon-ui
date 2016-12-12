@@ -260,8 +260,7 @@ const TouchableRipple = React.createClass({
         style={[
           styles.container,
           disabled && styles.containerDisabled,
-          style,
-        ]}
+        ].concat(style)}
         ref={c => { this._container = c }}
         onLayout={this._handleLayout}
         onKeyDown={this._onKeyDown}
@@ -321,8 +320,6 @@ const styles = ps({
   web: {
     container: {
       cursor: 'pointer',
-
-      WebkitTapHighlightColor: 'transparent',
     },
 
     containerDisabled: {

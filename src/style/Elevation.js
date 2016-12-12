@@ -43,6 +43,12 @@ export default ps({
       shadowOpacity: iosOpacity,
       shadowRadius: 4,
     },
+    dp12: {
+      shadowColor: 'black',
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: iosOpacity,
+      shadowRadius: 6,
+    },
     dp16: {
       shadowColor: 'black',
       shadowOffset: { width: 0, height: 8 },
@@ -75,6 +81,9 @@ export default ps({
     },
     dp8: {
       elevation: 8,
+    },
+    dp12: {
+      elevation: 12,
     },
     dp16: {
       elevation: 16,
@@ -118,8 +127,14 @@ export default ps({
     },
     dp8: {
       boxShadow: `
-        0 8px 10px 1px rgba(0, 0, 0, ${penumbraOpacity}),
-        0 3px 14px 2px rgba(0, 0, 0, ${umbraOpacity})
+        0 6px 10px 0 rgba(0, 0, 0, ${penumbraOpacity}),
+        0 3px 5px -1px rgba(0, 0, 0, ${umbraOpacity});
+      `,
+    },
+    dp12: {
+      boxShadow: `
+        0 12px 16px 1px rgba(0, 0, 0, ${penumbraOpacity}),
+        0 3px 22px 3px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
     dp16: {

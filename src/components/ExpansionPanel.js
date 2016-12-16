@@ -19,8 +19,8 @@ class ExpansionPanel extends Component {
         duration: 175,
         toValue: 0,
       }).start(() => this.setState({ expanded: true }))
-      Animations.standard(this._opacityAV, { delay: 175, duration: 300 }).start()
-      Animations.standard(this._heightAV).start()
+      setTimeout(() => Animations.standard(this._opacityAV, { delay: 175, duration: 300 }).start())
+      setTimeout(() => Animations.standard(this._heightAV).start())
       setTimeout(() => Animations.standard(this._iconAV, { duration: 150 }).start())
     }
     if (expanded && !next.expanded) {
@@ -150,8 +150,6 @@ const styles = {
     paddingVertical: 3 * gu,
 
     flexDirection: 'row',
-
-    zIndex: 100,
   },
 
   icon: {

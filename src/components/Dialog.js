@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { View, Animated } from 'react-native-universal'
+import { View, Animated, TouchableWithoutFeedback } from 'react-native-universal'
 import { animate } from 'uranium'
 
 import { Title, Animations, Colors, Elevation, gu } from '../index'
@@ -47,7 +47,7 @@ class Dialog extends Component {
   _showAV = new Animated.Value(this.props.active ? 1 : 0)
 
   render() {
-    const { title, actions, style, children } = this.props
+    const { title, actions, onOverlayPress, style, children } = this.props
     const { visible } = this.state
 
     return (
@@ -58,6 +58,9 @@ class Dialog extends Component {
           // HACK Just returning a <View /> if !visible freezes iOS for some reason :P
           !visible && styles.hidden,
         ]}>
+        <TouchableWithoutFeedback onPress={onOverlayPress}>
+          <View style={styles.touchableBackground} />
+        </TouchableWithoutFeedback>
         <Animated.View
           style={[
             styles.dialog,
@@ -92,6 +95,10 @@ Dialog.propTypes = {
    * Whether or not the Dialog is active.
    */
   active: PropTypes.bool,
+  /**
+   * When the overlay is pressed (usually to deactivate the dialog)
+   */
+  onOverlayPress: PropTypes.func,
   /**
    * The contents of the dialog
    */
@@ -132,6 +139,14 @@ const styles = {
 
   overlayVisible: {
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
+  },
+
+  touchableBackground: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 
   dialog: {

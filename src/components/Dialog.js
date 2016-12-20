@@ -47,7 +47,7 @@ class Dialog extends Component {
   _showAV = new Animated.Value(this.props.active ? 1 : 0)
 
   render() {
-    const { title, actions, children } = this.props
+    const { title, actions, style, children } = this.props
     const { visible } = this.state
 
     return (
@@ -62,6 +62,7 @@ class Dialog extends Component {
           style={[
             styles.dialog,
             animate(['top', 'opacity'], styles.dialog, styles.dialogVisible, this._showAV),
+            style,
           ]}>
           {!!title &&
             <View style={styles.title}><Title>{title}</Title></View>
@@ -95,6 +96,7 @@ Dialog.propTypes = {
    * The contents of the dialog
    */
   children: PropTypes.node.isRequired,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 Dialog.defaultProps = {

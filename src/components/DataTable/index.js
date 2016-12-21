@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native-universal'
+import { View } from 'react-native'
 import ps from 'react-native-ps'
 
 import HeaderRow from './HeaderRow'
@@ -14,7 +14,7 @@ import Cell from './Cell'
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { DataTable, gu } from 'carbon-ui'
  *
  *      export default () =>

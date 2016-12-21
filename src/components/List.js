@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { ScrollView } from 'react-native-universal'
+import { ScrollView } from 'react-native'
 import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import { Breakpoints } from '../index'
@@ -11,7 +11,7 @@ import { Breakpoints } from '../index'
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { List, ListItem, Elevation } from 'carbon-ui'
  *
  *      export default () =>
@@ -26,7 +26,7 @@ import { Breakpoints } from '../index'
  * ---
  *
  *      import React, { Component } from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { List, ListItem, Elevation, gu } from 'carbon-ui'
  *
  *      export default class Example extends Component {

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { Animated } from 'react-native-universal'
+import { Animated } from 'react-native'
 import ps from 'react-native-ps'
 import { animate } from 'uranium'
 import omit from 'lodash/omit'

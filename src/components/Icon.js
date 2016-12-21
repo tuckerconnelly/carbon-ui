@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Text } from 'react-native-universal'
+import { Text } from 'react-native'
 import ps from 'react-native-ps'
 
 const SIZE = 24
@@ -14,7 +14,7 @@ const SIZE = 24
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { Icon } from 'carbon-ui'
  *
  *      export default () =>

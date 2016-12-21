@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, TouchableWithoutFeedback, View } from 'react-native-universal'
+import { Animated, TouchableWithoutFeedback, View } from 'react-native'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 import { Animations, Breakpoints, Elevation, Colors, gu } from '../index'
@@ -13,7 +13,7 @@ import { Animations, Breakpoints, Elevation, Colors, gu } from '../index'
  *
  *
  *      import React, { Component } from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { NavigationDrawer, List, ListItem, RaisedButton } from 'carbon-ui'
  *
  *      export default class Example extends Component {

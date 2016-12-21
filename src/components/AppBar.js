@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated } from 'react-native-universal'
+import { Animated } from 'react-native'
 import Uranium, { animate } from 'uranium'
 import ps from 'react-native-ps'
 import omit from 'lodash/omit'
@@ -24,7 +24,7 @@ const ELEVATE_DURATION = 175
  * navigation, search, and actions.
  *
  *     import React from 'react'
- *     import { View } from 'react-native-universal'
+ *     import { View } from 'react-native'
  *     import { AppBar } from 'carbon-ui'
  *
  *     export default () =>

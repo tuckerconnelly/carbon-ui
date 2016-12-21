@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, TouchableOpacity, Platform } from 'react-native-universal'
+import { Animated, TouchableOpacity, Platform } from 'react-native'
 import { animate } from 'uranium'
 
 import { Animations, TouchableRipple, Elevation, gu, connectTheme } from '../../index'
@@ -13,7 +13,7 @@ import { Animations, TouchableRipple, Elevation, gu, connectTheme } from '../../
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { FloatingActionButton, Icon, gu } from 'carbon-ui'
  *
  *      export default () =>

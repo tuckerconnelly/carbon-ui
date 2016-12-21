@@ -1,4 +1,4 @@
-import { Animated, Easing, NativeModules } from 'react-native-universal'
+import { Animated, Easing, NativeModules } from 'react-native'
 
 import { Breakpoints } from './Responsive'
 

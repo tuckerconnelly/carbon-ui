@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 
 import React, { PropTypes, Component } from 'react'
-import { Text } from 'react-native-universal'
+import { Text } from 'react-native'
 import Uranium from 'uranium'
 
 import { Type as styles } from '../index'

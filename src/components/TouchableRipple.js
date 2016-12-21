@@ -9,7 +9,7 @@ import {
   TouchableNativeFeedback,
   View,
   Platform,
-} from 'react-native-universal'
+} from 'react-native'
 import ps from 'react-native-ps'
 import omit from 'lodash/omit'
 import Color from 'color'
@@ -23,7 +23,7 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { Paper, TouchableRipple, Body1, Colors, gu } from 'carbon-ui'
  *
  *      export default () =>

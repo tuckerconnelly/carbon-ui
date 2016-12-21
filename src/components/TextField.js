@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, TextInput, View } from 'react-native-universal'
+import { Animated, TextInput, View } from 'react-native'
 import Color from 'color'
 import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
@@ -19,7 +19,7 @@ const AnimatedDivider = Animated.createAnimatedComponent(Divider)
  * ### Examples
  *
  *      import React, { Component } from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { TextField } from 'carbon-ui'
  *
  *      export default class Example extends Component {

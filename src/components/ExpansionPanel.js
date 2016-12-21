@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, View } from 'react-native-universal'
+import { Animated, View } from 'react-native'
 import { animate } from 'uranium'
 import { Animations, Icon, TouchableRipple, Body1, Paper, gu } from '../index'
 

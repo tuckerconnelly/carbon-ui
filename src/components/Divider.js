@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native-universal'
+import { View } from 'react-native'
 
 import { connectTheme } from '../index'
 
@@ -10,7 +10,7 @@ import { connectTheme } from '../index'
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { Body1, Divider, gu } from 'carbon-ui'
  *
  *      export default () =>

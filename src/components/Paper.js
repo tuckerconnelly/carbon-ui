@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { View } from 'react-native-universal'
+import { View } from 'react-native'
 
 import { Colors, Elevation } from '../index'
 

@@ -18,7 +18,7 @@ import {
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { FlatButton } from 'carbon-ui'
  *
  *      export default () =>

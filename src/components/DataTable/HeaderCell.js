@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native-universal'
+import { View } from 'react-native'
 import ps from 'react-native-ps'
 
 import { Body2, gu } from '../../index'

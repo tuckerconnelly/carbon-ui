@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { View, Animated, TouchableWithoutFeedback } from 'react-native-universal'
+import { View, Animated, TouchableWithoutFeedback } from 'react-native'
 import { animate } from 'uranium'
 
 import { Title, Animations, Colors, Elevation, gu } from '../index'
@@ -11,7 +11,7 @@ import { Title, Animations, Colors, Elevation, gu } from '../index'
  * ### Examples
  *
  *      import React from 'react'
- *      import { View } from 'react-native-universal'
+ *      import { View } from 'react-native'
  *      import { Dialog, FlatButton, Body1 } from 'carbon-ui'
  *
  *      export default () =>

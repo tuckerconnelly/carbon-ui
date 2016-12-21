@@ -74,6 +74,10 @@ Long term, the React Native team is doing [good work](https://productpains.com/p
 
 If you run in to any snags, check out the [Known issues](https://carbon-ui.com/getting-started/known-issues) page in the docs for tips on improving performance, or file an issue here.
 
+**React Native 0.37 only**
+
+Currently carbon-ui only works with `react-native@0.37.0`. We're working on this and tracking it in: https://github.com/tuckerconnelly/carbon-ui/issues/3
+
 ### Disclaimer
 
 This is still a beta. Expect bugs 😛

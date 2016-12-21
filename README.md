@@ -5,6 +5,7 @@
 ### Installation
 
 ```
+npm -S i tuckerconnelly/carbon-ui#0.1 // or, if you want the latest:
 npm -S i tuckerconnelly/carbon-ui
 ```
 
@@ -17,24 +18,21 @@ You can download them [here](https://github.com/tuckerconnelly/carbon-ui-docs/tr
 - [Exponent](https://docs.getexponent.com/versions/v11.0.0/guides/using-custom-fonts.html)
 - Web
 
-Install [tuckerconnelly/react-native-web](https://github.com/tuckerconnelly/react-native-web), and then place the `<WebStyles />` component next to `<BaseStyles />` (from `tuckerconnelly/react-native-web`) in your `index.web.js`:
+Install [tuckerconnelly/react-native-web](https://github.com/tuckerconnelly/react-native-web), and then place the `<WebStyles />` in your `index.web.js`:
 
 ```js
+import 'babel-polyfill'
+
 import React from 'react'
-import { render } from 'react-dom'
-import { AppRegistry, BaseStyles } from 'react-native-universal'
+import { AppRegistry } from 'react-native-universal'
 import { WebStyles } from 'carbon-ui'
 
 import App from './src/index'
 
-const app = render(
-  <App>
-    <BaseStyles />
-    <WebStyles />
-  </App>,
-  document.getElementById('root')
-)
-AppRegistry.registerComponent('client', app)
+const AppWithStyles = () => <App><WebStyles /></App>
+
+AppRegistry.registerComponent('CarbonUIExample', () => AppWithStyles)
+AppRegistry.runApplication('CarbonUIExample', { rootTag: document.getElementById('root') })
 ```
 
 ### Usage

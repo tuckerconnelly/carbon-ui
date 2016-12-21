@@ -1,6 +1,6 @@
 {
   "name": "carbon-ui",
-  "version": "0.0.2",
+  "version": "1000.0.0",
   "description": "Material Design framework for React",
   "main": "lib/index.js",
   "scripts": {

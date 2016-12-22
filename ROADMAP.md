@@ -5,8 +5,14 @@
 - Snackbar
 - Dropdown
 
-### Future 😎
+### Lined up
 
-I have a few active projects being developed with carbon-ui. I'll build out components as they're needed.
+Feel free to submit a PR for these
 
-I also donate an hour of my time to OSS every day. If you need something in particular, file an issue and I'll get around to it.
+- Avatars in ListItems
+- Right-side NavigationDrawer
+- Checkbox
+- RadioButton
+- Slider
+
+If you need something in particular, file an issue and I'll get around to it, or shoot me an email if you need something ASAP.

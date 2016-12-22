@@ -128,7 +128,7 @@ export default ps({
     dp8: {
       boxShadow: `
         0 6px 10px 0 rgba(0, 0, 0, ${penumbraOpacity}),
-        0 3px 5px -1px rgba(0, 0, 0, ${umbraOpacity});
+        0 3px 5px -1px rgba(0, 0, 0, ${umbraOpacity})
       `,
     },
     dp12: {

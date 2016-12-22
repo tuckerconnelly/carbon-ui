@@ -13,6 +13,7 @@ export { default as TouchableRipple } from './TouchableRipple'
 export { default as ExpansionPanel } from './ExpansionPanel'
 export { default as BottomNavigation } from './BottomNavigation'
 export { default as BottomNavigationIcon } from './BottomNavigationIcon'
+export { default as Snackbar } from './Snackbar'
 
 export * from './buttons'
 export * from './Type'

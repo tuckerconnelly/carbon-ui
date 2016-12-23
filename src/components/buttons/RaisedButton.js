@@ -35,7 +35,7 @@ const RaisedButton = ({
   disabled,
 
   children,
-  css,
+  textStyle,
 
   theme,
   ...other
@@ -46,7 +46,12 @@ const RaisedButton = ({
   // Uppercase and style if the child is a string
   // Otherwise it's probably an icon or image, so let it through
   const formattedChildren = typeof children === 'string' ?
-    <Body2 style={[styles.text, disabled && styles.disabledText]}>
+    <Body2
+      style={[
+        styles.text,
+        disabled && styles.disabledText,
+        textStyle,
+      ]}>
       {children.toUpperCase()}
     </Body2> :
     children
@@ -54,7 +59,7 @@ const RaisedButton = ({
   return (
     <TouchableRipple
       hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
-      css={[styles.base, disabled && styles.disabled, css]}
+      css={[styles.base, disabled && styles.disabled]}
       rippleColor={Colors.white}
       disabled={disabled}
       {...other}>
@@ -73,7 +78,10 @@ RaisedButton.propTypes = {
    * The inside of the button. If it's text, it'll be UPPERCASEd.
    */
   children: PropTypes.node,
-  css: PropTypes.object,
+  /**
+   * The style of the button text. Only applies if props.children isn't passed.
+   */
+  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 
   // connectTheme
   theme: PropTypes.object.isRequired,

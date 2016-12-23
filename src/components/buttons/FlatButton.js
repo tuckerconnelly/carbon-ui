@@ -29,8 +29,8 @@ import {
 const Button = ({
   disabled,
   children,
-  css,
   theme,
+  textStyle,
   ...other
 }) => {
   // Themed styles
@@ -39,13 +39,17 @@ const Button = ({
   // Uppercase and style if the child is a string
   // Otherwise it's probably an icon or image, so let it through
   const formattedChildren = typeof children === 'string' ?
-    <Body2 style={styles.text}>{children.toUpperCase()}</Body2> :
+    <Body2
+      style={[
+        styles.text,
+        textStyle,
+      ]}>{children.toUpperCase()}</Body2> :
     children
 
   return (
     <TouchableRipple
       hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
-      css={[styles.base, disabled && styles.disabled, css]}
+      css={[styles.base, disabled && styles.disabled]}
       {...other}>
       {formattedChildren}
     </TouchableRipple>
@@ -63,6 +67,10 @@ Button.propTypes = {
    */
   children: PropTypes.node.isRequired,
   css: PropTypes.object,
+  /**
+   * The style of the button text. Only applies if props.children isn't passed.
+   */
+  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 
   // connectTheme
   theme: PropTypes.object.isRequired,

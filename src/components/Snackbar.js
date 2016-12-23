@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, View } from 'react-native'
+import { Animated } from 'react-native'
+import { animate } from 'uranium'
 
-import { Animations, FlatButton, Body1, Elevation } from 'carbon-ui'
+import { Animations, FlatButton, Body1, Elevation } from '../index'
 
 /**
  * Snackbars provide brief feedback about an operation through a message at the
@@ -11,28 +12,34 @@ class Snackbar extends Component {
   componentWillReceiveProps(next) {
     const { shown, autoHideDuration, onRequestHide } = this.props
 
+    // NOTE Was getting an exception with `useNativeDriver` and transform.translateY,
+    // using non-native `bottom` for now.
     if (!shown && next.shown) {
-      Animations.entrance(this._activateAV, { useNativeDriver: true }).start()
+      Animations.entrance(this._showAV).start()
       this._autoHideTimeout = setTimeout(onRequestHide, autoHideDuration)
     }
 
     if (shown && !next.shown) {
       clearTimeout(this._autoHideTimeout)
-      Animations.tempExit(this._activateAV, {
+      Animations.tempExit(this._showAV, {
         toValue: 0,
-        useNativeDriver: true,
       }).start()
     }
   }
 
-  _activateAV = new Animated.Value(this.props.children)
+  _showAV = new Animated.Value(this.props.shown ? 1 : 0)
   _autoHideTimeout = null
 
   render() {
     const { children, actionText, onPressAction } = this.props
+
     return (
-      <View style={styles.base}>
-        <Body1>{children}</Body1>
+      <Animated.View
+        style={[
+          styles.base,
+          animate(styles.base, styles.shown, this._showAV),
+        ]}>
+        <Body1 style={styles.text}>{children}</Body1>
         {actionText &&
           <FlatButton
             style={styles.action}
@@ -40,7 +47,7 @@ class Snackbar extends Component {
             {actionText}
           </FlatButton>
         }
-      </View>
+      </Animated.View>
     )
   }
 }
@@ -61,7 +68,7 @@ Snackbar.propTypes = {
   /**
    * The onPress prop of the action button.
    */
-  onPressAction: PropTypes.function,
+  onPressAction: PropTypes.func,
   /**
    * The duration in milliseconds after appearing that props.onRequestDeactivate
    * will be called.
@@ -70,11 +77,11 @@ Snackbar.propTypes = {
   /**
    * Called once the props.autoHideDuration passes
    */
-  onRequestHide: PropTypes.function,
+  onRequestHide: PropTypes.func,
 }
 
 Snackbar.defaultProps = {
-  autoHideDuration: 400,
+  autoHideDuration: 3000,
 }
 
 export default Snackbar
@@ -82,7 +89,11 @@ export default Snackbar
 const styles = {
   base: {
     position: 'absolute',
-    bottom: 0,
+    left: 0,
+    right: 0,
+    bottom: -48,
+
+    alignSelf: 'center',
 
     paddingVertical: 14,
     paddingHorizontal: 24,
@@ -92,6 +103,14 @@ const styles = {
     flexDirection: 'row',
 
     ...Elevation.dp8,
+  },
+
+  shown: {
+    bottom: 0,
+  },
+
+  text: {
+    color: 'white',
   },
 
   action: {

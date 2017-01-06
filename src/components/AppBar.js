@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated } from 'react-native'
+import { Animated, View } from 'react-native'
 import Uranium, { animate } from 'uranium'
 import ps from 'react-native-ps'
 import omit from 'lodash/omit'
@@ -74,7 +74,9 @@ class AppBar extends Component {
             rippleColor={Colors.white}
             onPress={onNavIconPress} />
         }
-        <Title style={styles.title}>{title}</Title>
+        <View style={styles.title}>
+          <Title style={styles.titleText}>{title}</Title>
+        </View>
         {children}
       </Animated.View>
     )
@@ -156,6 +158,10 @@ const tStyles = theme => ps({
   },
 
   title: {
+    flex: 1,
+  },
+
+  titleText: {
     color: Colors.white,
   },
 

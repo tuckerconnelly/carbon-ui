@@ -18,13 +18,13 @@ You can download them [here](https://github.com/tuckerconnelly/carbon-ui-docs/tr
 - [Exponent](https://docs.getexponent.com/versions/v11.0.0/guides/using-custom-fonts.html)
 - Web
 
-Install [tuckerconnelly/react-native-web](https://github.com/tuckerconnelly/react-native-web), and then place the `<WebStyles />` in your `index.web.js`:
+Install [react-native-web](https://github.com/necolas/react-native-web), and then place the `<WebStyles />` in your `index.web.js`:
 
 ```js
 import 'babel-polyfill'
 
 import React from 'react'
-import { AppRegistry } from 'react-native-universal'
+import { AppRegistry } from 'react-native-web'
 import { WebStyles } from 'carbon-ui'
 
 import App from './src/index'
@@ -73,10 +73,6 @@ Carbon UI optimizes a lot, using native animations and graceful degradations, an
 Long term, the React Native team is doing [good work](https://productpains.com/post/react-native/offload-some-animations-from-js-thread-for-better-perf) to improve Animated performance.
 
 If you run in to any snags, check out the [Known issues](https://carbon-ui.com/getting-started/known-issues) page in the docs for tips on improving performance, or file an issue here.
-
-**React Native 0.37 only**
-
-Currently carbon-ui only works with `react-native@0.37.0`. We're working on this and tracking it in: https://github.com/tuckerconnelly/carbon-ui/issues/3
 
 ### Disclaimer
 

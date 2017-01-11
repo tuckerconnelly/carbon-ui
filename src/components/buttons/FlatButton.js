@@ -39,11 +39,11 @@ const Button = ({
   // Uppercase and style if the child is a string
   // Otherwise it's probably an icon or image, so let it through
   const formattedChildren = typeof children === 'string' ?
-    <Body2
+    (<Body2
       style={[
         styles.text,
         textStyle,
-      ]}>{children.toUpperCase()}</Body2> :
+      ]}>{children.toUpperCase()}</Body2>) :
     children
 
   return (

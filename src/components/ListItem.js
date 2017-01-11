@@ -191,13 +191,13 @@ class ListItem extends Component {
                     styles.rightIcon,
                     rightText && styles.rightIconGivenRightText,
                   ]} /> :
-                  <View
-                    css={[
-                      styles.rightIcon,
-                      rightText && styles.rightIconGivenRightText,
-                    ]}>
-                    {rightIcon}
-                  </View>
+                <View
+                  css={[
+                    styles.rightIcon,
+                    rightText && styles.rightIconGivenRightText,
+                  ]}>
+                  {rightIcon}
+                </View>
             }
           </Animated.View>
         </TouchableRipple>

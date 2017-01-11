@@ -73,13 +73,14 @@ class NavigationDrawer extends Component {
   _openAV = new Animated.Value(this.props.open ? 1 : 0)
 
   render() {
-    const { menuStyle, onOverlayPress, children } = this.props
+    const { style, menuStyle, onOverlayPress, children } = this.props
 
     return (
       <View
         style={[
           styles.base,
           !this.state.shown && styles.hidden,
+          style,
         ]}>
         <TouchableWithoutFeedback onPress={onOverlayPress}>
           <Animated.View
@@ -108,6 +109,7 @@ NavigationDrawer.propTypes = {
    * Will open the drawer if set to true.
    */
   open: PropTypes.bool,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   /**
    * The style of the menu.
    */

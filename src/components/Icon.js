@@ -70,6 +70,7 @@ const styles = ps({
   web: {
     base: {
       wordWrap: 'normal',
+      fontFeatureSettings: '\'liga\'',
     },
   },
 })

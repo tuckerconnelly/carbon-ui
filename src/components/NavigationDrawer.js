@@ -149,10 +149,12 @@ const styles = ps({
     bottom: 0,
     right: 0,
 
-    zIndex: 200,
+    ...Elevation.dp24,
+    zIndex: 2400,
   },
 
   hidden: {
+    ...Elevation.dp0,
     zIndex: -1,
   },
 

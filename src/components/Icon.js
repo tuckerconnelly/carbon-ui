@@ -1,8 +1,32 @@
 import React, { Component, PropTypes } from 'react'
-import { Text } from 'react-native'
+import {
+  Platform,
+  Text,
+} from 'react-native'
 import ps from 'react-native-ps'
 
 const SIZE = 24
+
+// PlatformComponent's temporary location is in this file
+class PlatformComponent extends Component {
+  render() {
+    const icon = (() => {
+      if (Platform.OS === 'web') {
+        return this.props.web
+      } else if (this.props.android && Platform.OS === 'android') {
+        return this.props.android
+      }
+      return this.props.ios
+    })()
+    return React.createElement(icon, this.props, this.props.children)
+  }
+}
+PlatformComponent.propTypes = {
+  android: PropTypes.node,
+  children: PropTypes.node,
+  ios: PropTypes.node.isRequired,
+  web: PropTypes.node.isRequired,
+}
 
 /**
  * A system icon, or UI icon, symbolizes a command, file, device, or directory.
@@ -30,7 +54,11 @@ class Icon extends Component {
     const { name, style, children, ...other } = this.props
 
     return (
-      <Text
+      <PlatformComponent
+        web="i"
+        ios={Text}
+
+        className="material-icons"
         style={[
           styles.base,
           {
@@ -44,7 +72,7 @@ class Icon extends Component {
         {...other}>
         {name}
         {children}
-      </Text>
+      </PlatformComponent>
     )
   }
 }

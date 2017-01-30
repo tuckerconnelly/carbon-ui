@@ -45,7 +45,9 @@ import Cell from './Cell'
  */
 const DataTable = ({ children, style, ...other }) =>
   <View style={[styles.base].concat(style)} {...other}>
-    {children}
+    <View style={styles.table}>
+      {children}
+    </View>
   </View>
 
 DataTable.propTypes = {
@@ -71,8 +73,18 @@ const styles = ps({
     flex: 1,
   },
 
+  table: {
+    flex: 1,
+  },
+
   web: {
     base: {
+      width: '100%',
+      height: '100%',
+
+      overflow: 'auto',
+    },
+    table: {
       width: '100%',
       height: '100%',
 

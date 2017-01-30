@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { View, Animated, TouchableWithoutFeedback } from 'react-native'
+import { View, Animated, TouchableWithoutFeedback, Platform } from 'react-native'
 import { animate } from 'uranium'
 
 import { Title, Animations, Colors, Elevation, gu } from '../index'
@@ -128,6 +128,12 @@ const styles = {
     zIndex: 2400,
     overflow: 'hidden',
     elevation: 24,
+
+    ...Platform.select({
+      web: {
+        position: 'fixed',
+      },
+    }),
   },
 
   hidden: {

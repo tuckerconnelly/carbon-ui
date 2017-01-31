@@ -156,6 +156,9 @@ const styles = {
   },
 
   dialog: {
+    position: 'relative',
+    top: -3 * gu,
+
     minWidth: 70 * gu,
     backgroundColor: Colors.white,
 
@@ -165,6 +168,7 @@ const styles = {
   },
 
   dialogVisible: {
+    top: 0,
     opacity: 1,
   },
 

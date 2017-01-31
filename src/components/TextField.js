@@ -319,7 +319,7 @@ const styles = theme => ps({
   web: {
     textInput: {
       outline: 'none',
-      border: 'none',
+      borderWidth: 0,
 
       boxSizing: 'border-box',
     },

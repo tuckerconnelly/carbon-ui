@@ -127,7 +127,7 @@ const styles = {
 
     zIndex: 2400,
     overflow: 'hidden',
-    elevation: 24,
+    ...Elevation.dp24,
 
     ...Platform.select({
       web: {

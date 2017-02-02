@@ -14,7 +14,7 @@ export { default as ExpansionPanel } from './ExpansionPanel'
 export { default as BottomNavigation } from './BottomNavigation'
 export { default as BottomNavigationIcon } from './BottomNavigationIcon'
 export { default as Snackbar } from './Snackbar'
+export { default as Card } from './Card'
 
 export * from './buttons'
 export * from './Type'
-export * from './Card'

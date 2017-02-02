@@ -17,3 +17,4 @@ export { default as Snackbar } from './Snackbar'
 
 export * from './buttons'
 export * from './Type'
+export * from './Card'

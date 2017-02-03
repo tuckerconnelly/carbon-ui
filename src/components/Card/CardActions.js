@@ -22,10 +22,10 @@ class CardActions extends Component {
   }
 }
 
-export default connectTheme(Uranium(CardActions))
-
 const styles = {
   root: {
     padding: 8,
   },
 }
+
+export default connectTheme(Uranium(CardActions))

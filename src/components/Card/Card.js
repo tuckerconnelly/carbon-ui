@@ -28,8 +28,6 @@ Card.propTypes = {
   ]),
 }
 
-export default connectTheme(Uranium(Card))
-
 const styles = {
   root: {
     marginTop: 4,
@@ -45,3 +43,5 @@ const styles = {
     [Breakpoints.md]: Elevation.dp0,
   },
 }
+
+export default connectTheme(Uranium(Card))

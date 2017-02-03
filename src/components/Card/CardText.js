@@ -34,8 +34,6 @@ class CardText extends Component {
   }
 }
 
-export default connectTheme(Uranium(CardText))
-
 const styles = {
   root: {
     paddingLeft: 16,
@@ -52,3 +50,5 @@ const styles = {
     fontSize: 14,
   },
 }
+
+export default connectTheme(Uranium(CardText))

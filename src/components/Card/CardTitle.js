@@ -42,8 +42,6 @@ class CardTitle extends Component {
   }
 }
 
-export default connectTheme(Uranium(CardTitle))
-
 const styles = {
   root: {
     paddingTop: 24,
@@ -64,3 +62,5 @@ const styles = {
     fontSize: 14,
   },
 }
+
+export default connectTheme(Uranium(CardTitle))

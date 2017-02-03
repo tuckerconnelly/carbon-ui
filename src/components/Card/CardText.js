@@ -1,13 +1,12 @@
 import React, { Component, PropTypes } from 'react'
-import { View, Text } from 'react-native';
-import { Breakpoints, connectTheme } from 'carbon-ui';
-import Uranium from 'uranium';
+import { View, Text } from 'react-native'
+import Uranium from 'uranium'
+import { Breakpoints, connectTheme } from '../../index'
 
 class CardText extends Component {
   
   static propTypes = {
     children: PropTypes.node,
-    theme: PropTypes.object.isRequired,
     /**
      * Wrapper component style.
      */
@@ -21,17 +20,17 @@ class CardText extends Component {
     textStyle: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array,
-    ])
+    ]),
   };
   
   render() {
-    const {children, style, textStyle} = this.props;
+    const { children, style, textStyle } = this.props
         
-    return <View css={[styles.root, style]}>
+    return (<View css={[styles.root, style]}>
       <Text css={[styles.text, textStyle]}>
         {children}
       </Text>
-    </View>;
+    </View>)
   }
 }
 
@@ -47,9 +46,9 @@ const styles = {
     [Breakpoints.md]: {
       paddingLeft: 24,
       paddingRight: 24,
-    }
+    },
   },
   text: {
     fontSize: 14,
-  }
+  },
 }

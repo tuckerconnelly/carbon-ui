@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import { View, Text } from 'react-native';
-import { Breakpoints, connectTheme } from 'carbon-ui';
-import Uranium from 'uranium';
+import React, { Component, PropTypes } from 'react'
+import { View, Text } from 'react-native'
+import Uranium from 'uranium'
+import { Breakpoints, connectTheme } from '../../index'
 
 class CardTitle extends Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class CardTitle extends Component {
       title,
       titleStyle,
       ...other
-    } = this.props;
+    } = this.props
 
     return (
       <View {...other} css={[styles.root, style]}>
@@ -38,11 +38,11 @@ class CardTitle extends Component {
           {children}
         </Text> }
       </View>
-    );
+    )
   }
 }
 
-export default connectTheme(Uranium(CardTitle));
+export default connectTheme(Uranium(CardTitle))
 
 const styles = {
   root: {
@@ -55,12 +55,12 @@ const styles = {
     [Breakpoints.md]: {
       paddingRight: 24,
       paddingLeft: 24,
-    }
+    },
   },
   title: {
     fontSize: 24,
   },
   subtitle: {
     fontSize: 14,
-  }
-};
+  },
+}

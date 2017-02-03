@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { View } from 'react-native';
-import { Elevation, Breakpoints, Colors, connectTheme } from 'carbon-ui'
-import Uranium from 'uranium';
+import { View } from 'react-native'
+import Uranium from 'uranium'
+import { Elevation, Breakpoints, Colors, connectTheme } from '../../index'
 
 class Card extends Component {
   render() {
@@ -10,7 +10,7 @@ class Card extends Component {
       <View
         css={[
           styles.root,
-          style
+          style,
         ]}
         {...other}>
         {children}

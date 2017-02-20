@@ -24,6 +24,7 @@ import {
  *      export default () =>
  *        <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
  *          <FlatButton>Hey I'm a button</FlatButton>
+ *          <FlatButton disabled>Hey I'm disabled</FlatButton>
  *        </View>
  */
 const Button = ({
@@ -42,6 +43,7 @@ const Button = ({
     (<Body2
       style={[
         styles.text,
+        disabled && styles.disabledText,
         textStyle,
       ]}>{children.toUpperCase()}</Body2>) :
     children
@@ -50,6 +52,7 @@ const Button = ({
     <TouchableRipple
       hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
       css={[styles.base, disabled && styles.disabled]}
+      disabled={disabled}
       {...other}>
       {formattedChildren}
     </TouchableRipple>
@@ -107,8 +110,8 @@ const tStyles = theme => ps({
     backgroundColor: theme.colors.button.flat.pressed,
   },
 
-  disabled: {
-    backgroundColor: theme.colors.button.flat.disabled,
+  disabledText: {
+    color: theme.colors.button.flat.disabledText,
   },
 })
 

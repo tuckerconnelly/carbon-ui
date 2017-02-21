@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, TouchableWithoutFeedback, View } from 'react-native'
-import ps from 'react-native-ps'
+import { Animated, TouchableWithoutFeedback, View, Platform } from 'react-native'
 import Uranium, { animate } from 'uranium'
 import { Animations, Breakpoints, Elevation, Colors, gu } from '../index'
 
@@ -141,7 +140,7 @@ NavigationDrawer.defaultProps = {
 
 export default Uranium(NavigationDrawer)
 
-const styles = ps({
+const styles = {
   base: {
     position: 'absolute',
     left: 0,
@@ -151,11 +150,23 @@ const styles = ps({
 
     ...Elevation.dp24,
     zIndex: 2400,
+
+    ...Platform.select({
+      android: {
+        elevation: 16,
+      },
+    }),
   },
 
   hidden: {
     ...Elevation.dp0,
     zIndex: -1,
+
+    ...Platform.select({
+      android: {
+        elevation: undefined,
+      },
+    }),
   },
 
   overlay: {
@@ -200,22 +211,11 @@ const styles = ps({
     },
   },
 
-
-  // HACK Elevation overrides zIndex on android--this puts the base higher than
-  // everything else (namely, the AppBar)
-  android: {
-    base: {
-      elevation: 16,
-    },
-
-    hidden: {
-      elevation: undefined,
-    },
+  menuFullyOpen: {
+    ...Platform.select({
+      web: {
+        transform: null,
+      },
+    }),
   },
-
-  web: {
-    menuFullyOpen: {
-      transform: null,
-    },
-  },
-})
+}

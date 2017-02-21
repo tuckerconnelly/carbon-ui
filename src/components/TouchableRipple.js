@@ -10,7 +10,6 @@ import {
   View,
   Platform,
 } from 'react-native'
-import ps from 'react-native-ps'
 import omit from 'lodash/omit'
 import Color from 'color'
 
@@ -312,18 +311,22 @@ const TouchableRipple = React.createClass({
 
 export default TouchableRipple
 
-const styles = ps({
+const styles = {
   container: {
     overflow: 'hidden',
+
+    ...Platform.select({
+      web: {
+        cursor: 'pointer',
+      },
+    }),
   },
 
-  web: {
-    container: {
-      cursor: 'pointer',
-    },
-
-    containerDisabled: {
-      cursor: 'default',
-    },
+  containerDisabled: {
+    ...Platform.select({
+      web: {
+        cursor: 'default',
+      },
+    }),
   },
-})
+}

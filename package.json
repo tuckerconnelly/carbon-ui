@@ -38,7 +38,6 @@
   "dependencies": {
     "color": "^0.11.4",
     "lodash": "^4.17.2",
-    "react-native-ps": "0.0.7",
     "uranium": "github:tuckerconnelly/uranium"
   }
 }

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import ps from 'react-native-ps'
 import Uranium from 'uranium'
 
 import {
@@ -83,7 +82,7 @@ Button.defaultProps = {
   disabled: false,
 }
 
-const tStyles = theme => ps({
+const tStyles = theme => ({
   base: {
     height: 36,
     minWidth: 88,

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, View } from 'react-native'
+import { Animated, View, Platform } from 'react-native'
 import Uranium, { animate } from 'uranium'
-import ps from 'react-native-ps'
 import omit from 'lodash/omit'
 import {
   IconToggle,
@@ -122,7 +121,7 @@ export default
   AppBar))
 
 const IOS_HEADING_SIZE = 20
-const tStyles = theme => ps({
+const tStyles = theme => ({
   base: {
     height: 14 * gu,
     padding: 1 * gu,
@@ -143,6 +142,18 @@ const tStyles = theme => ps({
     [Breakpoints.ml]: {
       height: 16 * gu,
     },
+
+    ...Platform.select({
+      ios: {
+        // Account for heading on iOS in portrait mode
+        height: (14 * gu) + IOS_HEADING_SIZE,
+        paddingTop: IOS_HEADING_SIZE,
+
+        [Breakpoints.sm]: {
+          paddingTop: 4,
+        },
+      },
+    }),
   },
 
   baseWithoutNavIcon: {
@@ -163,17 +174,5 @@ const tStyles = theme => ps({
 
   titleText: {
     color: Colors.white,
-  },
-
-  // Account for heading on iOS in portrait mode
-  ios: {
-    base: {
-      height: (14 * gu) + IOS_HEADING_SIZE,
-      paddingTop: IOS_HEADING_SIZE,
-
-      [Breakpoints.sm]: {
-        paddingTop: 4,
-      },
-    },
   },
 })

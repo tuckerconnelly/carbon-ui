@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Text } from 'react-native'
-import ps from 'react-native-ps'
+import { Text, Platform } from 'react-native'
 
 const SIZE = 24
 
@@ -61,16 +60,15 @@ Icon.propTypes = {
 
 export default Icon
 
-const styles = ps({
+const styles = {
   base: {
     fontFamily: 'MaterialIcons-Regular',
-  },
 
-
-  web: {
-    base: {
-      wordWrap: 'normal',
-      fontFeatureSettings: '\'liga\'',
-    },
+    ...Platform.select({
+      web: {
+        wordWrap: 'normal',
+        fontFeatureSettings: '\'liga\'',
+      },
+    }),
   },
-})
+}

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native'
-import ps from 'react-native-ps'
+import { View, Platform } from 'react-native'
 
 import { gu } from '../../index'
 
@@ -30,19 +29,19 @@ HeaderRow.propTypes = {
 
 export default HeaderRow
 
-const styles = ps({
+const styles = {
   base: {
     flex: 1,
     flexDirection: 'row',
+
+    ...Platform.select({
+      web: {
+        display: 'table-row',
+      },
+    }),
   },
 
   firstCell: {
     paddingLeft: 6 * gu,
   },
-
-  web: {
-    base: {
-      display: 'table-row',
-    },
-  },
-})
+}

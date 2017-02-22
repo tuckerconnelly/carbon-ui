@@ -74,7 +74,10 @@ class AppBar extends Component {
             onPress={onNavIconPress} />
         }
         <View style={styles.title}>
-          <Title style={styles.titleText}>{title}</Title>
+          {typeof title === 'string' ?
+            <Title style={styles.titleText}>{title}</Title> :
+            title
+          }
         </View>
         {children}
       </Animated.View>
@@ -86,7 +89,7 @@ AppBar.propTypes = {
   /**
    * The title on the AppBar
    */
-  title: PropTypes.string,
+  title: PropTypes.node,
   /**
    * The material icon name of the nav icon
    */

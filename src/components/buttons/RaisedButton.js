@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import Color from 'color'
 
@@ -87,7 +86,7 @@ RaisedButton.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-const tStyles = theme => ps({
+const tStyles = theme => ({
   base: {
     height: 36,
     minWidth: 88,

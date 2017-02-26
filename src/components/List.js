@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { ScrollView } from 'react-native'
-import ps from 'react-native-ps'
 import Uranium from 'uranium'
 import { Breakpoints } from '../index'
 
@@ -80,7 +79,7 @@ List.propTypes = {
 
 export default Uranium(List)
 
-const styles = ps({
+const styles = {
   base: {
     paddingVertical: 8,
 
@@ -88,4 +87,4 @@ const styles = ps({
       paddingVertical: 4,
     },
   },
-})
+}

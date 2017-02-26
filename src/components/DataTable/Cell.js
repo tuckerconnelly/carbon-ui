@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native'
-import ps from 'react-native-ps'
+import { View, Platform } from 'react-native'
 
 import { Body1, Colors, gu } from '../../index'
 
@@ -22,7 +21,7 @@ Cell.propTypes = {
 
 export default Cell
 
-const styles = ps({
+const styles = {
   base: {
     // NOTE Spec says hard height of 48, but going with
     // paddingVertical: 16, expecting content to be height
@@ -37,11 +36,11 @@ const styles = ps({
     borderTopColor: Colors.grey300,
 
     flex: 1,
-  },
 
-  web: {
-    base: {
-      display: 'table-cell',
-    },
+    ...Platform.select({
+      web: {
+        display: 'table-cell',
+      },
+    }),
   },
-})
+}

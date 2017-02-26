@@ -1,11 +1,11 @@
-import ps from 'react-native-ps'
+import { Platform } from 'react-native'
 
 const iosOpacity = 0.25
 
 const penumbraOpacity = 0.14
 const umbraOpacity = 0.2
 
-export default ps({
+export default Platform.select({
   ios: {
     dp0: {
       shadowColor: 'transparent',

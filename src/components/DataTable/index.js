@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native'
-import ps from 'react-native-ps'
+import { View, Platform } from 'react-native'
 
 import HeaderRow from './HeaderRow'
 import HeaderCell from './HeaderCell'
@@ -68,27 +67,30 @@ DataTable.HeaderCell = HeaderCell
 DataTable.Row = Row
 DataTable.Cell = Cell
 
-const styles = ps({
+const styles = {
   base: {
     flex: 1,
+
+    ...Platform.select({
+      web: {
+        width: '100%',
+        height: '100%',
+
+        overflow: 'auto',
+      },
+    }),
   },
 
   table: {
     flex: 1,
+
+    ...Platform.select({
+      web: {
+        width: '100%',
+        height: '100%',
+
+        display: 'table',
+      },
+    }),
   },
-
-  web: {
-    base: {
-      width: '100%',
-      height: '100%',
-
-      overflow: 'auto',
-    },
-    table: {
-      width: '100%',
-      height: '100%',
-
-      display: 'table',
-    },
-  },
-})
+}

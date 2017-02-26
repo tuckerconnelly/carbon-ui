@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import { Animated, TextInput, View } from 'react-native'
+import { Animated, TextInput, View, Platform } from 'react-native'
 import Color from 'color'
-import ps from 'react-native-ps'
 import Uranium, { animate } from 'uranium'
 
 import { TextFieldError, Animations, Breakpoints, Colors, Type, connectTheme } from '../index'
@@ -233,7 +232,7 @@ TextField.defaultProps = {
   singleLine: false,
 }
 
-const styles = theme => ps({
+const styles = theme => ({
   base: {
     alignSelf: 'stretch',
   },
@@ -252,6 +251,15 @@ const styles = theme => ps({
 
       ...Type.subheading[Breakpoints.ml],
     },
+
+    ...Platform.select({
+      web: {
+        outline: 'none',
+        borderWidth: 0,
+
+        boxSizing: 'border-box',
+      },
+    }),
   },
 
   singleLine: {
@@ -264,6 +272,13 @@ const styles = theme => ps({
   // Applies to both input and placeholder
   disabled: {
     color: Colors.blackHint,
+
+    ...Platform.select({
+      web: {
+        cursor: 'default',
+        userSelect: 'none',
+      },
+    }),
   },
 
   placeholder: {
@@ -312,21 +327,6 @@ const styles = theme => ps({
 
     [Breakpoints.ml]: {
       marginBottom: 4,
-    },
-  },
-
-
-  web: {
-    textInput: {
-      outline: 'none',
-      borderWidth: 0,
-
-      boxSizing: 'border-box',
-    },
-
-    disabled: {
-      cursor: 'default',
-      userSelect: 'none',
     },
   },
 })

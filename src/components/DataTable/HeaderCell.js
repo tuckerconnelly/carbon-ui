@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View } from 'react-native'
-import ps from 'react-native-ps'
+import { View, Platform } from 'react-native'
 
 import { Body2, gu } from '../../index'
 
@@ -22,18 +21,18 @@ HeaderCell.propTypes = {
 
 export default HeaderCell
 
-const styles = ps({
+const styles = {
   base: {
     paddingRight: 6 * gu,
     paddingLeft: 8 * gu,
     paddingVertical: 4 * gu,
 
     flex: 1,
-  },
 
-  web: {
-    base: {
-      display: 'table-cell',
-    },
+    ...Platform.select({
+      web: {
+        display: 'table-cell',
+      },
+    }),
   },
-})
+}

@@ -1,58 +1,56 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { View, Text } from 'react-native'
 import Uranium from 'uranium'
 import { Breakpoints, connectTheme } from '../../index'
 
-class CardTitle extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-    subtitle: PropTypes.node,
-    subtitleStyle: PropTypes.object,
-    title: PropTypes.node,
-    titleStyle: PropTypes.object,
-    theme: PropTypes.object.isRequired,
-    style: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array,
-    ]),
-  };
+const CardTitle = ({
+  children,
+  style,
+  subtitle,
+  subtitleStyle,
+  title,
+  titleStyle,
+  ...other
+}) =>
+  <View {...other} css={[styles.root, style]}>
+    <Text css={[subtitle ? styles.title : styles.subtitle, titleStyle]}>
+      {title}
+    </Text>
+    {subtitle && <Text css={[styles.subtitle, subtitleStyle]}>
+      {subtitle}
+      {children}
+    </Text> }
+  </View>
 
-  render() {
-    const {
-      children,
-      style,
-      subtitle,
-      subtitleStyle,
-      title,
-      titleStyle,
-      ...other
-    } = this.props
-
-    return (
-      <View {...other} css={[styles.root, style]}>
-        <Text css={[subtitle ? styles.title : styles.subtitle, titleStyle]}>
-          {title}
-        </Text>
-        {subtitle && <Text css={[styles.subtitle, subtitleStyle]}>
-          {subtitle}
-          {children}
-        </Text> }
-      </View>
-    )
-  }
+CardTitle.propTypes = {
+  title: PropTypes.node,
+  titleStyle: PropTypes.object,
+  subtitle: PropTypes.node,
+  subtitleStyle: PropTypes.object,
+  children: PropTypes.node,
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
+  // connectTheme
+  theme: PropTypes.object.isRequired,
 }
+
+export default
+  connectTheme(
+  Uranium(
+  CardTitle))
 
 const styles = {
   root: {
+    position: 'relative',
+
     paddingTop: 24,
     paddingBottom: 16,
-    paddingRight: 16,
-    paddingLeft: 16,
-    position: 'relative',
+    paddingHorizontal: 16,
     // Larger left and right padding for tablet and desktop.
     [Breakpoints.md]: {
-      paddingRight: 24,
-      paddingLeft: 24,
+      paddingHorizontal: 24,
     },
   },
   title: {
@@ -62,5 +60,3 @@ const styles = {
     fontSize: 14,
   },
 }
-
-export default connectTheme(Uranium(CardTitle))

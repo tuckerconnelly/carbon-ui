@@ -74,7 +74,7 @@ class TextFieldError extends Component {
           animate('marginBottom', this.styles.base, this.styles.shown, this.heightAV),
           animate('opacity', this.styles.base, this.styles.shown, this.opacityAV),
         ]}
-        {...omit(other, 'children')}
+        {...omit(other, 'children', 'theme')}
         onLayout={this._setWidth}>
         {this.state.text}
       </Animated.Text>

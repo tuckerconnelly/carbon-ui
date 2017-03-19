@@ -1,6 +1,9 @@
 import Color from 'color'
 
-import { Colors } from '../../index'
+import {
+  Colors,
+  Type,
+} from '../../index'
 
 export default {
   colors: {
@@ -28,4 +31,6 @@ export default {
     ripple: 'rgba(0, 0, 0, .87)',
     error: Color(Colors.red400).alpha(0.87).rgbString(),
   },
+
+  type: Type,
 }

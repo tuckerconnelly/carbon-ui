@@ -19,6 +19,13 @@ CardText.propTypes = {
     PropTypes.array,
   ]),
   /**
+   * Override the inline-styles of the root element.
+   */
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
+  /**
    * Due to using Text component internally, CardText can only accept children of type:
    * - Text components
    * - literal strings
@@ -32,13 +39,6 @@ CardText.propTypes = {
         React.PropTypes.instanceOf(Text),
         PropTypes.string])),
   ]).isRequired,
-  /**
-   * Wrapper component style.
-   */
-  style: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array,
-  ]),
 }
 
 export default

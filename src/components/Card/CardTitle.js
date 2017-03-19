@@ -18,20 +18,38 @@ const CardTitle = ({
     </Text>
     {subtitle && <Text css={[styles.subtitle, subtitleStyle]}>
       {subtitle}
-      {children}
     </Text> }
+    {children}
   </View>
 
 CardTitle.propTypes = {
+  /**
+   * Primary title.
+   */
   title: PropTypes.node,
+  /**
+   * Primary title style.
+   */
   titleStyle: PropTypes.object,
+  /**
+   * Subtitle.
+   */
   subtitle: PropTypes.node,
+  /**
+   * Subtitle style.
+   */
   subtitleStyle: PropTypes.object,
-  children: PropTypes.node,
+  /**
+   * Override the inline-styles of the root element.
+   */
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
   ]),
+  /**
+   * children are inserted after the title.
+   */
+  children: PropTypes.node,
   // connectTheme
   theme: PropTypes.object.isRequired,
 }

@@ -48,6 +48,7 @@ IconToggle.propTypes = {
    * The style of the Icon element
    */
   iconStyle: PropTypes.object,
+  onPress: PropTypes.func,
 }
 
 export default IconToggle

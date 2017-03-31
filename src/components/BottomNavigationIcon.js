@@ -70,6 +70,7 @@ BottomNavigationIcon.propTypes = {
 
   // connectTheme
   theme: PropTypes.object.isRequired,
+  onPress: PropTypes.func,
 }
 
 export default

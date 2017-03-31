@@ -110,6 +110,8 @@ const propTypes = {
     PropTypes.array,
   ]),
   theme: PropTypes.object.isRequired,
+  onPress: PropTypes.func,
+
 }
 
 Display4.propTypes = propTypes

@@ -76,6 +76,8 @@ Button.propTypes = {
 
   // connectTheme
   theme: PropTypes.object.isRequired,
+  onPress: PropTypes.func,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 Button.defaultProps = {

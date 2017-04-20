@@ -15,5 +15,6 @@ export { default as BottomNavigation } from './BottomNavigation'
 export { default as BottomNavigationIcon } from './BottomNavigationIcon'
 export { default as Snackbar } from './Snackbar'
 
+export * from './Card'
 export * from './buttons'
 export * from './Type'

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { View, Platform } from 'react-native'
 
 import { Body1, Colors, gu } from '../../index'

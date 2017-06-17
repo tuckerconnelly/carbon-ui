@@ -1,6 +1,7 @@
 /* eslint-disable react/prefer-es6-class, react/prop-types */
 
-import React, { PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import {
   Animated,
   Easing,
@@ -39,8 +40,8 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
  *          </TouchableRipple>
  *        </View>
  */
-const TouchableRipple = React.createClass({
-  propTypes: {
+class TouchableRipple extends Component {
+  propTypes = {
     ...TouchableWithoutFeedback.propTypes,
     /**
      * The color of the ripple.
@@ -72,9 +73,9 @@ const TouchableRipple = React.createClass({
     children: PropTypes.node,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     ...TouchableWithoutFeedback.propTypes,
-  },
+  };
 
-  mixins: [Touchable.Mixin],
+  mixins = [Touchable.Mixin];
 
   getDefaultProps() {
     return {
@@ -84,18 +85,18 @@ const TouchableRipple = React.createClass({
       rippleDuration: 300, // ms
       rippleCentered: false,
     }
-  },
+  }
 
   getInitialState() {
     return {
       ...this.touchableGetInitialState(),
       ripples: [],
     }
-  },
+  }
 
   componentWillUnmount() {
     clearInterval(this._cleanupTimeout)
-  },
+  }
 
   async getLayout() {
     if (this._layoutChanged) {
@@ -106,19 +107,19 @@ const TouchableRipple = React.createClass({
       })
     }
     return this._layout
-  },
+  }
 
-  _layoutChanged: false,
-  _layout: null,
-  _container: null,
+  _layoutChanged = false;
+  _layout = null;
+  _container = null;
 
   _handleLayout(e) {
     this._layoutChanged = true
 
     this.props.onLayout && this.props.onLayout(e)
-  },
+  }
 
-  measure(cb) { this._container.measure(cb) },
+  measure(cb) { this._container.measure(cb) }
 
   /**
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
@@ -127,52 +128,52 @@ const TouchableRipple = React.createClass({
   touchableHandleActivePressIn(e) {
     this.start(e)
     this.props.onPressIn && this.props.onPressIn(e)
-  },
+  }
 
   touchableHandleActivePressOut(e) {
     this.end(e)
     this.props.onPressOut && this.props.onPressOut(e)
-  },
+  }
 
   touchableHandlePress(e) {
     this.props.onPress && this.props.onPress(e)
-  },
+  }
 
   touchableHandleLongPress(e) {
     this.props.onLongPress && this.props.onLongPress(e)
-  },
+  }
 
   touchableGetPressRectOffset() {
     return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET
-  },
+  }
 
   touchableGetHitSlop() {
     return this.props.hitSlop
-  },
+  }
 
   touchableGetHighlightDelayMS() {
     return this.props.delayPressIn || 0
-  },
+  }
 
   touchableGetLongPressDelayMS() {
     return this.props.delayLongPress === 0 ? 0 :
       this.props.delayLongPress || 500
-  },
+  }
 
   touchableGetPressOutDelayMS() {
     return this.props.delayPressOut
-  },
+  }
 
   _onKeyEnter(e, callback) {
     const ENTER = 13
     if (e.keyCode === ENTER) {
       callback && callback(e)
     }
-  },
+  }
 
-  _onKeyDown(e) { this._onKeyEnter(e, this.touchableHandleActivePressIn) },
-  _onKeyUp(e) { this._onKeyEnter(e, this.touchableHandleActivePressOut) },
-  _onKeyPress(e) { this._onKeyEnter(e, this.touchableHandlePress) },
+  _onKeyDown(e) { this._onKeyEnter(e, this.touchableHandleActivePressIn) }
+  _onKeyUp(e) { this._onKeyEnter(e, this.touchableHandleActivePressOut) }
+  _onKeyPress(e) { this._onKeyEnter(e, this.touchableHandlePress) }
 
   async start(e) {
     if (this.props.disabled) return
@@ -204,9 +205,9 @@ const TouchableRipple = React.createClass({
         easing: Easing.out(Easing.ease),
       }
     ).start()
-  },
+  }
 
-  _cleanupTimeout: null,
+  _cleanupTimeout = null;
 
   end() {
     const { ripples } = this.state
@@ -229,7 +230,7 @@ const TouchableRipple = React.createClass({
       pureRipples.splice(pureRipples.indexOf(ripple), 1)
       this.setState({ ripples: pureRipples })
     })
-  },
+  }
 
   render() {
     const { rippleColor, rippleOpacity, disabled, children, style, ...other } = this.props
@@ -306,8 +307,8 @@ const TouchableRipple = React.createClass({
         }
       </View>
     )
-  },
-})
+  }
+}
 
 export default TouchableRipple
 

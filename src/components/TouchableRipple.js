@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-es6-class, react/prop-types */
 
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import {
   Animated,
   Easing,

@@ -33,11 +33,11 @@ CardText.propTypes = {
    * - Array of Text or string literals (nesting)
    */
   children: PropTypes.oneOfType([
-    React.PropTypes.instanceOf(Text),
+    PropTypes.instanceOf(Text),
     PropTypes.string,
     PropTypes.arrayOf(
       PropTypes.oneOfType([
-        React.PropTypes.instanceOf(Text),
+        PropTypes.instanceOf(Text),
         PropTypes.string])),
   ]).isRequired,
 }

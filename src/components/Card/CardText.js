@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { View, Text } from 'react-native'
 import Uranium from 'uranium'
 import { Breakpoints, connectTheme } from '../../index'
@@ -32,11 +33,11 @@ CardText.propTypes = {
    * - Array of Text or string literals (nesting)
    */
   children: PropTypes.oneOfType([
-    React.PropTypes.instanceOf(Text),
+    PropTypes.instanceOf(Text),
     PropTypes.string,
     PropTypes.arrayOf(
       PropTypes.oneOfType([
-        React.PropTypes.instanceOf(Text),
+        PropTypes.instanceOf(Text),
         PropTypes.string])),
   ]).isRequired,
 }

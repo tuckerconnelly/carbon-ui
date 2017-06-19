@@ -1,6 +1,8 @@
 /* eslint-disable react/prefer-es6-class, react/prop-types */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import createReactClass from 'create-react-class'
+import PropTypes from 'prop-types'
 import {
   Animated,
   Easing,
@@ -39,7 +41,7 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 }
  *          </TouchableRipple>
  *        </View>
  */
-const TouchableRipple = React.createClass({
+const TouchableRipple = createReactClass({
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
     /**
@@ -71,7 +73,6 @@ const TouchableRipple = React.createClass({
      */
     children: PropTypes.node,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    ...TouchableWithoutFeedback.propTypes,
   },
 
   mixins: [Touchable.Mixin],

@@ -104,7 +104,7 @@ Dialog.propTypes = {
    * The contents of the dialog
    */
   children: PropTypes.node.isRequired,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
 }
 
 Dialog.defaultProps = {

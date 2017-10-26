@@ -209,11 +209,11 @@ TextField.propTypes = {
   /**
    * The style passed to the React Native TextInput
    */
-  textInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  textInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   /**
    * The style passed to the placeholder.
    */
-  placeholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  placeholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   /**
    * Passed through to the underlying TextInput.
    */
@@ -225,7 +225,7 @@ TextField.propTypes = {
   /**
    * The style of the containing View.
    */
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
 }
 
 TextField.defaultProps = {

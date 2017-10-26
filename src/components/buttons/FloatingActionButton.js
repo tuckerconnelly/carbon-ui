@@ -82,7 +82,7 @@ FloatingActionButton.propTypes = {
    * Usually an <Icon />
    */
   children: PropTypes.node,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   onPressIn: PropTypes.func,
   onPressOut: PropTypes.func,
 

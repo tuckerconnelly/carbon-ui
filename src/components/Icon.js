@@ -56,7 +56,7 @@ Icon.propTypes = {
   name: PropTypes.string.isRequired,
 
   children: PropTypes.node,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
 }
 
 export default Icon

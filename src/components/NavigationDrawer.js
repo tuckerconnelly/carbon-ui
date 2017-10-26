@@ -109,11 +109,11 @@ NavigationDrawer.propTypes = {
    * Will open the drawer if set to true.
    */
   open: PropTypes.bool,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   /**
    * The style of the menu.
    */
-  menuStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  menuStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   /**
    * Callback for when the overlay is pressed
    */

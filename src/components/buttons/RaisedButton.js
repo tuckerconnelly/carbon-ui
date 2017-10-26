@@ -81,7 +81,7 @@ RaisedButton.propTypes = {
   /**
    * The style of the button text. Only applies if props.children isn't passed.
    */
-  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
 
   // connectTheme
   theme: PropTypes.object.isRequired,

@@ -37,12 +37,6 @@ export default component => {
     `ConnectTheme(${Component.displayName || Component.name || 'Component'})`
 
   ConnectTheme.contextTypes = {
-    ...ConnectTheme.contextTypes,
-    theme: PropTypes.object,
-  }
-
-  ConnectTheme.childContextTypes = {
-    ...ConnectTheme.childContextTypes,
     theme: PropTypes.object,
   }
 

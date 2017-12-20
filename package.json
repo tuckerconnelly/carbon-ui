@@ -39,10 +39,10 @@
     "color": "^0.11.4",
     "create-react-class": "^15.6.0",
     "lodash": "^4.17.2",
-    "uranium": "github:divvito/uranium#42484b8"
+    "uranium": "github:tuckerconnelly/uranium"
   },
   "peerDependencies": {
     "prop-types": "^15.5.10",
-    "react": "16.0.0-alpha.12"
+    "react": "^16.0.0"
   }
 }

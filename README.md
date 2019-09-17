@@ -1,3 +1,5 @@
+**No longer maintained!**
+
 # <a href="https://carbon-ui.com" target="__blank"><img src="https://cloud.githubusercontent.com/assets/4349082/20800106/5141cfa0-b7b2-11e6-8b00-ced838b8320b.png" height="60" /></a>
 
 [Material Design](https://material.google.com/) library for React Native that runs on all platforms.

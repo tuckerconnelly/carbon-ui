@@ -44,7 +44,7 @@ IconToggle.propTypes = {
   /**
    * The style of the containing TouchableRipple (which is a View)
    */
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   /**
    * The style of the Icon element
    */

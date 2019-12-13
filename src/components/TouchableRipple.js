@@ -72,7 +72,7 @@ const TouchableRipple = createReactClass({
      * a single element.
      */
     children: PropTypes.node,
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   },
 
   mixins: [Touchable.Mixin],

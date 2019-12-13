@@ -258,7 +258,7 @@ ListItem.propTypes = {
    * and expandable.
    */
   children: PropTypes.node,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
   onPress: PropTypes.func,
 
   // connectTheme
